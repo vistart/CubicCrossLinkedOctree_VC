@@ -1,3 +1,12 @@
+/*
+ *  _   __ __ _____ _____ ___  ____  _____
+ * | | / // // ___//_  _//   ||  __||_   _|
+ * | |/ // /(__  )  / / / /| || |     | |
+ * |___//_//____/  /_/ /_/ |_||_|     |_|
+ * @link https://vistart.me/
+ * @copyright Copyright (c) 2019 vistart
+ * @license https://vistart.me/license/
+*/
 #ifndef __PLY_H__
 #include "PlyFile.h"
 #endif
@@ -55,11 +64,8 @@ bool PlyFile::read(fstream& file)
 	
 	string buffer;
 
-	int pos = file.tellg();
 	while (file >> buffer)
 	{
-		cout << "The Position of File Pointer: " << pos << endl;
-		pos = file.tellg();
 		if (is_header) {
 			transform(buffer.begin(), buffer.end(), buffer.begin(), tolower);
 			if (buffer.c_str() == string("ply")) {
@@ -88,6 +94,18 @@ bool PlyFile::read(fstream& file)
 				file >> element_name >> element_count;
 				cout << "Element: " << element_name << element_count << endl;
 
+				if (element_name == string("vertex")) {
+					
+				}
+
+				if (element_name == string("face")) {
+
+				}
+
+				if (element_name == string("edge")) {
+
+				}
+
 				while (file >> buffer) {
 					transform(buffer.begin(), buffer.end(), buffer.begin(), tolower);
 					if (buffer.c_str() == string("property")) {
@@ -95,11 +113,10 @@ bool PlyFile::read(fstream& file)
 						string property_name;
 						file >> property_type >> property_name;
 						cout << "Property: " << property_type << property_name << endl;
-						pos = file.tellg();
 					}
-					else {
-						file.seekg(pos, ios::beg);
-						cout << file.tellg() << endl;
+					else
+					{
+						for (int i = buffer.size(); i > 0; i--) file.putback(buffer[i - 1]);
 						break;
 					}
 				}
@@ -111,6 +128,10 @@ bool PlyFile::read(fstream& file)
 				is_header = false;
 				continue;
 			}
+		}
+		else
+		{
+
 		}
 	}
 	return true;

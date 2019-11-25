@@ -7,18 +7,16 @@
  * @copyright Copyright (c) 2019 vistart
  * @license https://vistart.me/license/
 */
-#ifndef __PLY_VERTEX__
-#include "PlyVertex.h"
+#pragma once
+
+#ifndef __PLY_EDGE_LIST__
+#define __PLY_EDGE_LIST__
+
+class PlyEdgeList
+{
+public:
+	PlyEdgeList();
+	~PlyEdgeList();
+};
+
 #endif
-
-#ifdef __PLY_VERTEX__
-PlyVertex::PlyVertex()
-{
-
-}
-
-PlyVertex::PlyVertex(std::fstream& file)
-{
-
-}
-#endif;

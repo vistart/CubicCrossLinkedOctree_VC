@@ -7,18 +7,4 @@
  * @copyright Copyright (c) 2019 vistart
  * @license https://vistart.me/license/
 */
-#ifndef __PLY_VERTEX__
-#include "PlyVertex.h"
-#endif
-
-#ifdef __PLY_VERTEX__
-PlyVertex::PlyVertex()
-{
-
-}
-
-PlyVertex::PlyVertex(std::fstream& file)
-{
-
-}
-#endif;
+#include "PlyFace.h"

@@ -152,12 +152,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CubicCrossLinkedOctree_VC.cpp" />
+    <ClCompile Include="PlyEdge.cpp" />
+    <ClCompile Include="PlyEdgeList.cpp" />
+    <ClCompile Include="PlyFace.cpp" />
+    <ClCompile Include="PlyFaceList.cpp" />
     <ClCompile Include="PlyFile.cpp" />
     <ClCompile Include="PlyVertex.cpp" />
+    <ClCompile Include="PlyVertexList.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PlyEdge.h" />
+    <ClInclude Include="PlyEdgeList.h" />
+    <ClInclude Include="PlyFace.h" />
+    <ClInclude Include="PlyFaceList.h" />
     <ClInclude Include="PlyFile.h" />
     <ClInclude Include="PlyVertex.h" />
+    <ClInclude Include="PlyVertexList.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LICENSE" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
