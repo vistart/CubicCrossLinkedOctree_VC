@@ -12,8 +12,21 @@
 #ifndef __PLY_VERTEX_LIST__
 #define __PLY_VERTEX_LIST__
 
+#include "PlyVertex.h"
+#include <fstream>
+#include <vector>
+using namespace std;
+
 class PlyVertexList
 {
+public:
+	PlyVertexList();
+	PlyVertexList(unsigned int, fstream&);
+	unsigned int GetVertexCount();
+	vector<PlyVertex> GetVertices();
+	~PlyVertexList();
+protected:
+	vector<PlyVertex> vertices;
 };
 
 #endif

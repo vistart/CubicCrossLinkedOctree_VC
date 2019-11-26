@@ -17,7 +17,12 @@ PlyVertex::PlyVertex()
 
 }
 
-PlyVertex::PlyVertex(std::fstream& file)
+PlyVertex::PlyVertex(fstream& file)
+{
+
+}
+
+PlyVertex::~PlyVertex()
 {
 
 }

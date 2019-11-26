@@ -14,6 +14,8 @@
 
 #include <fstream>
 
+using namespace std;
+
 class PlyVertex
 {
 public:
@@ -24,7 +26,7 @@ public:
 	char GetG();
 	char GetB();
 	PlyVertex();
-	PlyVertex(std::fstream&);
+	PlyVertex(fstream&);
 	PlyVertex(double, double, double);
 	PlyVertex(double, double, double, char, char, char);
 	~PlyVertex();
