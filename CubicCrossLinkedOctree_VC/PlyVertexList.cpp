@@ -10,7 +10,7 @@ PlyVertexList::PlyVertexList()
 
 PlyVertexList::PlyVertexList(unsigned int count, fstream& file)
 {
-	for (int i = 0; i < count; i++)
+	for (unsigned int i = 0; i < count; i++)
 	{
 		auto vertex = new PlyVertex(file);
 		vertices.push_back(*vertex);
@@ -24,7 +24,7 @@ PlyVertexList::~PlyVertexList()
 	}
 }
 
-unsigned int PlyVertexList::GetVertexCount()
+auto PlyVertexList::GetVertexCount()
 {
 	return vertices.size();
 }

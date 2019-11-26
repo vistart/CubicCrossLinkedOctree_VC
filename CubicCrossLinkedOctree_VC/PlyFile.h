@@ -15,8 +15,10 @@
 #include "PlyVertexList.h"
 #include "PlyFaceList.h"
 #include "PlyEdgeList.h"
+#include "PlyCommentList.h"
 #include <fstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -30,6 +32,10 @@ public:
 
 #pragma region File Format
 	string GetFileFormat();
+#pragma endregion
+
+#pragma region Comment
+	PlyCommentList GetCommentList();
 #pragma endregion
 
 #pragma region Vertex

@@ -26,4 +26,4 @@ PlyVertex::~PlyVertex()
 {
 
 }
-#endif;
+#endif

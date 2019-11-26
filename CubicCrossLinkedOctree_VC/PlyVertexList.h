@@ -22,7 +22,7 @@ class PlyVertexList
 public:
 	PlyVertexList();
 	PlyVertexList(unsigned int, fstream&);
-	unsigned int GetVertexCount();
+	auto GetVertexCount();
 	vector<PlyVertex> GetVertices();
 	~PlyVertexList();
 protected:

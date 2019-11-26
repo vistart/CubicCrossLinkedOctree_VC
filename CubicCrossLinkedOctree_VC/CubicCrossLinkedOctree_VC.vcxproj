@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CubicCrossLinkedOctree_VC.cpp" />
+    <ClCompile Include="PlyCommentList.cpp" />
     <ClCompile Include="PlyEdge.cpp" />
     <ClCompile Include="PlyEdgeList.cpp" />
     <ClCompile Include="PlyFace.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="PlyVertexList.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PlyCommentList.h" />
     <ClInclude Include="PlyEdge.h" />
     <ClInclude Include="PlyEdgeList.h" />
     <ClInclude Include="PlyFace.h" />

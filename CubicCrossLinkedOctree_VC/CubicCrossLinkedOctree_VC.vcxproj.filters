@@ -39,6 +39,9 @@
     <ClCompile Include="PlyEdgeList.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="PlyCommentList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlyFile.h">
@@ -60,6 +63,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="PlyEdgeList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PlyCommentList.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

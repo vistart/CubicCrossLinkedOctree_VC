@@ -15,6 +15,8 @@
 #include<iostream>
 #include<algorithm>
 
+using namespace std;
+
 #pragma region Constructor & Destructor
 /*
  * Summary: Instantiate the current object from the ply file.
@@ -63,6 +65,9 @@ bool PlyFile::read(fstream& file)
 	unsigned int element_count = 0;
 	
 	string buffer;
+	unsigned int vertex_count;
+	unsigned int face_count;
+	unsigned int edge_count;
 
 	while (file >> buffer)
 	{
@@ -116,7 +121,7 @@ bool PlyFile::read(fstream& file)
 					}
 					else
 					{
-						for (int i = buffer.size(); i > 0; i--) file.putback(buffer[i - 1]);
+						for (auto i = buffer.size(); i > 0; i--) file.putback(buffer[i - 1]);
 						break;
 					}
 				}
