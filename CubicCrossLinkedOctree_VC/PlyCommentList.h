@@ -9,10 +9,16 @@ using namespace std;
 class PlyCommentList
 {
 public:
-	PlyCommentList();
-	PlyCommentList(string);
-	~PlyCommentList();
+	static PlyCommentList& get();
+	bool add(string);
+	vector<string> getComments();
 protected:
 	vector<string> comments;
+	PlyCommentList();
+	PlyCommentList(PlyCommentList const&) = delete;
+	PlyCommentList(PlyCommentList&&) = delete;
+	PlyCommentList& operator=(PlyCommentList const&) = delete;
+	PlyCommentList& operator=(PlyCommentList&&) = delete;
+	~PlyCommentList();
 };
 #endif

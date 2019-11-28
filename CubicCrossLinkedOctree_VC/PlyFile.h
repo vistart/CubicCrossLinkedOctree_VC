@@ -35,7 +35,7 @@ public:
 #pragma endregion
 
 #pragma region Comment
-	PlyCommentList GetCommentList();
+	PlyCommentList& GetCommentList();
 #pragma endregion
 
 #pragma region Vertex

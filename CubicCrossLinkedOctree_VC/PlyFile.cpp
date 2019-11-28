@@ -13,6 +13,7 @@
 
 #ifdef __PLY_H__
 #include<iostream>
+#include<sstream>
 #include<algorithm>
 
 using namespace std;
@@ -45,6 +46,13 @@ string PlyFile::GetFileFormat()
 		return "ply";
 	}
 	return "unknown type!";
+}
+#pragma endregion
+
+#pragma region Comment
+PlyCommentList& PlyFile::GetCommentList()
+{
+	return PlyCommentList::get();
 }
 #pragma endregion
 
@@ -90,7 +98,11 @@ bool PlyFile::read(fstream& file)
 			if (buffer.c_str() == string("comment")) {
 				string comment;
 				getline(file, comment);
-				cout << "comment: " << comment << endl;
+				auto& list = GetCommentList();
+				list.add(comment);
+				for (auto comment : list.getComments()) {
+					cout << "comment: " << comment << endl;
+				}
 				continue;
 			}
 

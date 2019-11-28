@@ -3,19 +3,30 @@
 #endif
 
 #ifdef __PLY_COMMENT_LIST__
-PlyCommentList::PlyCommentList()
+PlyCommentList& PlyCommentList::get()
 {
-	//PlyCommentList("");
+	static PlyCommentList list;
+	return list;
 }
 
-PlyCommentList::PlyCommentList(string comment)
+bool PlyCommentList::add(string comment)
 {
-	
+	this->comments.push_back(comment);
+	return true;
+}
+
+vector<string> PlyCommentList::getComments()
+{
+	return this->comments;
+}
+
+PlyCommentList::PlyCommentList()
+{
+
 }
 
 PlyCommentList::~PlyCommentList()
 {
-	
-}
 
+}
 #endif
