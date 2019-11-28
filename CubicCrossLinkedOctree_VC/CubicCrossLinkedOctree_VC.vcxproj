@@ -158,6 +158,7 @@
     <ClCompile Include="PlyFace.cpp" />
     <ClCompile Include="PlyFaceList.cpp" />
     <ClCompile Include="PlyFile.cpp" />
+    <ClCompile Include="PlyFileEncoding.cpp" />
     <ClCompile Include="PlyVertex.cpp" />
     <ClCompile Include="PlyVertexList.cpp" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <ClInclude Include="PlyFace.h" />
     <ClInclude Include="PlyFaceList.h" />
     <ClInclude Include="PlyFile.h" />
+    <ClInclude Include="PlyFileEncoding.h" />
     <ClInclude Include="PlyVertex.h" />
     <ClInclude Include="PlyVertexList.h" />
   </ItemGroup>

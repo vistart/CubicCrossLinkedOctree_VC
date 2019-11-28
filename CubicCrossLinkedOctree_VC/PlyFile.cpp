@@ -50,9 +50,25 @@ string PlyFile::GetFileFormat()
 #pragma endregion
 
 #pragma region Comment
+
 PlyCommentList& PlyFile::GetCommentList()
 {
 	return PlyCommentList::get();
+}
+
+bool PlyFile::read_comment(string tag, fstream& file)
+{
+	if (tag != string(PLY_TAG_COMMENT))
+		return false;
+
+	string comment;
+	getline(file, comment);
+	auto& list = GetCommentList();
+	list.add(comment);
+	for (auto comment : list.getComments()) {
+		cout << "comment: " << comment << endl;
+	}
+	return true;
 }
 #pragma endregion
 
@@ -95,14 +111,7 @@ bool PlyFile::read(fstream& file)
 				continue;
 			}
 
-			if (buffer.c_str() == string("comment")) {
-				string comment;
-				getline(file, comment);
-				auto& list = GetCommentList();
-				list.add(comment);
-				for (auto comment : list.getComments()) {
-					cout << "comment: " << comment << endl;
-				}
+			if (read_comment(buffer.c_str(), file)) {
 				continue;
 			}
 

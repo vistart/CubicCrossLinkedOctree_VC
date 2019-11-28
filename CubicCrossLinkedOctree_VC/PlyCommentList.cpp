@@ -5,8 +5,8 @@
 #ifdef __PLY_COMMENT_LIST__
 PlyCommentList& PlyCommentList::get()
 {
-	static PlyCommentList list;
-	return list;
+	static PlyCommentList instance;
+	return instance;
 }
 
 bool PlyCommentList::add(string comment)
@@ -18,6 +18,15 @@ bool PlyCommentList::add(string comment)
 vector<string> PlyCommentList::getComments()
 {
 	return this->comments;
+}
+
+PlyCommentList& PlyCommentList::operator<<(string comment)
+{
+	auto& instance = this->get();
+	if (instance.add(comment)) {
+		
+	}
+	return instance;
 }
 
 PlyCommentList::PlyCommentList()

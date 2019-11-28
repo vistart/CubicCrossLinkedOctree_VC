@@ -3,6 +3,8 @@
 #ifndef __PLY_COMMENT_LIST__
 #define __PLY_COMMENT_LIST__
 
+#define PLY_TAG_COMMENT "comment"
+
 #include <vector>
 #include <string>
 using namespace std;
@@ -12,6 +14,7 @@ public:
 	static PlyCommentList& get();
 	bool add(string);
 	vector<string> getComments();
+	PlyCommentList& operator<<(string);
 protected:
 	vector<string> comments;
 	PlyCommentList();

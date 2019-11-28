@@ -63,14 +63,7 @@ protected:
 #pragma endregion
 
 #pragma region File Encoding
-	enum FileEncodingType { FILE_ENCODING_ASCII, FILE_ENCODING_BINARY_BIG_ENDIAN, FILE_ENCODING_BINARY_LITTLE_ENDIAN };
-	struct FileEncoding
-	{
-		int type = FILE_ENCODING_ASCII;
-		float version = 1.0;
-	};
-	FileEncoding file_encoding;
-	//FileEncoding read_file_encoding(fstream&);
+	bool read_file_encoding(string, fstream&);
 #pragma endregion
 
 #pragma region PropertyDataType
@@ -78,6 +71,7 @@ protected:
 #pragma endregion
 
 #pragma region Comment
+	bool read_comment(string, fstream&);
 #pragma endregion
 
 #pragma region Vertex
