@@ -22,11 +22,10 @@ vector<string> PlyCommentList::getComments()
 
 PlyCommentList& PlyCommentList::operator<<(string comment)
 {
-	auto& instance = this->get();
-	if (instance.add(comment)) {
+	if (this->add(comment)) {
 		
 	}
-	return instance;
+	return *this;
 }
 
 PlyCommentList::PlyCommentList()
@@ -36,7 +35,6 @@ PlyCommentList::PlyCommentList()
 
 PlyCommentList::~PlyCommentList()
 {
-	auto& instance = this->get();
-	instance.getComments().clear();
+	this->comments.erase(this->comments.begin(), this->comments.end());
 }
 #endif
