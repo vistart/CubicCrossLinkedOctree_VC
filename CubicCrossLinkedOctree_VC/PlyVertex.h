@@ -19,24 +19,41 @@ using namespace std;
 class PlyVertex
 {
 public:
-	double GetX();
-	double GetY();
-	double GetZ();
-	char GetR();
-	char GetG();
-	char GetB();
 	PlyVertex();
 	PlyVertex(fstream&);
-	PlyVertex(double, double, double);
-	PlyVertex(double, double, double, char, char, char);
+	PlyVertex(double const, double const, double const);
+	PlyVertex(double const, double const, double const, char const, char const, char const);
 	~PlyVertex();
+	double X() const;
+	PlyVertex& X(int const X);
+	double Y() const;
+	PlyVertex& Y(int const Y);
+	double Z() const;
+	PlyVertex& Z(int const Z);
+	char R() const;
+	PlyVertex& R(char const R);
+	char G() const;
+	PlyVertex& G(char const G);
+	char B() const;
+	PlyVertex& B(char const B);
+	bool operator==(PlyVertex const&) const;
+	bool operator!=(PlyVertex const&) const;
+	bool operator<(PlyVertex const&) const;
+	bool operator>(PlyVertex const&) const;
+	friend std::ostream& operator<<(std::ostream& stream, PlyVertex const& vertex)
+	{
+		stream << "(" << vertex.__X << "," << vertex.__Y << "," << vertex.__Z << ")";
+		return stream;
+	}
+	void offset(int const, int const, int const);
 protected:
-	double X;
-	double Y;
-	double Z;
-	char R;
-	char G;
-	char B;
+	double __X;
+	double __Y;
+	double __Z;
+	char __R;
+	char __G;
+	char __B;
+	bool has_RGB = false;
 };
 
 #endif

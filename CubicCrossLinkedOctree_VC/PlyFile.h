@@ -50,8 +50,11 @@ public:
 	PlyEdgeList GetEdgeList();
 #pragma endregion
 
+	bool GetIsValid();
+
 protected:
 	fstream file;
+	bool valid = false;
 	bool open(string);
 	enum Tag { PLY, FORMAT, COMMENT, ELEMENT, PROPERTY, END_HEADER };
 	bool read(fstream&);

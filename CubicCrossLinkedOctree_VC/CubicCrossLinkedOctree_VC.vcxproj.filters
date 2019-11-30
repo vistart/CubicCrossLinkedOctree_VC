@@ -13,66 +13,78 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\文件格式">
+      <UniqueIdentifier>{c2185dfa-612d-453e-9a17-a0b8bea5075c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\文件格式\PLY">
+      <UniqueIdentifier>{1cde8543-9c40-4900-bf50-18dc7300feb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\文件格式">
+      <UniqueIdentifier>{d557c99b-2ea9-41c5-b3cd-3503b88745e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\文件格式\PLY">
+      <UniqueIdentifier>{2e486d37-82b3-4820-a344-cb0b8468ac1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CubicCrossLinkedOctree_VC.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="PlyFile.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PlyVertex.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PlyFace.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PlyEdge.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="PlyVertexList.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PlyFaceList.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PlyEdgeList.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\文件格式\PLY</Filter>
     </ClCompile>
     <ClCompile Include="PlyCommentList.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\文件格式\PLY</Filter>
+    </ClCompile>
+    <ClCompile Include="PlyEdge.cpp">
+      <Filter>源文件\文件格式\PLY</Filter>
+    </ClCompile>
+    <ClCompile Include="PlyEdgeList.cpp">
+      <Filter>源文件\文件格式\PLY</Filter>
+    </ClCompile>
+    <ClCompile Include="PlyFace.cpp">
+      <Filter>源文件\文件格式\PLY</Filter>
+    </ClCompile>
+    <ClCompile Include="PlyFaceList.cpp">
+      <Filter>源文件\文件格式\PLY</Filter>
+    </ClCompile>
+    <ClCompile Include="PlyFile.cpp">
+      <Filter>源文件\文件格式\PLY</Filter>
     </ClCompile>
     <ClCompile Include="PlyFileEncoding.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\文件格式\PLY</Filter>
+    </ClCompile>
+    <ClCompile Include="PlyVertex.cpp">
+      <Filter>源文件\文件格式\PLY</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PlyFile.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PlyVertex.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PlyFace.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="PlyCommentList.h">
+      <Filter>头文件\文件格式\PLY</Filter>
     </ClInclude>
     <ClInclude Include="PlyEdge.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PlyVertexList.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PlyFaceList.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\文件格式\PLY</Filter>
     </ClInclude>
     <ClInclude Include="PlyEdgeList.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\文件格式\PLY</Filter>
     </ClInclude>
-    <ClInclude Include="PlyCommentList.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="PlyFace.h">
+      <Filter>头文件\文件格式\PLY</Filter>
+    </ClInclude>
+    <ClInclude Include="PlyFaceList.h">
+      <Filter>头文件\文件格式\PLY</Filter>
+    </ClInclude>
+    <ClInclude Include="PlyFile.h">
+      <Filter>头文件\文件格式\PLY</Filter>
     </ClInclude>
     <ClInclude Include="PlyFileEncoding.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\文件格式\PLY</Filter>
+    </ClInclude>
+    <ClInclude Include="PlyVertex.h">
+      <Filter>头文件\文件格式\PLY</Filter>
+    </ClInclude>
+    <ClInclude Include="PlyVertexList.h">
+      <Filter>头文件\文件格式\PLY</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

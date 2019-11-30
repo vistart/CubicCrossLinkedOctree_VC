@@ -36,6 +36,7 @@ PlyCommentList::PlyCommentList()
 
 PlyCommentList::~PlyCommentList()
 {
-
+	auto& instance = this->get();
+	instance.getComments().clear();
 }
 #endif

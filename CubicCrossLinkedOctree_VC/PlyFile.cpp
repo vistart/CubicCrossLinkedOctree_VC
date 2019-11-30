@@ -27,7 +27,8 @@ using namespace std;
 PlyFile::PlyFile(string file_path)
 {
 	open(file_path);
-	read(this->file);
+	if (read(this->file))
+		this->valid = true;
 }
 
 PlyFile::~PlyFile()
@@ -35,6 +36,11 @@ PlyFile::~PlyFile()
 	if (this->file.is_open()) {
 		this->file.close();
 	}
+}
+
+bool PlyFile::GetIsValid()
+{
+	return this->valid;
 }
 #pragma endregion
 
