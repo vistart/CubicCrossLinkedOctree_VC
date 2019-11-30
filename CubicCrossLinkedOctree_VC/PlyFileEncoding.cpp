@@ -9,6 +9,34 @@ PlyFileEncoding& PlyFileEncoding::get()
 	return instance;
 }
 
+string PlyFileEncoding::Encoding()
+{
+	if (this->file_encoding.type == FILE_ENCODING_ASCII)
+		return PLY_FILE_ENCODING_ASCII;
+	if (this->file_encoding.type == FILE_ENCODING_BINARY_BIG_ENDIAN)
+		return PLY_FILE_BINARY_BIG_ENDIAN;
+	if (this->file_encoding.type == FILE_ENCODING_BINARY_LITTLE_ENDIAN)
+		return PLY_FILE_BINARY_LITTLE_ENDIAN;
+	return "";
+}
+
+PlyFileEncoding& PlyFileEncoding::Encoding(string encoding)
+{
+	*this << encoding;
+	return *this;
+}
+
+float PlyFileEncoding::Version()
+{
+	return this->file_encoding.version;
+}
+
+PlyFileEncoding& PlyFileEncoding::Version(float version)
+{
+	*this << version;
+	return *this;
+}
+
 PlyFileEncoding& PlyFileEncoding::operator<<(fstream& file)
 {
 	string encoding;
@@ -37,6 +65,26 @@ PlyFileEncoding& PlyFileEncoding::operator<<(float version)
 {
 	this->file_encoding.version = version;
 	return *this;
+}
+
+bool PlyFileEncoding::operator==(PlyFileEncoding const& object)
+{
+	return this->file_encoding.type == object.file_encoding.type && this->file_encoding.version == object.file_encoding.version;
+}
+
+bool PlyFileEncoding::operator!=(PlyFileEncoding const& object)
+{
+	return !(*this == object);
+}
+
+bool PlyFileEncoding::operator==(PlyFileEncoding::FileEncoding const& object)
+{
+	return this->file_encoding.type == object.type && this->file_encoding.version == object.version;
+}
+
+bool PlyFileEncoding::operator!=(PlyFileEncoding::FileEncoding const& object)
+{
+	return !(*this == object);
 }
 
 PlyFileEncoding::PlyFileEncoding()

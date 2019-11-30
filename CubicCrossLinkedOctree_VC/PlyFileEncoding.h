@@ -25,6 +25,10 @@ public:
 	PlyFileEncoding& operator<<(FileEncoding);
 	PlyFileEncoding& operator<<(string);
 	PlyFileEncoding& operator<<(float);
+	string Encoding();
+	PlyFileEncoding& Encoding(string const);
+	float Version();
+	PlyFileEncoding& Version(float const);
 protected:
 	FileEncoding file_encoding;
 	PlyFileEncoding();
@@ -32,6 +36,10 @@ protected:
 	PlyFileEncoding(PlyFileEncoding&&) = delete;
 	PlyFileEncoding& operator=(PlyFileEncoding const&) = delete;
 	PlyFileEncoding& operator=(PlyFileEncoding&&) = delete;
+	bool operator==(PlyFileEncoding const&);
+	bool operator!=(PlyFileEncoding const&);
+	bool operator==(FileEncoding const&);
+	bool operator!=(FileEncoding const&);
 	~PlyFileEncoding();
 };
 

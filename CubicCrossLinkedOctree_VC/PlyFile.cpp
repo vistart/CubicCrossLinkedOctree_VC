@@ -98,6 +98,8 @@ bool PlyFile::read_file_encoding(string tag, fstream& file)
 	if (tag != string("format"))
 		return false;
 	auto& encoding = this->GetFileEncoding();
+	encoding << file;
+	return true;
 }
 
 bool PlyFile::read(fstream& file)
@@ -121,11 +123,8 @@ bool PlyFile::read(fstream& file)
 				continue;
 			}
 
-			if (buffer.c_str() == string("format")) {
-				string encoding;
-				float version;
-				file >> encoding >> version;
-				cout << "FORMAT: " << encoding << " VERSION:" << version << endl;
+			if (read_file_encoding(buffer.c_str(), file)) {
+				cout << "FORMAT: " << this->GetFileEncoding().Encoding() << " VERSION:" << this->GetFileEncoding().Version() << endl;
 				continue;
 			}
 
