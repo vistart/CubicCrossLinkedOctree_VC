@@ -9,6 +9,7 @@
 #define PLY_FILE_BINARY_LITTLE_ENDIAN "binary_little_endian"
 
 #include <string>
+#include <fstream>
 using namespace std;
 class PlyFileEncoding
 {
@@ -20,6 +21,7 @@ public:
 		float version = 1.0;
 	};
 	static PlyFileEncoding& get();
+	PlyFileEncoding& operator<<(fstream&);
 	PlyFileEncoding& operator<<(FileEncoding);
 	PlyFileEncoding& operator<<(string);
 	PlyFileEncoding& operator<<(float);

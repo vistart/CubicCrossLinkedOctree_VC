@@ -88,6 +88,18 @@ bool PlyFile::open(string file_path)
 	return this->file.good();
 }
 
+PlyFileEncoding& PlyFile::GetFileEncoding()
+{
+	return PlyFileEncoding::get();
+}
+
+bool PlyFile::read_file_encoding(string tag, fstream& file)
+{
+	if (tag != string("format"))
+		return false;
+	auto& encoding = this->GetFileEncoding();
+}
+
 bool PlyFile::read(fstream& file)
 {
 	file.seekg(0, ios::beg);

@@ -9,28 +9,34 @@ PlyFileEncoding& PlyFileEncoding::get()
 	return instance;
 }
 
+PlyFileEncoding& PlyFileEncoding::operator<<(fstream& file)
+{
+	string encoding;
+	float version;
+	file >> encoding >> version;
+	*this << encoding << version;
+	return *this;
+}
+
 PlyFileEncoding& PlyFileEncoding::operator<<(PlyFileEncoding::FileEncoding file_encoding)
 {
-	auto& instance = this->get();
-	instance.file_encoding = file_encoding;
-	return instance;
+	this->file_encoding = file_encoding;
+	return *this;
 }
 
 PlyFileEncoding& PlyFileEncoding::operator<<(string format)
 {
-	auto& instance = this->get();
 	if (format == string(PLY_FILE_ENCODING_ASCII))
 	{
-		instance.file_encoding.type = FILE_ENCODING_ASCII;
+		this->file_encoding.type = FILE_ENCODING_ASCII;
 	}
-	return instance;
+	return *this;
 }
 
 PlyFileEncoding& PlyFileEncoding::operator<<(float version)
 {
-	auto& instance = this->get();
-	instance.file_encoding.version = version;
-	return instance;
+	this->file_encoding.version = version;
+	return *this;
 }
 
 PlyFileEncoding::PlyFileEncoding()

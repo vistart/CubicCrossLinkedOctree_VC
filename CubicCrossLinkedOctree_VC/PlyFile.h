@@ -12,6 +12,7 @@
 #ifndef __PLY_H__
 #define __PLY_H__
 
+#include "PlyFileEncoding.h"
 #include "PlyVertexList.h"
 #include "PlyFaceList.h"
 #include "PlyEdgeList.h"
@@ -32,6 +33,10 @@ public:
 
 #pragma region File Format
 	string GetFileFormat();
+#pragma endregion
+
+#pragma region File Encoding
+	PlyFileEncoding& GetFileEncoding();
 #pragma endregion
 
 #pragma region Comment
