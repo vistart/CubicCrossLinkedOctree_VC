@@ -69,11 +69,7 @@ bool PlyFile::read_comment(string tag, fstream& file)
 
 	string comment;
 	getline(file, comment);
-	auto& list = GetCommentList();
-	list.add(comment);
-	for (auto comment : list.getComments()) {
-		cout << "comment: " << comment << endl;
-	}
+	this->GetCommentList() << comment;
 	return true;
 }
 #pragma endregion
@@ -109,9 +105,6 @@ bool PlyFile::read(fstream& file)
 	unsigned int element_count = 0;
 	
 	string buffer;
-	unsigned int vertex_count;
-	unsigned int face_count;
-	unsigned int edge_count;
 
 	while (file >> buffer)
 	{
@@ -129,6 +122,10 @@ bool PlyFile::read(fstream& file)
 			}
 
 			if (read_comment(buffer.c_str(), file)) {
+				for (auto comment : this->GetCommentList().getComments())
+				{
+					cout << "Comment: " << comment << endl;
+				}
 				continue;
 			}
 

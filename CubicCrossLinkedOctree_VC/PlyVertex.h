@@ -13,6 +13,7 @@
 #define __PLY_VERTEX__
 
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -20,8 +21,8 @@ class PlyVertex
 {
 public:
 	PlyVertex();
+	PlyVertex(string);
 	PlyVertex(fstream&);
-	PlyVertex(double const, double const, double const);
 	PlyVertex(double const, double const, double const, char const, char const, char const);
 	~PlyVertex();
 	double X() const;
@@ -45,14 +46,14 @@ public:
 		stream << "(" << vertex.__X << "," << vertex.__Y << "," << vertex.__Z << ")";
 		return stream;
 	}
-	void offset(int const, int const, int const);
+	void offset(double const, double const, double const);
 protected:
-	double __X;
-	double __Y;
-	double __Z;
-	char __R;
-	char __G;
-	char __B;
+	double __X = 0;
+	double __Y = 0;
+	double __Z = 0;
+	char __R = 0;
+	char __G = 0;
+	char __B = 0;
 	bool has_RGB = false;
 };
 

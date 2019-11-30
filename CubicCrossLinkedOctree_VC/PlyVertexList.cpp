@@ -19,9 +19,7 @@ PlyVertexList::PlyVertexList(unsigned int count, fstream& file)
 
 PlyVertexList::~PlyVertexList()
 {
-	for (auto& vertex : vertices) {
-		vertex.~PlyVertex();
-	}
+	vertices.erase(vertices.begin(), vertices.end());
 }
 
 auto PlyVertexList::GetVertexCount()
@@ -32,5 +30,25 @@ auto PlyVertexList::GetVertexCount()
 vector<PlyVertex> PlyVertexList::GetVertices()
 {
 	return vertices;
+}
+
+PlyVertexList& PlyVertexList::operator<<(string str_vertex)
+{
+	PlyVertex vertex(str_vertex);
+	this->vertices.push_back(vertex);
+	return *this;
+}
+
+PlyVertexList& PlyVertexList::operator<<(fstream& file)
+{
+	PlyVertex vertex(file);
+	this->vertices.push_back(vertex);
+	return *this;
+}
+
+PlyVertexList& PlyVertexList::operator<<(PlyVertex const& vertex)
+{
+	this->vertices.push_back(vertex);
+	return *this;
 }
 #endif

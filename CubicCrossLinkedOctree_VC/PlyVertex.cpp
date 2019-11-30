@@ -17,14 +17,47 @@ PlyVertex::PlyVertex()
 
 }
 
-PlyVertex::PlyVertex(fstream& file)
+PlyVertex::PlyVertex(string vertex)
 {
-
+	stringstream stream(vertex);
+	double X, Y, Z;
+	char R = 0, G = 0, B = 0;
+	stream >> X >> Y >> Z;
+	if (has_RGB) {
+		stream >> R >> G >> B;
+	}
+	this->__X = X;
+	this->__Y = Y;
+	this->__Z = Z;
+	this->__R = R;
+	this->__G = G;
+	this->__B = B;
 }
 
-PlyVertex::PlyVertex(double const, double const, double const, char const, char const, char const)
+PlyVertex::PlyVertex(fstream& file)
 {
+	double X, Y, Z;
+	char R = 0, G = 0, B = 0;
+	file >> X >> Y >> Z;
+	if (has_RGB) {
+		file >> R >> G >> B;
+	}
+	this->__X = X;
+	this->__Y = Y;
+	this->__Z = Z;
+	this->__R = R;
+	this->__G = G;
+	this->__B = B;
+}
 
+PlyVertex::PlyVertex(double const X, double const Y, double const Z, char const R = 0, char const G = 0, char const B = 0)
+{
+	this->__X = X;
+	this->__Y = Y;
+	this->__Z = Z;
+	this->__R = R;
+	this->__G = G;
+	this->__B = B;
 }
 
 PlyVertex::~PlyVertex()
@@ -112,7 +145,7 @@ bool PlyVertex::operator>(PlyVertex const& vertex) const
 	return __X > vertex.__X || __Y > vertex.__Y || __Z > vertex.__Z;
 }
 
-void PlyVertex::offset(int const offset_x, int const offset_y, int const offset_z)
+void PlyVertex::offset(double const offset_x, double const offset_y, double const offset_z)
 {
 	__X += offset_x;
 	__Y += offset_y;

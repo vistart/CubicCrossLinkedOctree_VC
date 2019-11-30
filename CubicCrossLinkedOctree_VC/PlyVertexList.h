@@ -14,6 +14,7 @@
 
 #include "PlyVertex.h"
 #include <fstream>
+#include <sstream>
 #include <vector>
 using namespace std;
 
@@ -25,8 +26,12 @@ public:
 	auto GetVertexCount();
 	vector<PlyVertex> GetVertices();
 	~PlyVertexList();
+	PlyVertexList& operator<<(string);
+	PlyVertexList& operator<<(fstream&);
+	PlyVertexList& operator<<(PlyVertex const&);
 protected:
 	vector<PlyVertex> vertices;
+	vector<string> names;
 };
 
 #endif
