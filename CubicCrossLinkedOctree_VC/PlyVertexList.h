@@ -22,16 +22,22 @@ class PlyVertexList
 {
 public:
 	PlyVertexList();
-	PlyVertexList(unsigned int, fstream&);
+	PlyVertexList(unsigned int const, fstream&);
 	auto GetVertexCount();
 	vector<PlyVertex> GetVertices();
 	~PlyVertexList();
 	PlyVertexList& operator<<(string);
 	PlyVertexList& operator<<(fstream&);
 	PlyVertexList& operator<<(PlyVertex const&);
+	enum PropertyDataType { INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64 };
+	struct VertexName {
+		string name;
+		int type;
+	};
 protected:
 	vector<PlyVertex> vertices;
-	vector<string> names;
+	vector<VertexName> names;
+	VertexName read_element_vertex_names(fstream&);
 };
 
 #endif

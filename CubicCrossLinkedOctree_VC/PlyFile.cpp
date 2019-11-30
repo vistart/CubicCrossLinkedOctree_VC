@@ -98,6 +98,11 @@ bool PlyFile::read_file_encoding(string tag, fstream& file)
 	return true;
 }
 
+bool PlyFile::read_element_vertex_names(fstream& file)
+{
+	return true;
+}
+
 bool PlyFile::read(fstream& file)
 {
 	file.seekg(0, ios::beg);

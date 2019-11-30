@@ -83,15 +83,20 @@ protected:
 #pragma endregion
 
 #pragma region Vertex
+	bool read_element_vertex_names(fstream&);
+	bool read_element_vertex(fstream&);
 #pragma endregion
 
 #pragma region Face
+	bool read_element_face(fstream&);
 #pragma endregion
 
 #pragma region Edge
+	bool read_element_edge(fstream&);
 #pragma endregion
 
 #pragma region User-Defined Elements
+	bool read_element_user_defined(fstream&);
 #pragma endregion
 };
 
