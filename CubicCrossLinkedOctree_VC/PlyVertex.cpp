@@ -36,11 +36,15 @@ PlyVertex::PlyVertex(string vertex)
 
 PlyVertex::PlyVertex(fstream& file)
 {
+	string line;
+	while (line == "")
+		getline(file, line);
+	stringstream stream(line);
 	double X, Y, Z;
 	char R = 0, G = 0, B = 0;
-	file >> X >> Y >> Z;
+	stream >> X >> Y >> Z;
 	if (has_RGB) {
-		file >> R >> G >> B;
+		stream >> R >> G >> B;
 	}
 	this->__X = X;
 	this->__Y = Y;

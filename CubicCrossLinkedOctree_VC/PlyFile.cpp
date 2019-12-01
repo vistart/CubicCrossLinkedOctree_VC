@@ -222,9 +222,10 @@ bool PlyFile::read(fstream& file)
 	for (unsigned int i = 0; i < GetVertexList().GetCountInHeader(); i++)
 	{
 		read_element_vertex(file);
-		auto& vertex_list = GetVertexList();
-		cout << vertex_list[i] << endl;
 	}
+	auto& vertex_list = GetVertexList();
+	auto& vertex = vertex_list.back();
+	cout << vertex << endl;
 	return true;
 }
 
