@@ -44,7 +44,7 @@ public:
 #pragma endregion
 
 #pragma region Vertex
-	PlyVertexList GetVertexList();
+	PlyVertexList& GetVertexList();
 #pragma endregion
 
 #pragma region Face
@@ -88,14 +88,17 @@ protected:
 #pragma endregion
 
 #pragma region Face
+	bool read_element_face_names(fstream&);
 	bool read_element_face(fstream&);
 #pragma endregion
 
 #pragma region Edge
+	bool read_element_edge_names(fstream&);
 	bool read_element_edge(fstream&);
 #pragma endregion
 
 #pragma region User-Defined Elements
+	bool read_element_user_defined_names(fstream&);
 	bool read_element_user_defined(fstream&);
 #pragma endregion
 };

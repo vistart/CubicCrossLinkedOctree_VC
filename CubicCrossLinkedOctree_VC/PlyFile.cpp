@@ -89,6 +89,11 @@ PlyFileEncoding& PlyFile::GetFileEncoding()
 	return PlyFileEncoding::get();
 }
 
+PlyVertexList& PlyFile::GetVertexList()
+{
+	return PlyVertexList::get();
+}
+
 bool PlyFile::read_file_encoding(string tag, fstream& file)
 {
 	if (tag != string("format"))
@@ -99,6 +104,24 @@ bool PlyFile::read_file_encoding(string tag, fstream& file)
 }
 
 bool PlyFile::read_element_vertex_names(fstream& file)
+{
+	GetVertexList().read_element_vertex_names(file);
+	PlyVertexList::VertexName back = GetVertexList().GetNames().back();
+	cout << "Property: " << back.name << " | " << back.type << endl;
+	return true;
+}
+
+bool PlyFile::read_element_face_names(fstream& file)
+{
+	return true;
+}
+
+bool PlyFile::read_element_edge_names(fstream& file)
+{
+	return true;
+}
+
+bool PlyFile::read_element_user_defined_names(fstream& file)
 {
 	return true;
 }
@@ -111,10 +134,34 @@ bool PlyFile::read(fstream& file)
 	
 	string buffer;
 
+	enum ELEMENTS { NONE, VERTEX, FACE, EDGE, USER_DEFINED };
+	int current_elements = NONE;
+
 	while (file >> buffer)
 	{
 		if (is_header) {
 			transform(buffer.begin(), buffer.end(), buffer.begin(), tolower);
+			if (buffer.c_str() == string("property")) {
+				if (current_elements == VERTEX) {
+					read_element_vertex_names(file);
+					continue;
+				}
+				if (current_elements == FACE) {
+					read_element_edge_names(file);
+					continue;
+				}
+				if (current_elements == EDGE) {
+					read_element_face_names(file);
+					continue;
+				}
+				if (current_elements == USER_DEFINED) {
+					read_element_user_defined_names(file);
+					continue;
+				}
+			}
+			
+			current_elements = NONE;
+
 			if (buffer.c_str() == string("ply")) {
 				cout << "PLY" << endl;
 				this->set_file_format("ply");
@@ -140,15 +187,16 @@ bool PlyFile::read(fstream& file)
 				cout << "Element: " << element_name << element_count << endl;
 
 				if (element_name == string("vertex")) {
-					
+					current_elements = VERTEX;
+					continue;
 				}
 
 				if (element_name == string("face")) {
-
+					current_elements = FACE;
 				}
 
 				if (element_name == string("edge")) {
-
+					current_elements = EDGE;
 				}
 
 				while (file >> buffer) {

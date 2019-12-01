@@ -3,6 +3,17 @@
 #endif
 
 #ifdef __PLY_VERTEX_LIST__
+PlyVertexList& PlyVertexList::get()
+{
+	static PlyVertexList instance;
+	return instance;
+}
+
+vector<PlyVertexList::VertexName> PlyVertexList::GetNames()
+{
+	return names;
+}
+
 PlyVertexList::PlyVertexList()
 {
 
@@ -20,6 +31,7 @@ PlyVertexList::PlyVertexList(unsigned int const count, fstream& file)
 PlyVertexList::~PlyVertexList()
 {
 	vertices.erase(vertices.begin(), vertices.end());
+	vertices.~vector();
 }
 
 auto PlyVertexList::GetVertexCount()
@@ -52,7 +64,7 @@ PlyVertexList& PlyVertexList::operator<<(PlyVertex const& vertex)
 	return *this;
 }
 
-PlyVertexList::VertexName PlyVertexList::read_element_vertex_names(fstream& file)
+bool PlyVertexList::read_element_vertex_names(fstream& file)
 {
 	string type;
 	string name;
@@ -77,11 +89,12 @@ PlyVertexList::VertexName PlyVertexList::read_element_vertex_names(fstream& file
 		vertex_name.type = UINT32;
 	}
 	if (type == string("float32")) {
-		vertex_name.type = INT32;
+		vertex_name.type = FLOAT32;
 	}
 	if (type == string("float64")) {
 		vertex_name.type = FLOAT64;
 	}
-	return vertex_name;
+	this->names.push_back(vertex_name);
+	return true;
 }
 #endif

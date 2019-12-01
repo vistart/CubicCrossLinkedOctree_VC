@@ -21,11 +21,8 @@ using namespace std;
 class PlyVertexList
 {
 public:
-	PlyVertexList();
-	PlyVertexList(unsigned int const, fstream&);
 	auto GetVertexCount();
 	vector<PlyVertex> GetVertices();
-	~PlyVertexList();
 	PlyVertexList& operator<<(string);
 	PlyVertexList& operator<<(fstream&);
 	PlyVertexList& operator<<(PlyVertex const&);
@@ -34,10 +31,18 @@ public:
 		string name;
 		int type;
 	};
+	bool read_element_vertex_names(fstream&);
+	vector<VertexName> GetNames();
+	PlyVertexList(PlyVertexList const&) = delete;
+	PlyVertexList& operator=(PlyVertexList const&) = delete;
+	static PlyVertexList& get();
 protected:
 	vector<PlyVertex> vertices;
 	vector<VertexName> names;
-	VertexName read_element_vertex_names(fstream&);
+	unsigned int count_in_header = 0;
+	PlyVertexList();
+	PlyVertexList(unsigned int const, fstream&);
+	~PlyVertexList();
 };
 
 #endif
