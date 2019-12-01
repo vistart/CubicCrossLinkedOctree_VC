@@ -9,14 +9,16 @@
 */
 #pragma once
 
-#ifndef __PLY_EDGE_LIST__
-#define __PLY_EDGE_LIST__
-
-class PlyEdgeList
+#ifndef __PLY_EDGE_LIST_H__
+#define __PLY_EDGE_LIST_H__
+#include "SingletonBase.h"
+#include <iostream>
+class PlyEdgeList : public SingletonBase<PlyEdgeList>
 {
+	PlyEdgeList() {}
+	friend class SingletonBase<PlyEdgeList>;
 public:
-	PlyEdgeList();
-	~PlyEdgeList();
+	void demo();
 };
 
 #endif

@@ -7,4 +7,18 @@
  * @copyright Copyright (c) 2019 vistart
  * @license https://vistart.me/license/
 */
+#ifndef __PLY_FACE_LIST_H__
 #include "PlyFaceList.h"
+#endif
+
+#ifdef __PLY_FACE_LIST_H__
+PlyFaceList::PlyFaceList()
+{
+
+}
+
+PlyFaceList::~PlyFaceList()
+{
+
+}
+#endif

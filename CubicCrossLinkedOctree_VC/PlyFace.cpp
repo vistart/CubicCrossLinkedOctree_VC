@@ -7,4 +7,9 @@
  * @copyright Copyright (c) 2019 vistart
  * @license https://vistart.me/license/
 */
+#ifndef __PLY_FACE_H__
 #include "PlyFace.h"
+#endif
+
+#ifdef __PLY_FACE_H__
+#endif

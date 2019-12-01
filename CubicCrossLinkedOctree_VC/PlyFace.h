@@ -9,8 +9,8 @@
 */
 #pragma once
 
-#ifndef __PLY_FACE__
-#define __PLY_FACE__
+#ifndef __PLY_FACE_H__
+#define __PLY_FACE_H__
 
 class PlyFace
 {

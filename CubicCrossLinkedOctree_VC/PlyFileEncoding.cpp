@@ -1,8 +1,17 @@
-#ifndef __PLY_FILE_ENCODING__
+/*
+ *  _   __ __ _____ _____ ___  ____  _____
+ * | | / // // ___//_  _//   ||  __||_   _|
+ * | |/ // /(__  )  / / / /| || |     | |
+ * |___//_//____/  /_/ /_/ |_||_|     |_|
+ * @link https://vistart.me/
+ * @copyright Copyright (c) 2019 vistart
+ * @license https://vistart.me/license/
+*/
+#ifndef __PLY_FILE_ENCODING_H__
 #include "PlyFileEncoding.h"
 #endif
 
-#ifdef __PLY_FILE_ENCODING__
+#ifdef __PLY_FILE_ENCODING_H__
 PlyFileEncoding& PlyFileEncoding::get()
 {
 	static PlyFileEncoding instance;

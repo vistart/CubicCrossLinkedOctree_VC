@@ -7,11 +7,11 @@
  * @copyright Copyright (c) 2019 vistart
  * @license https://vistart.me/license/
 */
-#ifndef __PLY_VERTEX__
+#ifndef __PLY_VERTEX_H__
 #include "PlyVertex.h"
 #endif
 
-#ifdef __PLY_VERTEX__
+#ifdef __PLY_VERTEX_H__
 PlyVertex::PlyVertex()
 {
 

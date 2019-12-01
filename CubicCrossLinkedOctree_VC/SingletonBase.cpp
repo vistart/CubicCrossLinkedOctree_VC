@@ -7,17 +7,9 @@
  * @copyright Copyright (c) 2019 vistart
  * @license https://vistart.me/license/
 */
-#pragma once
-
-#ifndef __PLY_FACE_LIST_H__
-#define __PLY_FACE_LIST_H__
+#ifndef __SINGLETON_BASE_H__
 #include "SingletonBase.h"
-class PlyFaceList : public SingletonBase<PlyFaceList>
-{
-	PlyFaceList();
-	~PlyFaceList();
-	friend class SingletonBase<PlyFaceList>;
-public:
-};
+#endif
 
+#ifdef __SINGLETON_BASE__
 #endif

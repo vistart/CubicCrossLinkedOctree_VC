@@ -9,8 +9,8 @@
 */
 #pragma once
 
-#ifndef __PLY_VERTEX__
-#define __PLY_VERTEX__
+#ifndef __PLY_VERTEX_H__
+#define __PLY_VERTEX_H__
 
 #include <fstream>
 #include <sstream>

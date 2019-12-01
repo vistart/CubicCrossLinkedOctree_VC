@@ -57,6 +57,9 @@
     <ClCompile Include="PlyVertex.cpp">
       <Filter>源文件\文件格式\PLY</Filter>
     </ClCompile>
+    <ClCompile Include="SingletonBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlyCommentList.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="PlyVertexList.h">
       <Filter>头文件\文件格式\PLY</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonBase.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

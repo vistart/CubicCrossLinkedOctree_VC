@@ -7,11 +7,11 @@
  * @copyright Copyright (c) 2019 vistart
  * @license https://vistart.me/license/
 */
-#ifndef __PLY_H__
+#ifndef __PLY_FILE_H__
 #include "PlyFile.h"
 #endif
 
-#ifdef __PLY_H__
+#ifdef __PLY_FILE_H__
 #include<iostream>
 #include<sstream>
 #include<algorithm>
@@ -53,6 +53,31 @@ string PlyFile::GetFileFormat()
 	}
 	return "unknown type!";
 }
+
+bool PlyFile::set_file_format(string file_format)
+{
+	if (file_format == "ply") {
+		this->file_format = FILE_FORMAT_PLY;
+		return true;
+	}
+	return false;
+}
+#pragma endregion
+
+#pragma region File Encoding
+PlyFileEncoding& PlyFile::GetFileEncoding()
+{
+	return PlyFileEncoding::get();
+}
+
+bool PlyFile::read_file_encoding(string tag, fstream& file)
+{
+	if (tag != string("format"))
+		return false;
+	auto& encoding = this->GetFileEncoding();
+	encoding << file;
+	return true;
+}
 #pragma endregion
 
 #pragma region Comment
@@ -84,23 +109,10 @@ bool PlyFile::open(string file_path)
 	return this->file.good();
 }
 
-PlyFileEncoding& PlyFile::GetFileEncoding()
-{
-	return PlyFileEncoding::get();
-}
-
+#pragma region Vertex
 PlyVertexList& PlyFile::GetVertexList()
 {
 	return PlyVertexList::get();
-}
-
-bool PlyFile::read_file_encoding(string tag, fstream& file)
-{
-	if (tag != string("format"))
-		return false;
-	auto& encoding = this->GetFileEncoding();
-	encoding << file;
-	return true;
 }
 
 bool PlyFile::read_element_vertex_names(fstream& file)
@@ -117,7 +129,9 @@ bool PlyFile::read_element_vertex(fstream& file)
 	vertex_list << file;
 	return true;
 }
+#pragma endregion
 
+#pragma region Face
 bool PlyFile::read_element_face_names(fstream& file)
 {
 	string face;
@@ -125,7 +139,9 @@ bool PlyFile::read_element_face_names(fstream& file)
 	cout << "Element: " << face << endl;
 	return true;
 }
+#pragma endregion
 
+#pragma region Edge
 bool PlyFile::read_element_edge_names(fstream& file)
 {
 	string edge;
@@ -133,11 +149,14 @@ bool PlyFile::read_element_edge_names(fstream& file)
 	cout << "Element: " << edge << endl;
 	return true;
 }
+#pragma endregion
 
+#pragma region User-Defined Elements
 bool PlyFile::read_element_user_defined_names(fstream& file)
 {
 	return true;
 }
+#pragma endregion
 
 bool PlyFile::read(fstream& file)
 {
@@ -228,19 +247,5 @@ bool PlyFile::read(fstream& file)
 	cout << vertex << endl;
 	return true;
 }
-
-#pragma region File Format
-bool PlyFile::set_file_format(string file_format)
-{
-	if (file_format == "ply") {
-		this->file_format = FILE_FORMAT_PLY;
-		return true;
-	}
-	return false;
-}
-#pragma endregion
-
-#pragma region File Encoding
-#pragma endregion
 
 #endif

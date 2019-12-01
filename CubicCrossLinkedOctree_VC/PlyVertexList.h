@@ -9,17 +9,22 @@
 */
 #pragma once
 
-#ifndef __PLY_VERTEX_LIST__
-#define __PLY_VERTEX_LIST__
+#ifndef __PLY_VERTEX_LIST_H__
+#define __PLY_VERTEX_LIST_H__
 
 #include "PlyVertex.h"
+#include "SingletonBase.h"
 #include <fstream>
 #include <sstream>
 #include <vector>
 using namespace std;
 
-class PlyVertexList
+class PlyVertexList : public SingletonBase<PlyVertexList>
 {
+private:
+	PlyVertexList();
+	~PlyVertexList();
+	friend class SingletonBase<PlyVertexList>;
 public:
 	auto GetVertexCount();
 	vector<PlyVertex> GetVertices();
@@ -44,9 +49,6 @@ protected:
 	vector<PlyVertex> vertices;
 	vector<VertexName> names;
 	unsigned int count_in_header = 0;
-private:
-	PlyVertexList();
-	~PlyVertexList();
 };
 
 #endif

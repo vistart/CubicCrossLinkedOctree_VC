@@ -161,6 +161,7 @@
     <ClCompile Include="PlyFileEncoding.cpp" />
     <ClCompile Include="PlyVertex.cpp" />
     <ClCompile Include="PlyVertexList.cpp" />
+    <ClCompile Include="SingletonBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlyCommentList.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="PlyFileEncoding.h" />
     <ClInclude Include="PlyVertex.h" />
     <ClInclude Include="PlyVertexList.h" />
+    <ClInclude Include="SingletonBase.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="LICENSE" />

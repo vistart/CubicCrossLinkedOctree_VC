@@ -1,8 +1,17 @@
-#ifndef __PLY_COMMENT_LIST__
+/*
+ *  _   __ __ _____ _____ ___  ____  _____
+ * | | / // // ___//_  _//   ||  __||_   _|
+ * | |/ // /(__  )  / / / /| || |     | |
+ * |___//_//____/  /_/ /_/ |_||_|     |_|
+ * @link https://vistart.me/
+ * @copyright Copyright (c) 2019 vistart
+ * @license https://vistart.me/license/
+*/
+#ifndef __PLY_COMMENT_LIST_H__
 #include "PlyCommentList.h"
 #endif
 
-#ifdef __PLY_COMMENT_LIST__
+#ifdef __PLY_COMMENT_LIST_H__
 PlyCommentList& PlyCommentList::get()
 {
 	static PlyCommentList instance;
@@ -26,11 +35,6 @@ PlyCommentList& PlyCommentList::operator<<(string comment)
 		
 	}
 	return *this;
-}
-
-PlyCommentList::PlyCommentList()
-{
-
 }
 
 PlyCommentList::~PlyCommentList()

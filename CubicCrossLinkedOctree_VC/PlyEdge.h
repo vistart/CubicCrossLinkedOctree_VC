@@ -9,8 +9,8 @@
 */
 #pragma once
 
-#ifndef __PLY_EDGE__
-#define __PLY_EDGE__
+#ifndef __PLY_EDGE_H__
+#define __PLY_EDGE_H__
 
 class PlyEdge
 {

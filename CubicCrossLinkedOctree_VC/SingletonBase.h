@@ -8,16 +8,20 @@
  * @license https://vistart.me/license/
 */
 #pragma once
-
-#ifndef __PLY_FACE_LIST_H__
-#define __PLY_FACE_LIST_H__
-#include "SingletonBase.h"
-class PlyFaceList : public SingletonBase<PlyFaceList>
+#ifndef __SINGLETON_BASE__
+#define __SINGLETON_BASE__
+template <class T>
+class SingletonBase
 {
-	PlyFaceList();
-	~PlyFaceList();
-	friend class SingletonBase<PlyFaceList>;
+protected:
+	SingletonBase() {}
 public:
+	SingletonBase(SingletonBase const&) = delete;
+	SingletonBase& operator=(SingletonBase const&) = delete;
+	static T& instance()
+	{
+		static T single;
+		return single;
+	}
 };
-
 #endif

@@ -7,4 +7,13 @@
  * @copyright Copyright (c) 2019 vistart
  * @license https://vistart.me/license/
 */
+#ifndef __PLY_EDGE_LIST_H__
 #include "PlyEdgeList.h"
+#endif
+
+#ifdef __PLY_EDGE_LIST_H__
+void PlyEdgeList::demo()
+{
+	std::cout << "demo" << std::endl;
+}
+#endif

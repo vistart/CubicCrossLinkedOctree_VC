@@ -7,4 +7,9 @@
  * @copyright Copyright (c) 2019 vistart
  * @license https://vistart.me/license/
 */
+#ifndef __PLY_EDGE_H__
 #include "PlyEdge.h"
+#endif
+
+#ifdef __PLY_EDGE_H__
+#endif

@@ -9,8 +9,8 @@
 */
 #pragma once
 
-#ifndef __PLY_H__
-#define __PLY_H__
+#ifndef __PLY_FILE_H__
+#define __PLY_FILE_H__
 
 #include "PlyFileEncoding.h"
 #include "PlyVertexList.h"
