@@ -19,15 +19,6 @@ PlyVertexList::PlyVertexList()
 
 }
 
-PlyVertexList::PlyVertexList(unsigned int const count, fstream& file)
-{
-	for (unsigned int i = 0; i < count; i++)
-	{
-		auto vertex = new PlyVertex(file);
-		vertices.push_back(*vertex);
-	}
-}
-
 PlyVertexList::~PlyVertexList()
 {
 	vertices.erase(vertices.begin(), vertices.end());
@@ -96,5 +87,25 @@ bool PlyVertexList::read_element_vertex_names(fstream& file)
 	}
 	this->names.push_back(vertex_name);
 	return true;
+}
+
+PlyVertex& PlyVertexList::operator[](int i)
+{
+	return vertices[i];
+}
+
+void PlyVertexList::SetCountInHeader(unsigned int const count)
+{
+	this->count_in_header = count;
+}
+
+unsigned int PlyVertexList::GetCountInHeader()
+{
+	return this->count_in_header;
+}
+
+PlyVertex& PlyVertexList::back()
+{
+	return vertices.back();
 }
 #endif

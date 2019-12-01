@@ -36,12 +36,16 @@ public:
 	PlyVertexList(PlyVertexList const&) = delete;
 	PlyVertexList& operator=(PlyVertexList const&) = delete;
 	static PlyVertexList& get();
+	PlyVertex& operator[](int);
+	void SetCountInHeader(unsigned int const);
+	unsigned int GetCountInHeader();
+	PlyVertex& back();
 protected:
 	vector<PlyVertex> vertices;
 	vector<VertexName> names;
 	unsigned int count_in_header = 0;
+private:
 	PlyVertexList();
-	PlyVertexList(unsigned int const, fstream&);
 	~PlyVertexList();
 };
 

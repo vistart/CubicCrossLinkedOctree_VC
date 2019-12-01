@@ -41,12 +41,13 @@ public:
 	bool operator!=(PlyVertex const&) const;
 	bool operator<(PlyVertex const&) const;
 	bool operator>(PlyVertex const&) const;
-	friend std::ostream& operator<<(std::ostream& stream, PlyVertex const& vertex)
+	friend ostream& operator<<(ostream& stream, PlyVertex const& vertex)
 	{
 		stream << "(" << vertex.__X << "," << vertex.__Y << "," << vertex.__Z << ")";
 		return stream;
 	}
 	void offset(double const, double const, double const);
+	bool has_RGB = false;
 protected:
 	double __X = 0;
 	double __Y = 0;
@@ -54,7 +55,6 @@ protected:
 	char __R = 0;
 	char __G = 0;
 	char __B = 0;
-	bool has_RGB = false;
 };
 
 #endif
