@@ -20,11 +20,10 @@
 using namespace std;
 class PlyCommentList : public SingletonBase<PlyCommentList>
 {
-	PlyCommentList() {}
+	PlyCommentList() = default;
 	~PlyCommentList();
 	friend class SingletonBase<PlyCommentList>;
 public:
-	static PlyCommentList& get();
 	bool add(string);
 	vector<string> getComments();
 	PlyCommentList& operator<<(string);

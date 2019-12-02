@@ -22,11 +22,10 @@ using namespace std;
 class PlyVertexList : public SingletonBase<PlyVertexList>
 {
 private:
-	PlyVertexList();
+	PlyVertexList() = default;
 	~PlyVertexList();
 	friend class SingletonBase<PlyVertexList>;
 public:
-	auto GetVertexCount();
 	vector<PlyVertex> GetVertices();
 	PlyVertexList& operator<<(string);
 	PlyVertexList& operator<<(fstream&);
@@ -38,9 +37,6 @@ public:
 	};
 	bool read_element_vertex_names(fstream&);
 	vector<VertexName> GetNames();
-	PlyVertexList(PlyVertexList const&) = delete;
-	PlyVertexList& operator=(PlyVertexList const&) = delete;
-	static PlyVertexList& get();
 	PlyVertex& operator[](int);
 	void SetCountInHeader(unsigned int const);
 	unsigned int GetCountInHeader();

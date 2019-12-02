@@ -24,7 +24,7 @@ using namespace std;
 class PlyFileEncoding : public SingletonBase<PlyFileEncoding>
 {
 	PlyFileEncoding();
-	~PlyFileEncoding();
+	~PlyFileEncoding() = default;
 	friend class SingletonBase<PlyFileEncoding>;
 public:
 	enum FileEncodingType { FILE_ENCODING_ASCII, FILE_ENCODING_BINARY_BIG_ENDIAN, FILE_ENCODING_BINARY_LITTLE_ENDIAN };
@@ -33,7 +33,6 @@ public:
 		int type = FILE_ENCODING_ASCII;
 		float version = 1.0;
 	};
-	static PlyFileEncoding& get();
 	PlyFileEncoding& operator<<(fstream&);
 	PlyFileEncoding& operator<<(FileEncoding);
 	PlyFileEncoding& operator<<(string);

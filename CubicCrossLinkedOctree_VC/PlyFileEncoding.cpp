@@ -12,11 +12,6 @@
 #endif
 
 #ifdef __PLY_FILE_ENCODING_H__
-PlyFileEncoding& PlyFileEncoding::get()
-{
-	static PlyFileEncoding instance;
-	return instance;
-}
 
 string PlyFileEncoding::Encoding()
 {
@@ -55,7 +50,7 @@ PlyFileEncoding& PlyFileEncoding::operator<<(fstream& file)
 	return *this;
 }
 
-PlyFileEncoding& PlyFileEncoding::operator<<(PlyFileEncoding::FileEncoding file_encoding)
+PlyFileEncoding& PlyFileEncoding::operator<<(FileEncoding file_encoding)
 {
 	this->file_encoding = file_encoding;
 	return *this;
@@ -99,10 +94,5 @@ bool PlyFileEncoding::operator!=(PlyFileEncoding::FileEncoding const& object)
 PlyFileEncoding::PlyFileEncoding()
 {
 	this->file_encoding = { FILE_ENCODING_ASCII, 1.0 };
-}
-
-PlyFileEncoding::~PlyFileEncoding()
-{
-
 }
 #endif

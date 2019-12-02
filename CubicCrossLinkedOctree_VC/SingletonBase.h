@@ -18,7 +18,7 @@ protected:
 public:
 	SingletonBase(SingletonBase const&) = delete;
 	SingletonBase& operator=(SingletonBase const&) = delete;
-	static T& instance()
+	static T& get()
 	{
 		static T single;
 		return single;

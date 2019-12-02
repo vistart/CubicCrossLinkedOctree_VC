@@ -12,13 +12,4 @@
 #endif
 
 #ifdef __PLY_FACE_LIST_H__
-PlyFaceList::PlyFaceList()
-{
-
-}
-
-PlyFaceList::~PlyFaceList()
-{
-
-}
 #endif

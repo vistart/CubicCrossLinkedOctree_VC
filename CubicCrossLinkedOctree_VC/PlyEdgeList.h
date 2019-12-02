@@ -15,7 +15,8 @@
 #include <iostream>
 class PlyEdgeList : public SingletonBase<PlyEdgeList>
 {
-	PlyEdgeList() {}
+	PlyEdgeList() = default;
+	~PlyEdgeList() = default;
 	friend class SingletonBase<PlyEdgeList>;
 public:
 	void demo();

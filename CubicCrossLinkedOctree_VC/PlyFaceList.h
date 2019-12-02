@@ -14,8 +14,8 @@
 #include "SingletonBase.h"
 class PlyFaceList : public SingletonBase<PlyFaceList>
 {
-	PlyFaceList();
-	~PlyFaceList();
+	PlyFaceList() = default;
+	~PlyFaceList() = default;
 	friend class SingletonBase<PlyFaceList>;
 public:
 };

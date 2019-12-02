@@ -12,31 +12,15 @@
 #endif
 
 #ifdef __PLY_VERTEX_LIST_H__
-PlyVertexList& PlyVertexList::get()
-{
-	static PlyVertexList instance;
-	return instance;
-}
-
 vector<PlyVertexList::VertexName> PlyVertexList::GetNames()
 {
 	return names;
-}
-
-PlyVertexList::PlyVertexList()
-{
-
 }
 
 PlyVertexList::~PlyVertexList()
 {
 	vertices.erase(vertices.begin(), vertices.end());
 	vertices.~vector();
-}
-
-auto PlyVertexList::GetVertexCount()
-{
-	return vertices.size();
 }
 
 vector<PlyVertex> PlyVertexList::GetVertices()

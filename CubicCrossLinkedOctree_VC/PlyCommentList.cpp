@@ -12,12 +12,6 @@
 #endif
 
 #ifdef __PLY_COMMENT_LIST_H__
-PlyCommentList& PlyCommentList::get()
-{
-	static PlyCommentList instance;
-	return instance;
-}
-
 bool PlyCommentList::add(string comment)
 {
 	this->comments.push_back(comment);
