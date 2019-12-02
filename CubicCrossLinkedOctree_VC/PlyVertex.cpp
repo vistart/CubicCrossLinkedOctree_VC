@@ -174,12 +174,12 @@ bool PlyVertex::operator!=(PlyVertex const& vertex) const
 
 bool PlyVertex::operator<(PlyVertex const& vertex) const
 {
-	return __X < vertex.__X || __Y < vertex.__Y || __Z < vertex.__Z;
+	return __X < vertex.X() || __Y < vertex.Y() || __Z < vertex.Z();
 }
 
 bool PlyVertex::operator>(PlyVertex const& vertex) const
 {
-	return __X > vertex.__X || __Y > vertex.__Y || __Z > vertex.__Z;
+	return __X > vertex.X() || __Y > vertex.Y() || __Z > vertex.Z();
 }
 
 void PlyVertex::offset(double const offset_x, double const offset_y, double const offset_z)
