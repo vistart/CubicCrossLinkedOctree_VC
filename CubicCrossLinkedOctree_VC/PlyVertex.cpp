@@ -12,11 +12,6 @@
 #endif
 
 #ifdef __PLY_VERTEX_H__
-PlyVertex::PlyVertex()
-{
-
-}
-
 PlyVertex::PlyVertex(string vertex)
 {
 	stringstream stream(vertex);

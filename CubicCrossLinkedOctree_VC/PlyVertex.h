@@ -20,7 +20,7 @@ using namespace std;
 class PlyVertex
 {
 public:
-	PlyVertex();
+	PlyVertex() = default;
 	PlyVertex(string);
 	PlyVertex(fstream&);
 	PlyVertex(double const, double const, double const, unsigned char const, unsigned char const, unsigned char const);
