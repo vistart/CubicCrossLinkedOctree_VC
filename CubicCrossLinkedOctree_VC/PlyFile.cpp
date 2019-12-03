@@ -214,19 +214,19 @@ bool PlyFile::read(fstream& file)
 			string element_name;
 			file >> element_name >> element_count;
 
-			if (element_name == string("vertex")) {
+			if (element_name == "vertex") {
 				current_elements = VERTEX;
 				GetVertexList().SetCountInHeader(element_count);
 				cout << "Element: " << element_name << GetVertexList().GetCountInHeader() << endl;
 				continue;
 			}
 
-			if (element_name == string("face")) {
+			if (element_name == "face") {
 				current_elements = FACE;
 				continue;
 			}
 
-			if (element_name == string("edge")) {
+			if (element_name == "edge") {
 				current_elements = EDGE;
 				continue;
 			}

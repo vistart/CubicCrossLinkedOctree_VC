@@ -54,28 +54,28 @@ bool PlyVertexList::read_element_vertex_names(fstream& file)
 	string name;
 	file >> type >> name;
 	PlyVertex::VertexName vertex_name = { name, 0 };
-	if (type == string("int8")) {
+	if (type == "int8" || type == "char") {
 		vertex_name.type = INT8;
 	}
-	else if (type == string("uint8")) {
+	else if (type == "uint8" || type == "uchar") {
 		vertex_name.type = UINT8;
 	}
-	else if (type == string("int16")) {
+	else if (type == "int16" || type == "short") {
 		vertex_name.type = INT16;
 	}
-	else if (type == string("uint16")) {
+	else if (type == "uint16" || type == "ushort") {
 		vertex_name.type = UINT16;
 	}
-	else if (type == string("int32")) {
+	else if (type == "int32" || type == "int") {
 		vertex_name.type = INT32;
 	}
-	else if (type == string("uint32")) {
+	else if (type == "uint32" || type == "uint") {
 		vertex_name.type = UINT32;
 	}
-	else if (type == string("float32") || type == string("float")) {
+	else if (type == "float32" || type == "float") {
 		vertex_name.type = FLOAT32;
 	}
-	else if (type == string("float64")) {
+	else if (type == "float64" || type == "double") {
 		vertex_name.type = FLOAT64;
 	}
 	this->names.push_back(vertex_name);
