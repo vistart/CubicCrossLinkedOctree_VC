@@ -12,39 +12,105 @@
 #endif
 
 #ifdef __PLY_VERTEX_H__
-PlyVertex::PlyVertex(string vertex)
+PlyVertex::PlyVertex(vector<VertexName> names, string vertex)
 {
+	double X = 0, Y = 0, Z = 0;
+	unsigned short R = 0, G = 0, B = 0;
+	double NX = 0, NY = 0, NZ = 0;
+	unsigned short ALPHA = 255;
 	stringstream stream(vertex);
-	double X, Y, Z;
-	char R = 0, G = 0, B = 0;
-	stream >> X >> Y >> Z;
-	if (has_RGB) {
-		stream >> R >> G >> B;
+	for (auto name : names)
+	{
+		if (name.name == "x") {
+			stream >> X;
+		}
+		else if (name.name == "y") {
+			stream >> Y;
+		}
+		else if (name.name == "z") {
+			stream >> Z;
+		}
+		else if (name.name == "red" || name.name == "r") {
+			stream >> R;
+		}
+		else if (name.name == "green" || name.name == "g") {
+			stream >> G;
+		}
+		else if (name.name == "blue" || name.name == "b") {
+			stream >> B;
+		}
+		else if (name.name == "nx") {
+			stream >> NX;
+		}
+		else if (name.name == "ny") {
+			stream >> NY;
+		}
+		else if (name.name == "nz") {
+			stream >> NZ;
+		}
+		else if (name.name == "alpha") {
+			stream >> ALPHA;
+		}
+		else {
+			string none;
+			stream >> none;
+		}
 	}
-	this->set_all_properties(X, Y, Z, R, G, B, 0, 0, 0, 255);
+	this->set_all_properties(X, Y, Z, R, G, B, NX, NY, NZ, ALPHA);
 }
 
-PlyVertex::PlyVertex(fstream& file)
+PlyVertex::PlyVertex(vector<VertexName> names, fstream& file)
 {
-	string line;
-	while (line == "")
-		getline(file, line);
-	stringstream stream(line);
-	double X, Y, Z;
-	char R = 0, G = 0, B = 0;
-	stream >> X >> Y >> Z;
-	if (has_RGB) {
-		stream >> R >> G >> B;
+	double X = 0, Y = 0, Z = 0;
+	unsigned short R = 0, G = 0, B = 0;
+	double NX = 0, NY = 0, NZ = 0;
+	unsigned short ALPHA = 255;
+	for (auto name : names)
+	{
+		if (name.name == "x") {
+			file >> X;
+		}
+		else if (name.name == "y") {
+			file >> Y;
+		}
+		else if (name.name == "z") {
+			file >> Z;
+		}
+		else if (name.name == "red" || name.name == "r") {
+			file >> R;
+		}
+		else if (name.name == "green" || name.name == "g") {
+			file >> G;
+		}
+		else if (name.name == "blue" || name.name == "b") {
+			file >> B;
+		}
+		else if (name.name == "nx") {
+			file >> NX;
+		}
+		else if (name.name == "ny") {
+			file >> NY;
+		}
+		else if (name.name == "nz") {
+			file >> NZ;
+		}
+		else if (name.name == "alpha") {
+			file >> ALPHA;
+		}
+		else {
+			string none;
+			file >> none;
+		}
 	}
-	this->set_all_properties(X, Y, Z, R, G, B, 0, 0, 0, 255);
+	this->set_all_properties(X, Y, Z, R, G, B, NX, NY, NZ, ALPHA);
 }
 
-PlyVertex::PlyVertex(double const X, double const Y, double const Z, unsigned char const R = 0, unsigned char const G = 0, unsigned char const B = 0)
+PlyVertex::PlyVertex(double const X, double const Y, double const Z, unsigned short const R = 0, unsigned short const G = 0, unsigned short const B = 0)
 {
 	this->set_all_properties(X, Y, Z, R, G, B, 0, 0, 0, 255);
 }
 
-void PlyVertex::set_all_properties(double const X, double const Y, double const Z, unsigned char const R, unsigned char const G, unsigned char const B, double const NX, double const NY, double const NZ, unsigned char const ALPHA)
+void PlyVertex::set_all_properties(double const X, double const Y, double const Z, unsigned short const R, unsigned short const G, unsigned short const B, double const NX, double const NY, double const NZ, unsigned short const ALPHA)
 {
 	this->__X = X;
 	this->__Y = Y;
@@ -85,29 +151,29 @@ PlyVertex& PlyVertex::Z(double const Z)
 	__Z = Z;
 	return *this;
 }
-unsigned char PlyVertex::R() const
+unsigned short PlyVertex::R() const
 {
 	return __R;
 }
-PlyVertex& PlyVertex::R(unsigned char const R)
+PlyVertex& PlyVertex::R(unsigned short const R)
 {
 	__R = R;
 	return *this;
 }
-unsigned char PlyVertex::G() const
+unsigned short PlyVertex::G() const
 {
 	return __G;
 }
-PlyVertex& PlyVertex::G(unsigned char const G)
+PlyVertex& PlyVertex::G(unsigned short const G)
 {
 	__G = G;
 	return *this;
 }
-unsigned char PlyVertex::B() const
+unsigned short PlyVertex::B() const
 {
 	return __B;
 }
-PlyVertex& PlyVertex::B(unsigned char const B)
+PlyVertex& PlyVertex::B(unsigned short const B)
 {
 	__B = B;
 	return *this;
@@ -139,11 +205,11 @@ PlyVertex& PlyVertex::NZ(double const NZ)
 	__NZ = NZ;
 	return *this;
 }
-unsigned char PlyVertex::ALPHA() const
+unsigned short PlyVertex::ALPHA() const
 {
 	return __ALPHA;
 }
-PlyVertex& PlyVertex::ALPHA(unsigned char const ALPHA)
+PlyVertex& PlyVertex::ALPHA(unsigned short const ALPHA)
 {
 	__ALPHA = ALPHA;
 	return *this;

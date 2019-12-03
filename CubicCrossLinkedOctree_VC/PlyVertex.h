@@ -12,6 +12,7 @@
 #ifndef __PLY_VERTEX_H__
 #define __PLY_VERTEX_H__
 
+#include <vector>
 #include <fstream>
 #include <sstream>
 
@@ -20,10 +21,14 @@ using namespace std;
 class PlyVertex
 {
 public:
+	struct VertexName {
+		string name;
+		int type;
+	};
 	PlyVertex() = default;
-	PlyVertex(string);
-	PlyVertex(fstream&);
-	PlyVertex(double const, double const, double const, unsigned char const, unsigned char const, unsigned char const);
+	PlyVertex(vector<VertexName>, string);
+	PlyVertex(vector<VertexName>, fstream&);
+	PlyVertex(double const, double const, double const, unsigned short const, unsigned short const, unsigned short const);
 	~PlyVertex() = default;
 	double X() const;
 	PlyVertex& X(double const X);
@@ -31,20 +36,20 @@ public:
 	PlyVertex& Y(double const Y);
 	double Z() const;
 	PlyVertex& Z(double const Z);
-	unsigned char R() const;
-	PlyVertex& R(unsigned char const R);
-	unsigned char G() const;
-	PlyVertex& G(unsigned char const G);
-	unsigned char B() const;
-	PlyVertex& B(unsigned char const B);
+	unsigned short R() const;
+	PlyVertex& R(unsigned short const R);
+	unsigned short G() const;
+	PlyVertex& G(unsigned short const G);
+	unsigned short B() const;
+	PlyVertex& B(unsigned short const B);
 	double NX() const;
 	PlyVertex& NX(double const NX);
 	double NY() const;
 	PlyVertex& NY(double const NY);
 	double NZ() const;
 	PlyVertex& NZ(double const NZ);
-	unsigned char ALPHA() const;
-	PlyVertex& ALPHA(unsigned char const ALPHA);
+	unsigned short ALPHA() const;
+	PlyVertex& ALPHA(unsigned short const ALPHA);
 	bool operator==(PlyVertex const&) const;
 	bool operator!=(PlyVertex const&) const;
 	bool operator<(PlyVertex const&) const;
@@ -62,14 +67,14 @@ protected:
 	double __X = 0;
 	double __Y = 0;
 	double __Z = 0;
-	unsigned char __R = 0;
-	unsigned char __G = 0;
-	unsigned char __B = 0;
+	unsigned short __R = 0;
+	unsigned short __G = 0;
+	unsigned short __B = 0;
 	double __NX = 0;
 	double __NY = 0;
 	double __NZ = 0;
-	unsigned char __ALPHA = 255;
-	void set_all_properties(double const, double const, double const, unsigned char const, unsigned char const, unsigned char const, double const, double const, double const, unsigned char const);
+	unsigned short __ALPHA = 255;
+	void set_all_properties(double const, double const, double const, unsigned short const, unsigned short const, unsigned short const, double const, double const, double const, unsigned short const);
 };
 
 #endif

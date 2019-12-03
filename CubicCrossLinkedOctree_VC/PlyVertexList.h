@@ -31,19 +31,15 @@ public:
 	PlyVertexList& operator<<(fstream&);
 	PlyVertexList& operator<<(PlyVertex const&);
 	enum PropertyDataType { INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64 };
-	struct VertexName {
-		string name;
-		int type;
-	};
 	bool read_element_vertex_names(fstream&);
-	vector<VertexName> GetNames();
+	vector<PlyVertex::VertexName> GetNames();
 	PlyVertex& operator[](int);
 	void SetCountInHeader(unsigned int const);
 	unsigned int GetCountInHeader();
 	PlyVertex& back();
 protected:
 	vector<PlyVertex> vertices;
-	vector<VertexName> names;
+	vector<PlyVertex::VertexName> names;
 	unsigned int count_in_header = 0;
 };
 

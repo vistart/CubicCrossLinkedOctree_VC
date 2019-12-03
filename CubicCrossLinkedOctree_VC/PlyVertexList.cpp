@@ -12,7 +12,7 @@
 #endif
 
 #ifdef __PLY_VERTEX_LIST_H__
-vector<PlyVertexList::VertexName> PlyVertexList::GetNames()
+vector<PlyVertex::VertexName> PlyVertexList::GetNames()
 {
 	return names;
 }
@@ -30,14 +30,14 @@ vector<PlyVertex> PlyVertexList::GetVertices()
 
 PlyVertexList& PlyVertexList::operator<<(string str_vertex)
 {
-	PlyVertex vertex(str_vertex);
+	PlyVertex vertex(GetNames(), str_vertex);
 	this->vertices.push_back(vertex);
 	return *this;
 }
 
 PlyVertexList& PlyVertexList::operator<<(fstream& file)
 {
-	PlyVertex vertex(file);
+	PlyVertex vertex(GetNames(), file);
 	this->vertices.push_back(vertex);
 	return *this;
 }
@@ -53,29 +53,29 @@ bool PlyVertexList::read_element_vertex_names(fstream& file)
 	string type;
 	string name;
 	file >> type >> name;
-	VertexName vertex_name = { name, 0 };
+	PlyVertex::VertexName vertex_name = { name, 0 };
 	if (type == string("int8")) {
 		vertex_name.type = INT8;
 	}
-	if (type == string("uint8")) {
+	else if (type == string("uint8")) {
 		vertex_name.type = UINT8;
 	}
-	if (type == string("int16")) {
+	else if (type == string("int16")) {
 		vertex_name.type = INT16;
 	}
-	if (type == string("uint16")) {
+	else if (type == string("uint16")) {
 		vertex_name.type = UINT16;
 	}
-	if (type == string("int32")) {
+	else if (type == string("int32")) {
 		vertex_name.type = INT32;
 	}
-	if (type == string("uint32")) {
+	else if (type == string("uint32")) {
 		vertex_name.type = UINT32;
 	}
-	if (type == string("float32")) {
+	else if (type == string("float32") || type == string("float")) {
 		vertex_name.type = FLOAT32;
 	}
-	if (type == string("float64")) {
+	else if (type == string("float64")) {
 		vertex_name.type = FLOAT64;
 	}
 	this->names.push_back(vertex_name);

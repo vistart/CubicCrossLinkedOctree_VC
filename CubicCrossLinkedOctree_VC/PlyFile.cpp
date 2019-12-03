@@ -118,7 +118,7 @@ PlyVertexList& PlyFile::GetVertexList()
 bool PlyFile::read_element_vertex_names(fstream& file)
 {
 	GetVertexList().read_element_vertex_names(file);
-	PlyVertexList::VertexName back = GetVertexList().GetNames().back();
+	PlyVertex::VertexName back = GetVertexList().GetNames().back();
 	cout << "Property: " << back.name << " | " << back.type << endl;
 	return true;
 }
