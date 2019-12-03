@@ -12,9 +12,10 @@
 #endif
 
 #ifdef __PLY_FILE_H__
-#include<iostream>
-#include<sstream>
-#include<algorithm>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -245,7 +246,7 @@ bool PlyFile::read(fstream& file)
 	}
 	auto& vertex_list = GetVertexList();
 	auto& vertex = vertex_list.back();
-	cout << vertex << endl;
+	cout << setiosflags(ios::fixed) << vertex << endl;
 	return true;
 }
 

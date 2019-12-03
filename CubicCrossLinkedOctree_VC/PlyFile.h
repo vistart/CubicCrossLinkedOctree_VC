@@ -36,23 +36,23 @@ public:
 #pragma endregion
 
 #pragma region File Encoding
-	PlyFileEncoding& GetFileEncoding();
+	static PlyFileEncoding& GetFileEncoding();
 #pragma endregion
 
 #pragma region Comment
-	PlyCommentList& GetCommentList();
+	static PlyCommentList& GetCommentList();
 #pragma endregion
 
 #pragma region Vertex
-	PlyVertexList& GetVertexList();
+	static PlyVertexList& GetVertexList();
 #pragma endregion
 
 #pragma region Face
-	PlyFaceList GetFaceList();
+	static PlyFaceList GetFaceList();
 #pragma endregion
 
 #pragma region Edge
-	PlyEdgeList GetEdgeList();
+	static PlyEdgeList GetEdgeList();
 #pragma endregion
 
 	bool GetIsValid();

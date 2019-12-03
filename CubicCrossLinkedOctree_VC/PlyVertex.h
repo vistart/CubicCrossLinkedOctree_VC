@@ -15,6 +15,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -60,7 +61,7 @@ public:
 	bool operator>(PlyVertex const&) const;
 	friend ostream& operator<<(ostream& stream, PlyVertex const& vertex)
 	{
-		stream << "(" << vertex.__X << "," << vertex.__Y << "," << vertex.__Z << ")";
+		stream << "(" << setprecision(10) << vertex.__X << "," << setprecision(10) << vertex.__Y << "," << setprecision(10) << vertex.__Z << ")";
 		return stream;
 	}
 	void offset(double const, double const, double const);
