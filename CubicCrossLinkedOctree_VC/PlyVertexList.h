@@ -30,7 +30,7 @@ public:
 	PlyVertexList& operator<<(string const&);
 	PlyVertexList& operator<<(fstream&);
 	PlyVertexList& operator<<(PlyVertex const&);
-	enum PropertyDataType { INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64 };
+	enum PropertyDataType { NONE, INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64 };
 	bool read_element_vertex_names(fstream&);
 	vector<PlyVertex::VertexName> GetNames() const;
 	PlyVertex& operator[](int const);

@@ -19,7 +19,6 @@ vector<PlyVertex::VertexName> PlyVertexList::GetNames() const
 
 PlyVertexList::~PlyVertexList()
 {
-	vertices.erase(vertices.begin(), vertices.end());
 	vertices.~vector();
 }
 
@@ -53,7 +52,7 @@ bool PlyVertexList::read_element_vertex_names(fstream& file)
 	string type;
 	string name;
 	file >> type >> name;
-	PlyVertex::VertexName vertex_name = { name, 0 };
+	PlyVertex::VertexName vertex_name = { name, NONE };
 	if (type == "int8" || type == "char") {
 		vertex_name.type = INT8;
 	}
