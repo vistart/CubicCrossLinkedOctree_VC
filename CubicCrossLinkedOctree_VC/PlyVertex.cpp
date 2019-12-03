@@ -12,14 +12,14 @@
 #endif
 
 #ifdef __PLY_VERTEX_H__
-PlyVertex::PlyVertex(vector<VertexName> names, string vertex)
+PlyVertex::PlyVertex(vector<VertexName> const& names, string const& vertex)
 {
 	double X = 0, Y = 0, Z = 0;
 	unsigned short R = 0, G = 0, B = 0;
-	double NX = 0, NY = 0, NZ = 0;
+	double NX = 0, NY = 0, NZ = 0, CONFIDENCE = 1, INTENSITY = 0.5;
 	unsigned short ALPHA = 255;
 	stringstream stream(vertex);
-	for (auto name : names)
+	for (auto& name : names)
 	{
 		if (name.name == "x") {
 			stream >> X;
@@ -51,21 +51,27 @@ PlyVertex::PlyVertex(vector<VertexName> names, string vertex)
 		else if (name.name == "alpha") {
 			stream >> ALPHA;
 		}
+		else if (name.name == "confidence") {
+			stream >> CONFIDENCE;
+		}
+		else if (name.name == "intensity") {
+			stream >> INTENSITY;
+		}
 		else {
 			string none;
 			stream >> none;
 		}
 	}
-	this->set_all_properties(X, Y, Z, R, G, B, NX, NY, NZ, ALPHA);
+	this->set_all_properties(X, Y, Z, R, G, B, NX, NY, NZ, ALPHA, CONFIDENCE, INTENSITY);
 }
 
-PlyVertex::PlyVertex(vector<VertexName> names, fstream& file)
+PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file)
 {
 	double X = 0, Y = 0, Z = 0;
 	unsigned short R = 0, G = 0, B = 0;
-	double NX = 0, NY = 0, NZ = 0;
+	double NX = 0, NY = 0, NZ = 0, CONFIDENCE = 1, INTENSITY = 0.5;
 	unsigned short ALPHA = 255;
-	for (auto name : names)
+	for (auto& name : names)
 	{
 		if (name.name == "x") {
 			file >> X;
@@ -97,20 +103,29 @@ PlyVertex::PlyVertex(vector<VertexName> names, fstream& file)
 		else if (name.name == "alpha") {
 			file >> ALPHA;
 		}
+		else if (name.name == "confidence") {
+			file >> CONFIDENCE;
+		}
+		else if (name.name == "intensity") {
+			file >> INTENSITY;
+		}
 		else {
 			string none;
 			file >> none;
 		}
 	}
-	this->set_all_properties(X, Y, Z, R, G, B, NX, NY, NZ, ALPHA);
+	this->set_all_properties(X, Y, Z, R, G, B, NX, NY, NZ, ALPHA, CONFIDENCE, INTENSITY);
 }
 
 PlyVertex::PlyVertex(double const X, double const Y, double const Z, unsigned short const R = 0, unsigned short const G = 0, unsigned short const B = 0)
 {
-	this->set_all_properties(X, Y, Z, R, G, B, 0, 0, 0, 255);
+	this->set_all_properties(X, Y, Z, R, G, B, 0, 0, 0, 255, 1, 0.5);
 }
 
-void PlyVertex::set_all_properties(double const X, double const Y, double const Z, unsigned short const R, unsigned short const G, unsigned short const B, double const NX, double const NY, double const NZ, unsigned short const ALPHA)
+void PlyVertex::set_all_properties(double const X, double const Y, double const Z,
+	                               unsigned short const R, unsigned short const G, unsigned short const B,
+	                               double const NX, double const NY, double const NZ,
+	                               unsigned short const ALPHA, double const CONFIDENCE, double const INTENSITY)
 {
 	this->__X = X;
 	this->__Y = Y;
@@ -122,6 +137,8 @@ void PlyVertex::set_all_properties(double const X, double const Y, double const 
 	this->__NY = NY;
 	this->__NZ = NZ;
 	this->__ALPHA = ALPHA;
+	this->__CONFIDENCE = CONFIDENCE;
+	this->__INTENSITY = INTENSITY;
 }
 
 double PlyVertex::X() const
@@ -214,6 +231,24 @@ PlyVertex& PlyVertex::ALPHA(unsigned short const ALPHA)
 	__ALPHA = ALPHA;
 	return *this;
 }
+double PlyVertex::CONFIDENCE() const
+{
+	return __CONFIDENCE;
+}
+PlyVertex& PlyVertex::CONFIDENCE(double const CONFIDENCE)
+{
+	__CONFIDENCE = CONFIDENCE;
+	return *this;
+}
+double PlyVertex::INTENSITY() const
+{
+	return __INTENSITY;
+}
+PlyVertex& PlyVertex::INTENSITY(double const INTENSITY)
+{
+	__INTENSITY = INTENSITY;
+	return *this;
+}
 
 bool PlyVertex::operator==(PlyVertex const& vertex) const
 {
@@ -229,6 +264,14 @@ bool PlyVertex::operator==(PlyVertex const& vertex) const
 	if (has_alpha)
 	{
 		result = (result && __ALPHA == vertex.ALPHA());
+	}
+	if (has_confidence)
+	{
+		result = (result && __CONFIDENCE == vertex.CONFIDENCE());
+	}
+	if (has_intensity)
+	{
+		result = (result && __INTENSITY == vertex.INTENSITY());
 	}
 	return result;
 }

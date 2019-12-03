@@ -26,8 +26,8 @@ public:
 		int type;
 	};
 	PlyVertex() = default;
-	PlyVertex(vector<VertexName>, string);
-	PlyVertex(vector<VertexName>, fstream&);
+	PlyVertex(vector<VertexName> const&, string const&);
+	PlyVertex(vector<VertexName> const&, fstream&);
 	PlyVertex(double const, double const, double const, unsigned short const, unsigned short const, unsigned short const);
 	~PlyVertex() = default;
 	double X() const;
@@ -50,6 +50,10 @@ public:
 	PlyVertex& NZ(double const NZ);
 	unsigned short ALPHA() const;
 	PlyVertex& ALPHA(unsigned short const ALPHA);
+	double CONFIDENCE() const;
+	PlyVertex& CONFIDENCE(double const CONFIDENCE);
+	double INTENSITY() const;
+	PlyVertex& INTENSITY(double const INTENSITY);
 	bool operator==(PlyVertex const&) const;
 	bool operator!=(PlyVertex const&) const;
 	bool operator<(PlyVertex const&) const;
@@ -63,6 +67,8 @@ public:
 	bool has_RGB = false;
 	bool has_normal = false;
 	bool has_alpha = false;
+	bool has_confidence = false;
+	bool has_intensity = false;
 protected:
 	double __X = 0;
 	double __Y = 0;
@@ -74,7 +80,12 @@ protected:
 	double __NY = 0;
 	double __NZ = 0;
 	unsigned short __ALPHA = 255;
-	void set_all_properties(double const, double const, double const, unsigned short const, unsigned short const, unsigned short const, double const, double const, double const, unsigned short const);
+	double __CONFIDENCE = 1;
+	double __INTENSITY = 0.5;
+	void set_all_properties(double const, double const, double const,
+		                    unsigned short const, unsigned short const, unsigned short const,
+		                    double const, double const, double const,
+		                    unsigned short const, double const, double const);
 };
 
 #endif

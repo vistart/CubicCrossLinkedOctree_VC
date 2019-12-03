@@ -26,16 +26,16 @@ private:
 	~PlyVertexList();
 	friend class SingletonBase<PlyVertexList>;
 public:
-	vector<PlyVertex> GetVertices();
-	PlyVertexList& operator<<(string);
+	vector<PlyVertex> GetVertices() const;
+	PlyVertexList& operator<<(string const&);
 	PlyVertexList& operator<<(fstream&);
 	PlyVertexList& operator<<(PlyVertex const&);
 	enum PropertyDataType { INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64 };
 	bool read_element_vertex_names(fstream&);
-	vector<PlyVertex::VertexName> GetNames();
-	PlyVertex& operator[](int);
+	vector<PlyVertex::VertexName> GetNames() const;
+	PlyVertex& operator[](int const);
 	void SetCountInHeader(unsigned int const);
-	unsigned int GetCountInHeader();
+	unsigned int GetCountInHeader() const;
 	PlyVertex& back();
 protected:
 	vector<PlyVertex> vertices;

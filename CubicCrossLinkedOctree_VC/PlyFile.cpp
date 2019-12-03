@@ -118,7 +118,7 @@ PlyVertexList& PlyFile::GetVertexList()
 bool PlyFile::read_element_vertex_names(fstream& file)
 {
 	GetVertexList().read_element_vertex_names(file);
-	PlyVertex::VertexName back = GetVertexList().GetNames().back();
+	PlyVertex::VertexName const back = GetVertexList().GetNames().back();
 	cout << "Property: " << back.name << " | " << back.type << endl;
 	return true;
 }
@@ -238,7 +238,8 @@ bool PlyFile::read(fstream& file)
 			break;
 		}
 	}
-	for (unsigned int i = 0; i < GetVertexList().GetCountInHeader(); i++)
+	unsigned int const count_in_header = GetVertexList().GetCountInHeader();
+	for (unsigned int i = 0; i < count_in_header; i++)
 	{
 		read_element_vertex(file);
 	}

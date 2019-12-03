@@ -12,7 +12,7 @@
 #endif
 
 #ifdef __PLY_VERTEX_LIST_H__
-vector<PlyVertex::VertexName> PlyVertexList::GetNames()
+vector<PlyVertex::VertexName> PlyVertexList::GetNames() const
 {
 	return names;
 }
@@ -23,21 +23,21 @@ PlyVertexList::~PlyVertexList()
 	vertices.~vector();
 }
 
-vector<PlyVertex> PlyVertexList::GetVertices()
+vector<PlyVertex> PlyVertexList::GetVertices() const
 {
 	return vertices;
 }
 
-PlyVertexList& PlyVertexList::operator<<(string str_vertex)
+PlyVertexList& PlyVertexList::operator<<(string const& str_vertex)
 {
-	PlyVertex vertex(GetNames(), str_vertex);
+	PlyVertex const vertex(GetNames(), str_vertex);
 	this->vertices.push_back(vertex);
 	return *this;
 }
 
 PlyVertexList& PlyVertexList::operator<<(fstream& file)
 {
-	PlyVertex vertex(GetNames(), file);
+	PlyVertex const vertex(GetNames(), file);
 	this->vertices.push_back(vertex);
 	return *this;
 }
@@ -82,7 +82,7 @@ bool PlyVertexList::read_element_vertex_names(fstream& file)
 	return true;
 }
 
-PlyVertex& PlyVertexList::operator[](int i)
+PlyVertex& PlyVertexList::operator[](int const i)
 {
 	return vertices[i];
 }
@@ -92,7 +92,7 @@ void PlyVertexList::SetCountInHeader(unsigned int const count)
 	this->count_in_header = count;
 }
 
-unsigned int PlyVertexList::GetCountInHeader()
+unsigned int PlyVertexList::GetCountInHeader() const
 {
 	return this->count_in_header;
 }
