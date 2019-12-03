@@ -13,6 +13,7 @@
 #define __PLY_VERTEX_LIST_H__
 
 #include "PlyVertex.h"
+#include "PlyFileEncoding.h"
 #include "SingletonBase.h"
 #include <fstream>
 #include <sstream>
@@ -26,13 +27,14 @@ private:
 	~PlyVertexList();
 	friend class SingletonBase<PlyVertexList>;
 public:
-	vector<PlyVertex> GetVertices() const;
+	vector<PlyVertex> GetVertices() const&;
 	PlyVertexList& operator<<(string const&);
 	PlyVertexList& operator<<(fstream&);
 	PlyVertexList& operator<<(PlyVertex const&);
+	PlyVertexList& operator<<(PlyFileEncoding::FileEncoding const&);
 	enum PropertyDataType { NONE, INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64 };
 	bool read_element_vertex_names(fstream&);
-	vector<PlyVertex::VertexName> GetNames() const;
+	vector<PlyVertex::VertexName> GetNames() const&;
 	PlyVertex& operator[](int const);
 	void SetCountInHeader(unsigned int const);
 	unsigned int GetCountInHeader() const;

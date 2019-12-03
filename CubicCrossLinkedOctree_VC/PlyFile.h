@@ -84,7 +84,7 @@ protected:
 
 #pragma region Vertex
 	bool read_element_vertex_names(fstream&);
-	bool read_element_vertex(fstream&);
+	bool read_element_vertex(fstream&, PlyFileEncoding::FileEncoding const&);
 #pragma endregion
 
 #pragma region Face

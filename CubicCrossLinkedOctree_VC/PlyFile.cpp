@@ -124,7 +124,7 @@ bool PlyFile::read_element_vertex_names(fstream& file)
 	return true;
 }
 
-bool PlyFile::read_element_vertex(fstream& file)
+bool PlyFile::read_element_vertex(fstream& file, PlyFileEncoding::FileEncoding const& encoding = { PlyFileEncoding::FILE_ENCODING_ASCII, 1.0 })
 {
 	auto& vertex_list = GetVertexList();
 	vertex_list << file;
@@ -239,8 +239,8 @@ bool PlyFile::read(fstream& file)
 			break;
 		}
 	}
-	unsigned int const count_in_header = GetVertexList().GetCountInHeader();
-	for (unsigned int i = 0; i < count_in_header; i++)
+	unsigned int const vertex_count_in_header = GetVertexList().GetCountInHeader();
+	for (unsigned int i = 0; i < vertex_count_in_header; i++)
 	{
 		read_element_vertex(file);
 	}

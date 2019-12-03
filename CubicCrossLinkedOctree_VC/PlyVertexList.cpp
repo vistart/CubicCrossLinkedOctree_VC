@@ -12,7 +12,7 @@
 #endif
 
 #ifdef __PLY_VERTEX_LIST_H__
-vector<PlyVertex::VertexName> PlyVertexList::GetNames() const
+vector<PlyVertex::VertexName> PlyVertexList::GetNames() const&
 {
 	return names;
 }
@@ -22,7 +22,7 @@ PlyVertexList::~PlyVertexList()
 	vertices.~vector();
 }
 
-vector<PlyVertex> PlyVertexList::GetVertices() const
+vector<PlyVertex> PlyVertexList::GetVertices() const&
 {
 	return vertices;
 }
@@ -44,6 +44,11 @@ PlyVertexList& PlyVertexList::operator<<(fstream& file)
 PlyVertexList& PlyVertexList::operator<<(PlyVertex const& vertex)
 {
 	this->vertices.push_back(vertex);
+	return *this;
+}
+
+PlyVertexList& PlyVertexList::operator<<(PlyFileEncoding::FileEncoding const&)
+{
 	return *this;
 }
 
