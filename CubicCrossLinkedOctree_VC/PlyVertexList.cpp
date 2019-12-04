@@ -36,7 +36,7 @@ PlyVertexList& PlyVertexList::operator<<(string const& str_vertex)
 
 PlyVertexList& PlyVertexList::operator<<(fstream& file)
 {
-	PlyVertex const vertex(GetNames(), file);
+	PlyVertex const vertex(GetNames(), file, this->file_encoding);
 	this->vertices.push_back(vertex);
 	return *this;
 }
@@ -58,7 +58,45 @@ bool PlyVertexList::read_element_vertex_names(fstream& file)
 	string type;
 	string name;
 	file >> type >> name;
-	PlyVertex::VertexName vertex_name = { name, PlyPropertyType::NOTYPE };
+	PlyVertex::VertexName vertex_name = { PlyVertex::PROPERTY_NONE, PlyPropertyType::NOTYPE };
+
+	if (name == "x") {
+		vertex_name.name = PlyVertex::PROPERTY_X;
+	}
+	else if (name == "y") {
+		vertex_name.name = PlyVertex::PROPERTY_Y;
+	}
+	else if (name == "z") {
+		vertex_name.name = PlyVertex::PROPERTY_Z;
+	}
+	else if (name == "red" || name == "r") {
+		vertex_name.name = PlyVertex::PROPERTY_R;
+	}
+	else if (name == "green" || name == "g") {
+		vertex_name.name = PlyVertex::PROPERTY_G;
+	}
+	else if (name == "blue" || name == "b") {
+		vertex_name.name = PlyVertex::PROPERTY_B;
+	}
+	else if (name == "nx") {
+		vertex_name.name = PlyVertex::PROPERTY_NX;
+	}
+	else if (name == "ny") {
+		vertex_name.name = PlyVertex::PROPERTY_NY;
+	}
+	else if (name == "nz") {
+		vertex_name.name = PlyVertex::PROPERTY_NZ;
+	}
+	else if (name == "alpha") {
+		vertex_name.name = PlyVertex::PROPERTY_ALPHA;
+	}
+	else if (name == "confidence") {
+		vertex_name.name = PlyVertex::PROPERTY_CONFIDENCE;
+	}
+	else if (name == "intensity") {
+		vertex_name.name = PlyVertex::PROPERTY_INTENSITY;
+	}
+
 	if (type == "int8" || type == "char") {
 		vertex_name.type = PlyPropertyType::INT8;
 	}
@@ -83,6 +121,7 @@ bool PlyVertexList::read_element_vertex_names(fstream& file)
 	else if (type == "float64" || type == "double") {
 		vertex_name.type = PlyPropertyType::FLOAT64;
 	}
+
 	this->names.push_back(vertex_name);
 	return true;
 }

@@ -25,14 +25,19 @@ class PlyVertex
 {
 public:
 	struct VertexName {
-		string name;
+		int name;
 		int type;
 	};
 	PlyVertex() = default;
 	PlyVertex(vector<VertexName> const&, string const&);
-	PlyVertex(vector<VertexName> const&, fstream&);
+	PlyVertex(vector<VertexName> const&, fstream&, PlyFileEncoding::FileEncoding const&);
 	PlyVertex(double const, double const, double const, unsigned short const, unsigned short const, unsigned short const);
 	~PlyVertex() = default;
+	enum PropertyNames { PROPERTY_NONE,
+		                 PROPERTY_X, PROPERTY_Y, PROPERTY_Z,
+		                 PROPERTY_R, PROPERTY_G, PROPERTY_B,
+		                 PROPERTY_NX, PROPERTY_NY, PROPERTY_NZ,
+		                 PROPERTY_ALPHA, PROPERTY_CONFIDENCE, PROPERTY_INTENSITY };
 	double X() const;
 	PlyVertex& X(double const X);
 	double Y() const;

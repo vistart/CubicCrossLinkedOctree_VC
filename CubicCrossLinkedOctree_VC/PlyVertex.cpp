@@ -21,43 +21,44 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, string const& vertex)
 	stringstream stream(vertex);
 	for (auto& name : names)
 	{
-		if (name.name == "x") {
+		switch (name.name) {
+		case PROPERTY_X:
 			stream >> X;
-		}
-		else if (name.name == "y") {
+			break;
+		case PROPERTY_Y:
 			stream >> Y;
-		}
-		else if (name.name == "z") {
+			break;
+		case PROPERTY_Z:
 			stream >> Z;
-		}
-		else if (name.name == "red" || name.name == "r") {
+			break;
+		case PROPERTY_R:
 			stream >> R;
-		}
-		else if (name.name == "green" || name.name == "g") {
+			break;
+		case PROPERTY_G:
 			stream >> G;
-		}
-		else if (name.name == "blue" || name.name == "b") {
+			break;
+		case PROPERTY_B:
 			stream >> B;
-		}
-		else if (name.name == "nx") {
+			break;
+		case PROPERTY_NX:
 			stream >> NX;
-		}
-		else if (name.name == "ny") {
+			break;
+		case PROPERTY_NY:
 			stream >> NY;
-		}
-		else if (name.name == "nz") {
+			break;
+		case PROPERTY_NZ:
 			stream >> NZ;
-		}
-		else if (name.name == "alpha") {
+			break;
+		case PROPERTY_ALPHA:
 			stream >> ALPHA;
-		}
-		else if (name.name == "confidence") {
+			break;
+		case PROPERTY_CONFIDENCE:
 			stream >> CONFIDENCE;
-		}
-		else if (name.name == "intensity") {
+			break;
+		case PROPERTY_INTENSITY:
 			stream >> INTENSITY;
-		}
-		else {
+			break;
+		default:
 			string none;
 			stream >> none;
 		}
@@ -65,7 +66,7 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, string const& vertex)
 	this->set_all_properties(X, Y, Z, R, G, B, NX, NY, NZ, ALPHA, CONFIDENCE, INTENSITY);
 }
 
-PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file)
+PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEncoding::FileEncoding const& file_encoding)
 {
 	double X = 0, Y = 0, Z = 0;
 	unsigned short R = 0, G = 0, B = 0;
@@ -73,43 +74,44 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file)
 	unsigned short ALPHA = 255;
 	for (auto& name : names)
 	{
-		if (name.name == "x") {
+		switch (name.name) {
+		case PROPERTY_X:
 			file >> X;
-		}
-		else if (name.name == "y") {
+			break;
+		case PROPERTY_Y:
 			file >> Y;
-		}
-		else if (name.name == "z") {
+			break;
+		case PROPERTY_Z:
 			file >> Z;
-		}
-		else if (name.name == "red" || name.name == "r") {
+			break;
+		case PROPERTY_R:
 			file >> R;
-		}
-		else if (name.name == "green" || name.name == "g") {
+			break;
+		case PROPERTY_G:
 			file >> G;
-		}
-		else if (name.name == "blue" || name.name == "b") {
+			break;
+		case PROPERTY_B:
 			file >> B;
-		}
-		else if (name.name == "nx") {
+			break;
+		case PROPERTY_NX:
 			file >> NX;
-		}
-		else if (name.name == "ny") {
+			break;
+		case PROPERTY_NY:
 			file >> NY;
-		}
-		else if (name.name == "nz") {
+			break;
+		case PROPERTY_NZ:
 			file >> NZ;
-		}
-		else if (name.name == "alpha") {
+			break;
+		case PROPERTY_ALPHA:
 			file >> ALPHA;
-		}
-		else if (name.name == "confidence") {
+			break;
+		case PROPERTY_CONFIDENCE:
 			file >> CONFIDENCE;
-		}
-		else if (name.name == "intensity") {
+			break;
+		case PROPERTY_INTENSITY:
 			file >> INTENSITY;
-		}
-		else {
+			break;
+		default:
 			string none;
 			file >> none;
 		}
