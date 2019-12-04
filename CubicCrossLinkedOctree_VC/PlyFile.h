@@ -74,17 +74,14 @@ protected:
 	bool read_file_encoding(string, fstream&);
 #pragma endregion
 
-#pragma region PropertyDataType
-	enum PropertyDataType { INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64};
-#pragma endregion
-
 #pragma region Comment
 	bool read_comment(string, fstream&);
 #pragma endregion
 
 #pragma region Vertex
 	bool read_element_vertex_names(fstream&);
-	bool read_element_vertex(fstream&, PlyFileEncoding const&);
+	bool read_element_vertex_encoding(PlyFileEncoding const&);
+	bool read_element_vertex(fstream&);
 #pragma endregion
 
 #pragma region Face

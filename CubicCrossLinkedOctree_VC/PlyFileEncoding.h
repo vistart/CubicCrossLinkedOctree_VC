@@ -35,6 +35,7 @@ public:
 	PlyFileEncoding& operator<<(FileEncoding const&);
 	PlyFileEncoding& operator<<(string const&);
 	PlyFileEncoding& operator<<(float const&);
+	FileEncoding GetDefinition() const&;
 	string Encoding() const;
 	PlyFileEncoding& Encoding(string const&);
 	float Version() const;

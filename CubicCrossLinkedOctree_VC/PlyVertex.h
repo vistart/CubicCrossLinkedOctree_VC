@@ -12,6 +12,8 @@
 #ifndef __PLY_VERTEX_H__
 #define __PLY_VERTEX_H__
 
+#include "PlyFileEncoding.h"
+#include "PlyPropertyType.h"
 #include <vector>
 #include <fstream>
 #include <sstream>

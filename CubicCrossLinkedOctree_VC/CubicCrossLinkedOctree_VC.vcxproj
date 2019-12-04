@@ -158,6 +158,7 @@
     <ClCompile Include="PlyFaceList.cpp" />
     <ClCompile Include="PlyFile.cpp" />
     <ClCompile Include="PlyFileEncoding.cpp" />
+    <ClCompile Include="PlyPropertyType.cpp" />
     <ClCompile Include="PlyVertex.cpp" />
     <ClCompile Include="PlyVertexList.cpp" />
     <ClCompile Include="SingletonBase.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="PlyFaceList.h" />
     <ClInclude Include="PlyFile.h" />
     <ClInclude Include="PlyFileEncoding.h" />
+    <ClInclude Include="PlyPropertyType.h" />
     <ClInclude Include="PlyVertex.h" />
     <ClInclude Include="PlyVertexList.h" />
     <ClInclude Include="SingletonBase.h" />

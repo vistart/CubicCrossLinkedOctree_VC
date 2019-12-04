@@ -41,6 +41,11 @@ PlyFileEncoding& PlyFileEncoding::Version(float const& version)
 	return *this;
 }
 
+PlyFileEncoding::FileEncoding PlyFileEncoding::GetDefinition() const&
+{
+	return this->file_encoding;
+}
+
 PlyFileEncoding& PlyFileEncoding::operator<<(fstream& file)
 {
 	string encoding;

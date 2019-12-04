@@ -60,6 +60,9 @@
     <ClCompile Include="SingletonBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="PlyPropertyType.cpp">
+      <Filter>源文件\文件格式\PLY</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlyCommentList.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="SingletonBase.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PlyPropertyType.h">
+      <Filter>头文件\文件格式\PLY</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

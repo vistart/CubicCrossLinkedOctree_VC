@@ -14,6 +14,7 @@
 
 #include "PlyVertex.h"
 #include "PlyFileEncoding.h"
+#include "PlyPropertyType.h"
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -28,8 +29,7 @@ public:
 	PlyVertexList& operator<<(string const&);
 	PlyVertexList& operator<<(fstream&);
 	PlyVertexList& operator<<(PlyVertex const&);
-	PlyVertexList& operator<<(PlyFileEncoding::FileEncoding const&);
-	enum PropertyDataType { NONE, INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64 };
+	PlyVertexList& operator<<(PlyFileEncoding const&);
 	bool read_element_vertex_names(fstream&);
 	vector<PlyVertex::VertexName> GetNames() const&;
 	PlyVertex& operator[](int const);
@@ -40,6 +40,7 @@ protected:
 	vector<PlyVertex> vertices;
 	vector<PlyVertex::VertexName> names;
 	unsigned int count_in_header = 0;
+	PlyFileEncoding::FileEncoding file_encoding = { PlyFileEncoding::FILE_ENCODING_ASCII, 1.0 };
 };
 
 #endif

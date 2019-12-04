@@ -47,8 +47,9 @@ PlyVertexList& PlyVertexList::operator<<(PlyVertex const& vertex)
 	return *this;
 }
 
-PlyVertexList& PlyVertexList::operator<<(PlyFileEncoding::FileEncoding const&)
+PlyVertexList& PlyVertexList::operator<<(PlyFileEncoding const& file_encoding)
 {
+	this->file_encoding = file_encoding.GetDefinition();
 	return *this;
 }
 
@@ -57,30 +58,30 @@ bool PlyVertexList::read_element_vertex_names(fstream& file)
 	string type;
 	string name;
 	file >> type >> name;
-	PlyVertex::VertexName vertex_name = { name, NONE };
+	PlyVertex::VertexName vertex_name = { name, PlyPropertyType::NOTYPE };
 	if (type == "int8" || type == "char") {
-		vertex_name.type = INT8;
+		vertex_name.type = PlyPropertyType::INT8;
 	}
 	else if (type == "uint8" || type == "uchar") {
-		vertex_name.type = UINT8;
+		vertex_name.type = PlyPropertyType::UINT8;
 	}
 	else if (type == "int16" || type == "short") {
-		vertex_name.type = INT16;
+		vertex_name.type = PlyPropertyType::INT16;
 	}
 	else if (type == "uint16" || type == "ushort") {
-		vertex_name.type = UINT16;
+		vertex_name.type = PlyPropertyType::UINT16;
 	}
 	else if (type == "int32" || type == "int") {
-		vertex_name.type = INT32;
+		vertex_name.type = PlyPropertyType::INT32;
 	}
 	else if (type == "uint32" || type == "uint") {
-		vertex_name.type = UINT32;
+		vertex_name.type = PlyPropertyType::UINT32;
 	}
 	else if (type == "float32" || type == "float") {
-		vertex_name.type = FLOAT32;
+		vertex_name.type = PlyPropertyType::FLOAT32;
 	}
 	else if (type == "float64" || type == "double") {
-		vertex_name.type = FLOAT64;
+		vertex_name.type = PlyPropertyType::FLOAT64;
 	}
 	this->names.push_back(vertex_name);
 	return true;

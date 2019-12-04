@@ -119,9 +119,16 @@ bool PlyFile::read_element_vertex_names(fstream& file)
 	return true;
 }
 
-bool PlyFile::read_element_vertex(fstream& file, PlyFileEncoding const& file_encoding)
+bool PlyFile::read_element_vertex_encoding(PlyFileEncoding const& file_encoding)
 {
-	auto& vertex_list = (*this->VertexList);
+	auto& vertex_list = *this->VertexList;
+	vertex_list << file_encoding;
+	return true;
+}
+
+bool PlyFile::read_element_vertex(fstream& file)
+{
+	auto& vertex_list = *this->VertexList;
 	vertex_list << file;
 	return true;
 }
@@ -156,13 +163,13 @@ bool PlyFile::read_element_user_defined_names(fstream& file)
 
 bool PlyFile::read(fstream& file)
 {
-	file.seekg(0, ios::beg);
 	unsigned int element_count = 0;
 	
 	string buffer;
 
 	enum ELEMENTS { NONE, VERTEX, FACE, EDGE, USER_DEFINED };
 	int current_elements = NONE;
+	file.seekg(0, ios::beg);
 	while (file >> buffer)
 	{
 		transform(buffer.begin(), buffer.end(), buffer.begin(), tolower);
@@ -234,10 +241,11 @@ bool PlyFile::read(fstream& file)
 			break;
 		}
 	}
+	read_element_vertex_encoding(*this->FileEncoding);
 	unsigned int const vertex_count_in_header = (*this->VertexList).GetCountInHeader();
 	for (unsigned int i = 0; i < vertex_count_in_header; i++)
 	{
-		read_element_vertex(file, *this->FileEncoding);
+		read_element_vertex(file);
 	}
 	auto& vertex_list = (*this->VertexList);
 	auto& vertex = vertex_list.back();
