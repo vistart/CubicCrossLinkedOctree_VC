@@ -11,14 +11,12 @@
 
 #ifndef __PLY_EDGE_LIST_H__
 #define __PLY_EDGE_LIST_H__
-#include "SingletonBase.h"
 #include <iostream>
-class PlyEdgeList : public SingletonBase<PlyEdgeList>
+class PlyEdgeList
 {
+public:
 	PlyEdgeList() = default;
 	~PlyEdgeList() = default;
-	friend class SingletonBase<PlyEdgeList>;
-public:
 	void demo();
 };
 

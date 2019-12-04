@@ -27,6 +27,11 @@ using namespace std;
  */
 PlyFile::PlyFile(string file_path)
 {
+	this->FileEncoding = make_unique<PlyFileEncoding>();
+	this->CommentList = make_unique<PlyCommentList>();
+	this->VertexList = make_unique<PlyVertexList>();
+	this->EdgeList = make_unique<PlyEdgeList>();
+	this->FaceList = make_unique<PlyFaceList>();
 	open(file_path);
 	if (read(this->file))
 		this->valid = true;
@@ -37,6 +42,11 @@ PlyFile::~PlyFile()
 	if (this->file.is_open()) {
 		this->file.close();
 	}
+	this->FaceList = nullptr;
+	this->EdgeList = nullptr;
+	this->VertexList = nullptr;
+	this->CommentList = nullptr;
+	this->FileEncoding = nullptr;
 }
 
 bool PlyFile::GetIsValid()
@@ -66,27 +76,17 @@ bool PlyFile::set_file_format(string file_format)
 #pragma endregion
 
 #pragma region File Encoding
-PlyFileEncoding& PlyFile::GetFileEncoding()
-{
-	return PlyFileEncoding::get();
-}
-
 bool PlyFile::read_file_encoding(string tag, fstream& file)
 {
 	if (tag != string("format"))
 		return false;
-	auto& encoding = this->GetFileEncoding();
-	encoding << file;
+	auto& encoding = this->FileEncoding;
+	*encoding << file;
 	return true;
 }
 #pragma endregion
 
 #pragma region Comment
-
-PlyCommentList& PlyFile::GetCommentList()
-{
-	return PlyCommentList::get();
-}
 
 bool PlyFile::read_comment(string tag, fstream& file)
 {
@@ -95,7 +95,7 @@ bool PlyFile::read_comment(string tag, fstream& file)
 
 	string comment;
 	getline(file, comment);
-	this->GetCommentList() << comment;
+	*this->CommentList << comment;
 	return true;
 }
 #pragma endregion
@@ -111,22 +111,17 @@ bool PlyFile::open(string file_path)
 }
 
 #pragma region Vertex
-PlyVertexList& PlyFile::GetVertexList()
-{
-	return PlyVertexList::get();
-}
-
 bool PlyFile::read_element_vertex_names(fstream& file)
 {
-	GetVertexList().read_element_vertex_names(file);
-	PlyVertex::VertexName const back = GetVertexList().GetNames().back();
+	(*this->VertexList).read_element_vertex_names(file);
+	PlyVertex::VertexName const back = (*this->VertexList).GetNames().back();
 	cout << "Property: " << back.name << " | " << back.type << endl;
 	return true;
 }
 
-bool PlyFile::read_element_vertex(fstream& file, PlyFileEncoding::FileEncoding const& encoding = { PlyFileEncoding::FILE_ENCODING_ASCII, 1.0 })
+bool PlyFile::read_element_vertex(fstream& file, PlyFileEncoding const& file_encoding)
 {
-	auto& vertex_list = GetVertexList();
+	auto& vertex_list = (*this->VertexList);
 	vertex_list << file;
 	return true;
 }
@@ -199,12 +194,12 @@ bool PlyFile::read(fstream& file)
 		}
 
 		if (read_file_encoding(buffer.c_str(), file)) {
-			cout << "FORMAT: " << this->GetFileEncoding().Encoding() << " VERSION:" << this->GetFileEncoding().Version() << endl;
+			cout << "FORMAT: " << (*this->FileEncoding).Encoding() << " VERSION:" << (*this->FileEncoding).Version() << endl;
 			continue;
 		}
 
 		if (read_comment(buffer.c_str(), file)) {
-			for (auto comment : this->GetCommentList().getComments())
+			for (auto comment : (*this->CommentList).getComments())
 			{
 				cout << "Comment: " << comment << endl;
 			}
@@ -217,8 +212,8 @@ bool PlyFile::read(fstream& file)
 
 			if (element_name == "vertex") {
 				current_elements = VERTEX;
-				GetVertexList().SetCountInHeader(element_count);
-				cout << "Element: " << element_name << GetVertexList().GetCountInHeader() << endl;
+				(*this->VertexList).SetCountInHeader(element_count);
+				cout << "Element: " << element_name << (*this->VertexList).GetCountInHeader() << endl;
 				continue;
 			}
 
@@ -239,12 +234,12 @@ bool PlyFile::read(fstream& file)
 			break;
 		}
 	}
-	unsigned int const vertex_count_in_header = GetVertexList().GetCountInHeader();
+	unsigned int const vertex_count_in_header = (*this->VertexList).GetCountInHeader();
 	for (unsigned int i = 0; i < vertex_count_in_header; i++)
 	{
-		read_element_vertex(file);
+		read_element_vertex(file, *this->FileEncoding);
 	}
-	auto& vertex_list = GetVertexList();
+	auto& vertex_list = (*this->VertexList);
 	auto& vertex = vertex_list.back();
 	cout << setiosflags(ios::fixed) << vertex << endl;
 	return true;

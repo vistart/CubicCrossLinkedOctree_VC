@@ -11,13 +11,11 @@
 
 #ifndef __PLY_FACE_LIST_H__
 #define __PLY_FACE_LIST_H__
-#include "SingletonBase.h"
-class PlyFaceList : public SingletonBase<PlyFaceList>
+class PlyFaceList
 {
+public:
 	PlyFaceList() = default;
 	~PlyFaceList() = default;
-	friend class SingletonBase<PlyFaceList>;
-public:
 };
 
 #endif

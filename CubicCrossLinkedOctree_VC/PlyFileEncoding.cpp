@@ -13,7 +13,7 @@
 
 #ifdef __PLY_FILE_ENCODING_H__
 
-string PlyFileEncoding::Encoding()
+string PlyFileEncoding::Encoding() const
 {
 	if (this->file_encoding.type == FILE_ENCODING_ASCII)
 		return PLY_FILE_ENCODING_ASCII;
@@ -24,18 +24,18 @@ string PlyFileEncoding::Encoding()
 	return "";
 }
 
-PlyFileEncoding& PlyFileEncoding::Encoding(string encoding)
+PlyFileEncoding& PlyFileEncoding::Encoding(string const& encoding)
 {
 	*this << encoding;
 	return *this;
 }
 
-float PlyFileEncoding::Version()
+float PlyFileEncoding::Version() const
 {
 	return this->file_encoding.version;
 }
 
-PlyFileEncoding& PlyFileEncoding::Version(float version)
+PlyFileEncoding& PlyFileEncoding::Version(float const& version)
 {
 	*this << version;
 	return *this;
@@ -50,13 +50,13 @@ PlyFileEncoding& PlyFileEncoding::operator<<(fstream& file)
 	return *this;
 }
 
-PlyFileEncoding& PlyFileEncoding::operator<<(FileEncoding file_encoding)
+PlyFileEncoding& PlyFileEncoding::operator<<(FileEncoding const& file_encoding)
 {
 	this->file_encoding = file_encoding;
 	return *this;
 }
 
-PlyFileEncoding& PlyFileEncoding::operator<<(string format)
+PlyFileEncoding& PlyFileEncoding::operator<<(string const& format)
 {
 	if (format == string(PLY_FILE_ENCODING_ASCII))
 	{
@@ -65,28 +65,28 @@ PlyFileEncoding& PlyFileEncoding::operator<<(string format)
 	return *this;
 }
 
-PlyFileEncoding& PlyFileEncoding::operator<<(float version)
+PlyFileEncoding& PlyFileEncoding::operator<<(float const& version)
 {
 	this->file_encoding.version = version;
 	return *this;
 }
 
-bool PlyFileEncoding::operator==(PlyFileEncoding const& object)
+bool PlyFileEncoding::operator==(PlyFileEncoding const& object) const
 {
 	return this->file_encoding.type == object.file_encoding.type && this->file_encoding.version == object.file_encoding.version;
 }
 
-bool PlyFileEncoding::operator!=(PlyFileEncoding const& object)
+bool PlyFileEncoding::operator!=(PlyFileEncoding const& object) const
 {
 	return !(*this == object);
 }
 
-bool PlyFileEncoding::operator==(PlyFileEncoding::FileEncoding const& object)
+bool PlyFileEncoding::operator==(PlyFileEncoding::FileEncoding const& object) const
 {
 	return this->file_encoding.type == object.type && this->file_encoding.version == object.version;
 }
 
-bool PlyFileEncoding::operator!=(PlyFileEncoding::FileEncoding const& object)
+bool PlyFileEncoding::operator!=(PlyFileEncoding::FileEncoding const& object) const
 {
 	return !(*this == object);
 }

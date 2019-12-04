@@ -17,16 +17,14 @@
 #define PLY_FILE_BINARY_BIG_ENDIAN "binary_big_endian"
 #define PLY_FILE_BINARY_LITTLE_ENDIAN "binary_little_endian"
 
-#include "SingletonBase.h"
 #include <string>
 #include <fstream>
 using namespace std;
-class PlyFileEncoding : public SingletonBase<PlyFileEncoding>
+class PlyFileEncoding
 {
+public:
 	PlyFileEncoding();
 	~PlyFileEncoding() = default;
-	friend class SingletonBase<PlyFileEncoding>;
-public:
 	enum FileEncodingType { FILE_ENCODING_ASCII, FILE_ENCODING_BINARY_BIG_ENDIAN, FILE_ENCODING_BINARY_LITTLE_ENDIAN };
 	struct FileEncoding
 	{
@@ -34,17 +32,17 @@ public:
 		float version = 1.0;
 	};
 	PlyFileEncoding& operator<<(fstream&);
-	PlyFileEncoding& operator<<(FileEncoding);
-	PlyFileEncoding& operator<<(string);
-	PlyFileEncoding& operator<<(float);
-	string Encoding();
-	PlyFileEncoding& Encoding(string const);
-	float Version();
-	PlyFileEncoding& Version(float const);
-	bool operator==(PlyFileEncoding const&);
-	bool operator!=(PlyFileEncoding const&);
-	bool operator==(FileEncoding const&);
-	bool operator!=(FileEncoding const&);
+	PlyFileEncoding& operator<<(FileEncoding const&);
+	PlyFileEncoding& operator<<(string const&);
+	PlyFileEncoding& operator<<(float const&);
+	string Encoding() const;
+	PlyFileEncoding& Encoding(string const&);
+	float Version() const;
+	PlyFileEncoding& Version(float const&);
+	bool operator==(PlyFileEncoding const&) const;
+	bool operator!=(PlyFileEncoding const&) const;
+	bool operator==(FileEncoding const&) const;
+	bool operator!=(FileEncoding const&) const;
 protected:
 	FileEncoding file_encoding;
 };

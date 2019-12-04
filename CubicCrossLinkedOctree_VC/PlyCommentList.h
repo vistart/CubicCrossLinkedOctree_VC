@@ -14,16 +14,14 @@
 
 #define PLY_TAG_COMMENT "comment"
 
-#include "SingletonBase.h"
 #include <vector>
 #include <string>
 using namespace std;
-class PlyCommentList : public SingletonBase<PlyCommentList>
+class PlyCommentList
 {
+public:
 	PlyCommentList() = default;
 	~PlyCommentList();
-	friend class SingletonBase<PlyCommentList>;
-public:
 	bool add(string);
 	vector<string> getComments();
 	PlyCommentList& operator<<(string);

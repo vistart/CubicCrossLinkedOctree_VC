@@ -36,23 +36,23 @@ public:
 #pragma endregion
 
 #pragma region File Encoding
-	static PlyFileEncoding& GetFileEncoding();
+    unique_ptr<PlyFileEncoding> FileEncoding;
 #pragma endregion
 
 #pragma region Comment
-	static PlyCommentList& GetCommentList();
+	unique_ptr<PlyCommentList> CommentList;
 #pragma endregion
 
 #pragma region Vertex
-	static PlyVertexList& GetVertexList();
+	unique_ptr<PlyVertexList> VertexList;
 #pragma endregion
 
 #pragma region Face
-	static PlyFaceList GetFaceList();
+	unique_ptr<PlyFaceList> FaceList;
 #pragma endregion
 
 #pragma region Edge
-	static PlyEdgeList GetEdgeList();
+	unique_ptr<PlyEdgeList> EdgeList;
 #pragma endregion
 
 	bool GetIsValid();
@@ -84,7 +84,7 @@ protected:
 
 #pragma region Vertex
 	bool read_element_vertex_names(fstream&);
-	bool read_element_vertex(fstream&, PlyFileEncoding::FileEncoding const&);
+	bool read_element_vertex(fstream&, PlyFileEncoding const&);
 #pragma endregion
 
 #pragma region Face

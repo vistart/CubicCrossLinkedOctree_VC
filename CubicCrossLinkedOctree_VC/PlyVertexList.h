@@ -14,19 +14,16 @@
 
 #include "PlyVertex.h"
 #include "PlyFileEncoding.h"
-#include "SingletonBase.h"
 #include <fstream>
 #include <sstream>
 #include <vector>
 using namespace std;
 
-class PlyVertexList : public SingletonBase<PlyVertexList>
+class PlyVertexList
 {
-private:
+public:
 	PlyVertexList() = default;
 	~PlyVertexList();
-	friend class SingletonBase<PlyVertexList>;
-public:
 	vector<PlyVertex> GetVertices() const&;
 	PlyVertexList& operator<<(string const&);
 	PlyVertexList& operator<<(fstream&);
