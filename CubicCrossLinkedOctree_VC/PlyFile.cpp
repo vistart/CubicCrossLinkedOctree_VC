@@ -27,12 +27,13 @@ using namespace std;
  */
 PlyFile::PlyFile(string file_path)
 {
+	this->filename = file_path;
 	this->FileEncoding = make_unique<PlyFileEncoding>();
 	this->CommentList = make_unique<PlyCommentList>();
 	this->VertexList = make_unique<PlyVertexList>();
 	this->EdgeList = make_unique<PlyEdgeList>();
 	this->FaceList = make_unique<PlyFaceList>();
-	open(file_path);
+	open(this->filename);
 	if (read(this->file))
 		this->valid = true;
 }
@@ -47,6 +48,7 @@ PlyFile::~PlyFile()
 	this->VertexList = nullptr;
 	this->CommentList = nullptr;
 	this->FileEncoding = nullptr;
+	this->filename = "";
 }
 
 bool PlyFile::GetIsValid()
@@ -106,7 +108,7 @@ bool PlyFile::open(string file_path)
 		this->file.close();
 	}
 	//std::cout << file_path << std::endl;
-	this->file.open(file_path);
+	this->file.open(file_path, ios::in | ios::binary);
 	return this->file.good();
 }
 
@@ -161,12 +163,10 @@ bool PlyFile::read_element_user_defined_names(fstream& file)
 }
 #pragma endregion
 
-bool PlyFile::read(fstream& file)
+bool PlyFile::read_header(fstream& file)
 {
 	unsigned int element_count = 0;
-	
 	string buffer;
-
 	enum ELEMENTS { NONE, VERTEX, FACE, EDGE, USER_DEFINED };
 	int current_elements = NONE;
 	file.seekg(0, ios::beg);
@@ -241,15 +241,34 @@ bool PlyFile::read(fstream& file)
 			break;
 		}
 	}
+	return true;
+}
+
+bool PlyFile::read_body(fstream& file)
+{
+	file.get(); // throw out the last character ('\n').
 	read_element_vertex_encoding(*this->FileEncoding);
+	auto& vertex_list = (*this->VertexList);
 	unsigned int const vertex_count_in_header = (*this->VertexList).GetCountInHeader();
 	for (unsigned int i = 0; i < vertex_count_in_header; i++)
 	{
+		// cout << "file pointer: " << file.tellg() << endl;
 		read_element_vertex(file);
 	}
-	auto& vertex_list = (*this->VertexList);
 	auto& vertex = vertex_list.back();
 	cout << setiosflags(ios::fixed) << vertex << endl;
+	return true;
+}
+
+
+bool PlyFile::read(fstream& file)
+{
+	if (!this->read_header(file)) {
+		return false;
+	}
+	if (!this->read_body(file)) {
+		return false;
+	}
 	return true;
 }
 

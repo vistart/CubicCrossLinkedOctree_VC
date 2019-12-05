@@ -63,9 +63,15 @@ PlyFileEncoding& PlyFileEncoding::operator<<(FileEncoding const& file_encoding)
 
 PlyFileEncoding& PlyFileEncoding::operator<<(string const& format)
 {
-	if (format == string(PLY_FILE_ENCODING_ASCII))
+	if (format == PLY_FILE_ENCODING_ASCII)
 	{
 		this->file_encoding.type = FILE_ENCODING_ASCII;
+	}
+	else if (format == PLY_FILE_BINARY_BIG_ENDIAN) {
+		this->file_encoding.type = FILE_ENCODING_BINARY_BIG_ENDIAN;
+	}
+	else if (format == PLY_FILE_BINARY_LITTLE_ENDIAN) {
+		this->file_encoding.type = FILE_ENCODING_BINARY_LITTLE_ENDIAN;
 	}
 	return *this;
 }

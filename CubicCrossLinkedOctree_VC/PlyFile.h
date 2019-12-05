@@ -59,10 +59,13 @@ public:
 
 protected:
 	fstream file;
+	string filename;
 	bool valid = false;
 	bool open(string);
 	enum Tag { PLY, FORMAT, COMMENT, ELEMENT, PROPERTY, END_HEADER };
 	bool read(fstream&);
+	bool read_header(fstream&);
+	bool read_body(fstream&);
 
 #pragma region File Format
 	enum FileFormatType { FILE_FORMAT_PLY };

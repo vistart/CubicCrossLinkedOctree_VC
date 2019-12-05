@@ -94,6 +94,8 @@ protected:
 		                    unsigned short const, unsigned short const, unsigned short const,
 		                    double const, double const, double const,
 		                    unsigned short const, double const, double const);
+	template<typename T> typename std::enable_if<std::is_arithmetic<T>::value, T>::type read_vertex_binary_le_property(fstream&) const&;
+	template<typename T> typename std::enable_if<std::is_arithmetic<T>::value, T>::type read_vertex_binary_be_property(fstream& file) const&;
 };
 
 #endif
