@@ -3,6 +3,7 @@
 #define __PLY_PROPERTY_TYPE_H__
 #endif
 
+#include <climits>
 #include <fstream>
 #include <type_traits>
 using namespace std;

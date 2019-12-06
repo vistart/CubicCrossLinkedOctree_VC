@@ -172,7 +172,7 @@ bool PlyFile::read_header(fstream& file)
 	file.seekg(0, ios::beg);
 	while (file >> buffer)
 	{
-		transform(buffer.begin(), buffer.end(), buffer.begin(), tolower);
+		transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
 		if (buffer.c_str() == string("property")) {
 			if (current_elements == VERTEX) {
 				read_element_vertex_names(file);
