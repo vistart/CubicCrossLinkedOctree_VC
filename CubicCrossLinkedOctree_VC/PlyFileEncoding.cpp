@@ -104,6 +104,7 @@ bool PlyFileEncoding::operator!=(PlyFileEncoding::FileEncoding const& object) co
 
 PlyFileEncoding::PlyFileEncoding()
 {
+	this->endian = PlyPropertyType::check_endian();
 	this->file_encoding = { FILE_ENCODING_ASCII, 1.0 };
 }
 #endif

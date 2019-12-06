@@ -17,6 +17,7 @@
 #define PLY_FILE_BINARY_BIG_ENDIAN "binary_big_endian"
 #define PLY_FILE_BINARY_LITTLE_ENDIAN "binary_little_endian"
 
+#include "PlyPropertyType.h"
 #include <string>
 #include <fstream>
 using namespace std;
@@ -44,6 +45,7 @@ public:
 	bool operator!=(PlyFileEncoding const&) const;
 	bool operator==(FileEncoding const&) const;
 	bool operator!=(FileEncoding const&) const;
+	PlyPropertyType::Endian endian;
 protected:
 	FileEncoding file_encoding;
 };

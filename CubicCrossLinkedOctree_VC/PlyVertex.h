@@ -18,6 +18,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <type_traits>
 
 using namespace std;
 
@@ -39,29 +40,29 @@ public:
 		                 PROPERTY_NX, PROPERTY_NY, PROPERTY_NZ,
 		                 PROPERTY_ALPHA, PROPERTY_CONFIDENCE, PROPERTY_INTENSITY };
 	double X() const;
-	PlyVertex& X(double const X);
+	PlyVertex& X(double const);
 	double Y() const;
-	PlyVertex& Y(double const Y);
+	PlyVertex& Y(double const);
 	double Z() const;
-	PlyVertex& Z(double const Z);
+	PlyVertex& Z(double const);
 	unsigned short R() const;
-	PlyVertex& R(unsigned short const R);
+	PlyVertex& R(unsigned short const);
 	unsigned short G() const;
-	PlyVertex& G(unsigned short const G);
+	PlyVertex& G(unsigned short const);
 	unsigned short B() const;
-	PlyVertex& B(unsigned short const B);
+	PlyVertex& B(unsigned short const);
 	double NX() const;
-	PlyVertex& NX(double const NX);
+	PlyVertex& NX(double const);
 	double NY() const;
-	PlyVertex& NY(double const NY);
+	PlyVertex& NY(double const);
 	double NZ() const;
-	PlyVertex& NZ(double const NZ);
+	PlyVertex& NZ(double const);
 	unsigned short ALPHA() const;
-	PlyVertex& ALPHA(unsigned short const ALPHA);
+	PlyVertex& ALPHA(unsigned short const);
 	double CONFIDENCE() const;
-	PlyVertex& CONFIDENCE(double const CONFIDENCE);
+	PlyVertex& CONFIDENCE(double const);
 	double INTENSITY() const;
-	PlyVertex& INTENSITY(double const INTENSITY);
+	PlyVertex& INTENSITY(double const);
 	bool operator==(PlyVertex const&) const;
 	bool operator!=(PlyVertex const&) const;
 	bool operator<(PlyVertex const&) const;
@@ -94,8 +95,6 @@ protected:
 		                    unsigned short const, unsigned short const, unsigned short const,
 		                    double const, double const, double const,
 		                    unsigned short const, double const, double const);
-	template<typename T> typename std::enable_if<std::is_arithmetic<T>::value, T>::type read_vertex_binary_le_property(fstream&) const&;
-	template<typename T> typename std::enable_if<std::is_arithmetic<T>::value, T>::type read_vertex_binary_be_property(fstream& file) const&;
 };
 
 #endif
