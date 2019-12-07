@@ -13,15 +13,15 @@
 
 #ifdef __PLY_VERTEX_H__
 
-#define read_be PlyPropertyType::read_vertex_binary_be_property
-#define read_le PlyPropertyType::read_vertex_binary_le_property
+#define read_be PlyPropertyType::read_binary_be_property
+#define read_le PlyPropertyType::read_binary_le_property
 
 PlyVertex::PlyVertex(vector<VertexName> const& names, string const& vertex)
 {
 	double X = 0, Y = 0, Z = 0;
-	unsigned short R = 0, G = 0, B = 0;
+	unsigned char R = 0, G = 0, B = 0;
 	double NX = 0, NY = 0, NZ = 0, CONFIDENCE = 1, INTENSITY = 0.5;
-	unsigned short ALPHA = 255;
+	unsigned char ALPHA = 255;
 	stringstream stream(vertex);
 	for (auto& name : names)
 	{
@@ -73,9 +73,9 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, string const& vertex)
 PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEncoding::FileEncoding const& file_encoding)
 {
 	double X = 0, Y = 0, Z = 0;
-	unsigned short R = 0, G = 0, B = 0;
+	unsigned char R = 0, G = 0, B = 0;
 	double NX = 0, NY = 0, NZ = 0, CONFIDENCE = 1, INTENSITY = 0.5;
-	unsigned short ALPHA = 255;
+	unsigned char ALPHA = 255;
 	switch (file_encoding.type) {
 	case PlyFileEncoding::FILE_ENCODING_ASCII:
 		for (auto& name : names)
@@ -364,15 +364,15 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEnco
 }
 
 
-PlyVertex::PlyVertex(double const X, double const Y, double const Z, unsigned short const R = 0, unsigned short const G = 0, unsigned short const B = 0)
+PlyVertex::PlyVertex(double const X, double const Y, double const Z, unsigned char const R = 0, unsigned char const G = 0, unsigned char const B = 0)
 {
 	this->set_all_properties(X, Y, Z, R, G, B, 0, 0, 0, 255, 1, 0.5);
 }
 
 void PlyVertex::set_all_properties(double const X, double const Y, double const Z,
-	                               unsigned short const R, unsigned short const G, unsigned short const B,
+	                               unsigned char const R, unsigned char const G, unsigned char const B,
 	                               double const NX, double const NY, double const NZ,
-	                               unsigned short const ALPHA, double const CONFIDENCE, double const INTENSITY)
+	                               unsigned char const ALPHA, double const CONFIDENCE, double const INTENSITY)
 {
 	this->__X = X;
 	this->__Y = Y;
@@ -415,29 +415,29 @@ PlyVertex& PlyVertex::Z(double const Z)
 	__Z = Z;
 	return *this;
 }
-unsigned short PlyVertex::R() const
+unsigned char PlyVertex::R() const
 {
 	return __R;
 }
-PlyVertex& PlyVertex::R(unsigned short const R)
+PlyVertex& PlyVertex::R(unsigned char const R)
 {
 	__R = R;
 	return *this;
 }
-unsigned short PlyVertex::G() const
+unsigned char PlyVertex::G() const
 {
 	return __G;
 }
-PlyVertex& PlyVertex::G(unsigned short const G)
+PlyVertex& PlyVertex::G(unsigned char const G)
 {
 	__G = G;
 	return *this;
 }
-unsigned short PlyVertex::B() const
+unsigned char PlyVertex::B() const
 {
 	return __B;
 }
-PlyVertex& PlyVertex::B(unsigned short const B)
+PlyVertex& PlyVertex::B(unsigned char const B)
 {
 	__B = B;
 	return *this;
@@ -469,11 +469,11 @@ PlyVertex& PlyVertex::NZ(double const NZ)
 	__NZ = NZ;
 	return *this;
 }
-unsigned short PlyVertex::ALPHA() const
+unsigned char PlyVertex::ALPHA() const
 {
 	return __ALPHA;
 }
-PlyVertex& PlyVertex::ALPHA(unsigned short const ALPHA)
+PlyVertex& PlyVertex::ALPHA(unsigned char const ALPHA)
 {
 	__ALPHA = ALPHA;
 	return *this;

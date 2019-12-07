@@ -33,7 +33,7 @@ public:
 	}
 
 	template<typename T>
-	static T read_vertex_binary_le_property(fstream& file)
+	static typename std::enable_if<std::is_arithmetic<T>::value, T>::type read_binary_le_property(fstream& file)
 	{
 		T p = 0;
 		file.read(reinterpret_cast<char*>(&p), sizeof(T));
@@ -41,7 +41,7 @@ public:
 	}
 
 	template<typename T>
-	static T read_vertex_binary_be_property(fstream& file)
+	static typename std::enable_if<std::is_arithmetic<T>::value, T>::type read_binary_be_property(fstream& file)
 	{
 		T p = 0;
 		file.read(reinterpret_cast<char*>(&p), sizeof(T));

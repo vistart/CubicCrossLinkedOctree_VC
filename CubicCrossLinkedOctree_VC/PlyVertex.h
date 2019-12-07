@@ -32,7 +32,7 @@ public:
 	PlyVertex() = default;
 	PlyVertex(vector<VertexName> const&, string const&);
 	PlyVertex(vector<VertexName> const&, fstream&, PlyFileEncoding::FileEncoding const&);
-	PlyVertex(double const, double const, double const, unsigned short const, unsigned short const, unsigned short const);
+	PlyVertex(double const, double const, double const, unsigned char const, unsigned char const, unsigned char const);
 	~PlyVertex() = default;
 	enum PropertyNames { PROPERTY_NONE,
 		                 PROPERTY_X, PROPERTY_Y, PROPERTY_Z,
@@ -45,20 +45,20 @@ public:
 	PlyVertex& Y(double const);
 	double Z() const;
 	PlyVertex& Z(double const);
-	unsigned short R() const;
-	PlyVertex& R(unsigned short const);
-	unsigned short G() const;
-	PlyVertex& G(unsigned short const);
-	unsigned short B() const;
-	PlyVertex& B(unsigned short const);
+	unsigned char R() const;
+	PlyVertex& R(unsigned char const);
+	unsigned char G() const;
+	PlyVertex& G(unsigned char const);
+	unsigned char B() const;
+	PlyVertex& B(unsigned char const);
 	double NX() const;
 	PlyVertex& NX(double const);
 	double NY() const;
 	PlyVertex& NY(double const);
 	double NZ() const;
 	PlyVertex& NZ(double const);
-	unsigned short ALPHA() const;
-	PlyVertex& ALPHA(unsigned short const);
+	unsigned char ALPHA() const;
+	PlyVertex& ALPHA(unsigned char const);
 	double CONFIDENCE() const;
 	PlyVertex& CONFIDENCE(double const);
 	double INTENSITY() const;
@@ -82,19 +82,19 @@ protected:
 	double __X = 0;
 	double __Y = 0;
 	double __Z = 0;
-	unsigned short __R = 0;
-	unsigned short __G = 0;
-	unsigned short __B = 0;
+	unsigned char __R = 0;
+	unsigned char __G = 0;
+	unsigned char __B = 0;
 	double __NX = 0;
 	double __NY = 0;
 	double __NZ = 0;
-	unsigned short __ALPHA = 255;
+	unsigned char __ALPHA = 255;
 	double __CONFIDENCE = 1;
 	double __INTENSITY = 0.5;
 	void set_all_properties(double const, double const, double const,
-		                    unsigned short const, unsigned short const, unsigned short const,
+		                    unsigned char const, unsigned char const, unsigned char const,
 		                    double const, double const, double const,
-		                    unsigned short const, double const, double const);
+		                    unsigned char const, double const, double const);
 };
 
 #endif
