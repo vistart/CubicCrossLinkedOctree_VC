@@ -9,10 +9,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlyFile", "PlyFile\PlyFile.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PointCloudBasePresentation", "PointCloudBasePresentation\PointCloudBasePresentation.vcxitems", "{ADD42B0F-0B43-4F01-829B-CA0CA95246FB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CubicCrossLinkedOctree", "CubicCrossLinkedOctree\CubicCrossLinkedOctree.vcxitems", "{3F00340C-1920-48DC-89D7-6A2D96D0C2DF}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CubicCrossLinkedOctree\CubicCrossLinkedOctree.vcxitems*{25a09332-c7fd-440c-8497-70e2b4a3f5d6}*SharedItemsImports = 4
 		PlyFile\PlyFile.vcxitems*{25a09332-c7fd-440c-8497-70e2b4a3f5d6}*SharedItemsImports = 4
 		PointCloudBasePresentation\PointCloudBasePresentation.vcxitems*{25a09332-c7fd-440c-8497-70e2b4a3f5d6}*SharedItemsImports = 4
+		CubicCrossLinkedOctree\CubicCrossLinkedOctree.vcxitems*{3f00340c-1920-48dc-89d7-6a2d96d0c2df}*SharedItemsImports = 9
 		PlyFile\PlyFile.vcxitems*{90508b54-ff16-45bd-bc6f-bff0cfd7203c}*SharedItemsImports = 9
 		PointCloudBasePresentation\PointCloudBasePresentation.vcxitems*{add42b0f-0b43-4f01-829b-ca0ca95246fb}*SharedItemsImports = 9
 	EndGlobalSection
