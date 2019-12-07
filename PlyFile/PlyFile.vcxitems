@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{90508b54-ff16-45bd-bc6f-bff0cfd7203c}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlyCommentList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlyEdge.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlyEdgeList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlyFace.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlyFaceList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlyFile.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlyFileEncoding.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlyPropertyType.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlyVertex.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlyVertexList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SingletonBase.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlyCommentList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlyEdge.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlyEdgeList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlyFace.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlyFaceList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlyFile.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlyFileEncoding.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlyPropertyType.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlyVertex.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlyVertexList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SingletonBase.cpp" />
+  </ItemGroup>
+</Project>

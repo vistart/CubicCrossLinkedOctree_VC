@@ -55,6 +55,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared">
+    <Import Project="..\PlyFile\PlyFile.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -152,30 +153,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CubicCrossLinkedOctree_VC.cpp" />
-    <ClCompile Include="PlyCommentList.cpp" />
-    <ClCompile Include="PlyEdge.cpp" />
-    <ClCompile Include="PlyEdgeList.cpp" />
-    <ClCompile Include="PlyFace.cpp" />
-    <ClCompile Include="PlyFaceList.cpp" />
-    <ClCompile Include="PlyFile.cpp" />
-    <ClCompile Include="PlyFileEncoding.cpp" />
-    <ClCompile Include="PlyPropertyType.cpp" />
-    <ClCompile Include="PlyVertex.cpp" />
-    <ClCompile Include="PlyVertexList.cpp" />
-    <ClCompile Include="SingletonBase.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="PlyCommentList.h" />
-    <ClInclude Include="PlyEdge.h" />
-    <ClInclude Include="PlyEdgeList.h" />
-    <ClInclude Include="PlyFace.h" />
-    <ClInclude Include="PlyFaceList.h" />
-    <ClInclude Include="PlyFile.h" />
-    <ClInclude Include="PlyFileEncoding.h" />
-    <ClInclude Include="PlyPropertyType.h" />
-    <ClInclude Include="PlyVertex.h" />
-    <ClInclude Include="PlyVertexList.h" />
-    <ClInclude Include="SingletonBase.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="LICENSE" />
