@@ -6,6 +6,9 @@
 #include <climits>
 #include <fstream>
 #include <type_traits>
+
+#define IS_LITTLE_ENDIAN (1 == *(unsigned char *)&(const int){1})
+
 using namespace std;
 class PlyPropertyType
 {
@@ -33,19 +36,33 @@ public:
 	}
 
 	template<typename T>
-	static typename std::enable_if<std::is_arithmetic<T>::value, T>::type read_binary_le_property(fstream& file)
+	static typename enable_if<is_arithmetic<T>::value, T>::type read_binary_le_property(fstream& file)
 	{
 		T p = 0;
 		file.read(reinterpret_cast<char*>(&p), sizeof(T));
+#ifdef IS_LITTLE_ENDIAN
 		return p;
+#else
+		return swap_endian<T>(p);
+#endif
 	}
 
 	template<typename T>
-	static typename std::enable_if<std::is_arithmetic<T>::value, T>::type read_binary_be_property(fstream& file)
+	static typename enable_if<is_arithmetic<T>::value, T>::type read_binary_be_property(fstream& file)
 	{
 		T p = 0;
 		file.read(reinterpret_cast<char*>(&p), sizeof(T));
+#ifdef IS_LITTLE_ENDIAN
 		return swap_endian<T>(p);
+#else
+		return p;
+#endif
 	}
+
 	static Endian check_endian();
+
+	template <int N>
+	struct TypeSelector {
+		using type = double;
+	};
 };
