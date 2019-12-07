@@ -14,15 +14,14 @@
 
 #include "PlyFileEncoding.h"
 #include "PlyPropertyType.h"
+#include "Point.h"
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include <iomanip>
-#include <type_traits>
 
 using namespace std;
 
-class PlyVertex
+class PlyVertex : Point
 {
 public:
 	struct VertexName {
@@ -39,62 +38,11 @@ public:
 		                 PROPERTY_R, PROPERTY_G, PROPERTY_B,
 		                 PROPERTY_NX, PROPERTY_NY, PROPERTY_NZ,
 		                 PROPERTY_ALPHA, PROPERTY_CONFIDENCE, PROPERTY_INTENSITY };
-	double X() const;
-	PlyVertex& X(double const);
-	double Y() const;
-	PlyVertex& Y(double const);
-	double Z() const;
-	PlyVertex& Z(double const);
-	unsigned char R() const;
-	PlyVertex& R(unsigned char const);
-	unsigned char G() const;
-	PlyVertex& G(unsigned char const);
-	unsigned char B() const;
-	PlyVertex& B(unsigned char const);
-	double NX() const;
-	PlyVertex& NX(double const);
-	double NY() const;
-	PlyVertex& NY(double const);
-	double NZ() const;
-	PlyVertex& NZ(double const);
-	unsigned char ALPHA() const;
-	PlyVertex& ALPHA(unsigned char const);
-	double CONFIDENCE() const;
-	PlyVertex& CONFIDENCE(double const);
-	double INTENSITY() const;
-	PlyVertex& INTENSITY(double const);
-	bool operator==(PlyVertex const&) const;
-	bool operator!=(PlyVertex const&) const;
-	bool operator<(PlyVertex const&) const;
-	bool operator>(PlyVertex const&) const;
 	friend ostream& operator<<(ostream& stream, PlyVertex const& vertex)
 	{
 		stream << "(" << setprecision(10) << vertex.__X << "," << setprecision(10) << vertex.__Y << "," << setprecision(10) << vertex.__Z << ")";
 		return stream;
 	}
-	void offset(double const, double const, double const);
-	bool has_RGB = false;
-	bool has_normal = false;
-	bool has_alpha = false;
-	bool has_confidence = false;
-	bool has_intensity = false;
-protected:
-	double __X = 0;
-	double __Y = 0;
-	double __Z = 0;
-	unsigned char __R = 0;
-	unsigned char __G = 0;
-	unsigned char __B = 0;
-	double __NX = 0;
-	double __NY = 0;
-	double __NZ = 0;
-	unsigned char __ALPHA = 255;
-	double __CONFIDENCE = 1;
-	double __INTENSITY = 0.5;
-	void set_all_properties(double const, double const, double const,
-		                    unsigned char const, unsigned char const, unsigned char const,
-		                    double const, double const, double const,
-		                    unsigned char const, double const, double const);
 };
 
 #endif

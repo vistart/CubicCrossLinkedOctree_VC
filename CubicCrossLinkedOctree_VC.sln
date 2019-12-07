@@ -7,10 +7,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CubicCrossLinkedOctree_VC",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlyFile", "PlyFile\PlyFile.vcxitems", "{90508B54-FF16-45BD-BC6F-BFF0CFD7203C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PointCloudBasePresentation", "PointCloudBasePresentation\PointCloudBasePresentation.vcxitems", "{ADD42B0F-0B43-4F01-829B-CA0CA95246FB}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlyFile\PlyFile.vcxitems*{25a09332-c7fd-440c-8497-70e2b4a3f5d6}*SharedItemsImports = 4
+		PointCloudBasePresentation\PointCloudBasePresentation.vcxitems*{25a09332-c7fd-440c-8497-70e2b4a3f5d6}*SharedItemsImports = 4
 		PlyFile\PlyFile.vcxitems*{90508b54-ff16-45bd-bc6f-bff0cfd7203c}*SharedItemsImports = 9
+		PointCloudBasePresentation\PointCloudBasePresentation.vcxitems*{add42b0f-0b43-4f01-829b-ca0ca95246fb}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
