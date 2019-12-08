@@ -13,6 +13,7 @@
 #define __PLY_VERTEX_LIST_H__
 
 #include "PlyVertex.h"
+#include "PointList.h"
 #include "PlyFileEncoding.h"
 #include "PlyPropertyType.h"
 #include <fstream>
@@ -20,12 +21,13 @@
 #include <vector>
 using namespace std;
 
-class PlyVertexList
+class PlyVertexList : PointList
 {
 public:
 	PlyVertexList() = default;
 	~PlyVertexList();
 	vector<PlyVertex> GetVertices() const&;
+	vector<PlyVertex> GetPoints() const&;
 	PlyVertexList& operator<<(string const&);
 	PlyVertexList& operator<<(fstream&);
 	PlyVertexList& operator<<(PlyVertex const&);
@@ -33,11 +35,11 @@ public:
 	bool read_element_vertex_names(fstream&);
 	vector<PlyVertex::VertexName> GetNames() const&;
 	PlyVertex& operator[](int const);
+	PlyVertex& back();
 	void SetCountInHeader(unsigned int const);
 	unsigned int GetCountInHeader() const;
-	PlyVertex& back();
 protected:
-	vector<PlyVertex> vertices;
+	vector<PlyVertex> points;
 	vector<PlyVertex::VertexName> names;
 	unsigned int count_in_header = 0;
 	PlyFileEncoding::FileEncoding file_encoding = { PlyFileEncoding::FILE_ENCODING_ASCII, 1.0 };

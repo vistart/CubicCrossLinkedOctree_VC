@@ -17,13 +17,14 @@
 #include "PlyFaceList.h"
 #include "PlyEdgeList.h"
 #include "PlyCommentList.h"
+#include "PointCloud.h"
 #include <fstream>
 #include <string>
 #include <vector>
 
 using namespace std;
 
-class PlyFile
+class PlyFile : PointCloud
 {
 public:
 #pragma region Constructor & Destructor
