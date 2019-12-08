@@ -21,7 +21,7 @@
 
 using namespace std;
 
-class PlyVertex : Point
+class PlyVertex : public Point
 {
 public:
 	struct VertexName {

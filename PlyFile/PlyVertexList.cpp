@@ -12,36 +12,22 @@
 #endif
 
 #ifdef __PLY_VERTEX_LIST_H__
-vector<PlyVertex::VertexName> PlyVertexList::GetNames() const&
-{
-	return names;
-}
 
 PlyVertexList::~PlyVertexList()
 {
 	points.~vector();
 }
 
-vector<PlyVertex> PlyVertexList::GetVertices() const&
-{
-	return points;
-}
-
-vector<PlyVertex> PlyVertexList::GetPoints() const&
-{
-	return points;
-}
-
 PlyVertexList& PlyVertexList::operator<<(string const& str_vertex)
 {
-	PlyVertex const vertex(GetNames(), str_vertex);
+	PlyVertex const vertex(names, str_vertex);
 	this->points.push_back(vertex);
 	return *this;
 }
 
 PlyVertexList& PlyVertexList::operator<<(fstream& file)
 {
-	PlyVertex const vertex(GetNames(), file, this->file_encoding);
+	PlyVertex const vertex(names, file, this->file_encoding);
 	this->points.push_back(vertex);
 	return *this;
 }
@@ -131,11 +117,6 @@ bool PlyVertexList::read_element_vertex_names(fstream& file)
 	return true;
 }
 
-PlyVertex& PlyVertexList::operator[](int const i)
-{
-	return points[i];
-}
-
 void PlyVertexList::SetCountInHeader(unsigned int const count)
 {
 	this->count_in_header = count;
@@ -144,10 +125,5 @@ void PlyVertexList::SetCountInHeader(unsigned int const count)
 unsigned int PlyVertexList::GetCountInHeader() const
 {
 	return this->count_in_header;
-}
-
-PlyVertex& PlyVertexList::back()
-{
-	return points.back();
 }
 #endif

@@ -162,6 +162,58 @@ bool Point::operator>(Point const& vertex) const
 	return __X > vertex.X() || __Y > vertex.Y() || __Z > vertex.Z();
 }
 
+bool Point::is_less_than(Point const& obj, Coordination coord) const
+{
+	switch (coord) {
+	case Coordination::X:
+		return this->__X < obj.X();
+
+	case Coordination::Y:
+		return this->__Y < obj.Y();
+
+	case Coordination::Z:
+		return this->__Z < obj.Z();
+	}
+}
+
+bool Point::is_equal_to(Point const& obj, Coordination coord) const
+{
+	switch (coord) {
+	case Coordination::X:
+		return this->__X == obj.X();
+
+	case Coordination::Y:
+		return this->__Y == obj.Y();
+
+	case Coordination::Z:
+		return this->__Z == obj.Z();
+	}
+}
+
+bool Point::is_greater_than(Point const& obj, Coordination coord) const
+{
+	switch (coord) {
+	case Coordination::X:
+		return this->__X > obj.X();
+
+	case Coordination::Y:
+		return this->__Y > obj.Y();
+
+	case Coordination::Z:
+		return this->__Z > obj.Z();
+	}
+}
+
+bool Point::is_equal_or_less_than(Point const& obj, Coordination coord) const
+{
+	return this->is_less_than(obj, coord) || this->is_equal_to(obj, coord);
+}
+
+bool Point::is_equal_or_greater_than(Point const& obj, Coordination coord) const
+{
+	return this->is_greater_than(obj, coord) || this->is_equal_to(obj, coord);
+}
+
 void Point::set_all_properties(double const X, double const Y, double const Z,
 	unsigned char const R, unsigned char const G, unsigned char const B,
 	double const NX, double const NY, double const NZ,

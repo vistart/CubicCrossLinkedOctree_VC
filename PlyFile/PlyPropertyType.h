@@ -10,7 +10,6 @@
 #pragma once
 #ifndef __PLY_PROPERTY_TYPE_H__
 #define __PLY_PROPERTY_TYPE_H__
-#endif
 
 #include <climits>
 #include <fstream>
@@ -75,3 +74,4 @@ public:
 		using type = double;
 	};
 };
+#endif

@@ -24,7 +24,7 @@
 
 using namespace std;
 
-class PlyFile : PointCloud
+class PlyFile : public PointCloud
 {
 public:
 #pragma region Constructor & Destructor
@@ -37,23 +37,24 @@ public:
 #pragma endregion
 
 #pragma region File Encoding
-    unique_ptr<PlyFileEncoding> FileEncoding;
+    shared_ptr<PlyFileEncoding> FileEncoding;
 #pragma endregion
 
 #pragma region Comment
-	unique_ptr<PlyCommentList> CommentList;
+	shared_ptr<PlyCommentList> CommentList;
 #pragma endregion
 
 #pragma region Vertex
-	unique_ptr<PlyVertexList> VertexList;
+	shared_ptr<PlyVertexList> VertexList;
+	shared_ptr<PlyVertexList> points;
 #pragma endregion
 
 #pragma region Face
-	unique_ptr<PlyFaceList> FaceList;
+	shared_ptr<PlyFaceList> FaceList;
 #pragma endregion
 
 #pragma region Edge
-	unique_ptr<PlyEdgeList> EdgeList;
+	shared_ptr<PlyEdgeList> EdgeList;
 #pragma endregion
 
 	bool GetIsValid();

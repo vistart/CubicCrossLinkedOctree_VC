@@ -21,26 +21,21 @@
 #include <vector>
 using namespace std;
 
-class PlyVertexList : PointList
+class PlyVertexList : public PointList
 {
 public:
 	PlyVertexList() = default;
 	~PlyVertexList();
-	vector<PlyVertex> GetVertices() const&;
-	vector<PlyVertex> GetPoints() const&;
 	PlyVertexList& operator<<(string const&);
 	PlyVertexList& operator<<(fstream&);
 	PlyVertexList& operator<<(PlyVertex const&);
 	PlyVertexList& operator<<(PlyFileEncoding const&);
 	bool read_element_vertex_names(fstream&);
-	vector<PlyVertex::VertexName> GetNames() const&;
-	PlyVertex& operator[](int const);
-	PlyVertex& back();
 	void SetCountInHeader(unsigned int const);
 	unsigned int GetCountInHeader() const;
-protected:
 	vector<PlyVertex> points;
 	vector<PlyVertex::VertexName> names;
+protected:
 	unsigned int count_in_header = 0;
 	PlyFileEncoding::FileEncoding file_encoding = { PlyFileEncoding::FILE_ENCODING_ASCII, 1.0 };
 };

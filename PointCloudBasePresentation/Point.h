@@ -10,7 +10,6 @@
 #pragma once
 #ifndef __POINT_H__
 #define __POINT_H__
-#endif
 
 #include <iostream>
 #include <iomanip>
@@ -48,6 +47,12 @@ public:
 	bool operator!=(Point const&) const;
 	bool operator<(Point const&) const;
 	bool operator>(Point const&) const;
+	enum class Coordination { X, Y, Z };
+	bool is_less_than(Point const&, Coordination) const;
+	bool is_equal_to(Point const&, Coordination) const;
+	bool is_greater_than(Point const&, Coordination) const;
+	bool is_equal_or_less_than(Point const&, Coordination) const;
+	bool is_equal_or_greater_than(Point const&, Coordination) const;
 	bool has_RGB = false;
 	bool has_normal = false;
 	bool has_alpha = false;
@@ -78,3 +83,4 @@ protected:
 							unsigned char const, double const, double const);
 };
 
+#endif

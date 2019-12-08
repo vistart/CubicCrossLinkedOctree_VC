@@ -13,4 +13,12 @@
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CubicCrossLinkedOctree.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)OctreeNode.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CubicCrossLinkedOctree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OctreeNode.h" />
+  </ItemGroup>
 </Project>

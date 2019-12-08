@@ -28,11 +28,12 @@ using namespace std;
 PlyFile::PlyFile(string file_path)
 {
 	this->filename = file_path;
-	this->FileEncoding = make_unique<PlyFileEncoding>();
-	this->CommentList = make_unique<PlyCommentList>();
-	this->VertexList = make_unique<PlyVertexList>();
-	this->EdgeList = make_unique<PlyEdgeList>();
-	this->FaceList = make_unique<PlyFaceList>();
+	this->FileEncoding = make_shared<PlyFileEncoding>();
+	this->CommentList = make_shared<PlyCommentList>();
+	this->VertexList = make_shared<PlyVertexList>();
+	this->EdgeList = make_shared<PlyEdgeList>();
+	this->FaceList = make_shared<PlyFaceList>();
+	this->points = this->VertexList;
 	open(this->filename);
 	if (read(this->file))
 		this->valid = true;
@@ -43,6 +44,7 @@ PlyFile::~PlyFile()
 	if (this->file.is_open()) {
 		this->file.close();
 	}
+	this->points = nullptr;
 	this->FaceList = nullptr;
 	this->EdgeList = nullptr;
 	this->VertexList = nullptr;
@@ -116,7 +118,7 @@ bool PlyFile::open(string file_path)
 bool PlyFile::read_element_vertex_names(fstream& file)
 {
 	(*this->VertexList).read_element_vertex_names(file);
-	PlyVertex::VertexName const back = (*this->VertexList).GetNames().back();
+	PlyVertex::VertexName const back = (*this->VertexList).names.back();
 	cout << "Property: " << back.name << " | " << back.type << endl;
 	return true;
 }
@@ -248,15 +250,12 @@ bool PlyFile::read_body(fstream& file)
 {
 	file.get(); // throw out the last character ('\n').
 	read_element_vertex_encoding(*this->FileEncoding);
-	auto& vertex_list = (*this->VertexList);
 	unsigned int const vertex_count_in_header = (*this->VertexList).GetCountInHeader();
 	for (unsigned int i = 0; i < vertex_count_in_header; i++)
 	{
 		// cout << "file pointer: " << file.tellg() << endl;
 		read_element_vertex(file);
 	}
-	auto& vertex = vertex_list.back();
-	cout << setiosflags(ios::fixed) << vertex << endl;
 	return true;
 }
 

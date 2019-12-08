@@ -16,19 +16,4 @@ PointList::~PointList()
 {
     this->points.~vector();
 }
-
-vector<Point> PointList::GetPoints() const&
-{
-	return points;
-}
-
-Point& PointList::operator[](int const i)
-{
-    return points[i];
-}
-
-Point& PointList::back()
-{
-    return points.back();
-}
 #endif

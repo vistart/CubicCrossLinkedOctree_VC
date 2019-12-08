@@ -8,16 +8,19 @@
  * @license https://vistart.me/license/
 */
 #pragma once
-#ifndef __POINT_CLOUD_H__
-#define __POINT_CLOUD_H__
+#ifndef __OCTREE_NODE_H__
+#define __OCTREE_NODE_H__
 
-#include "PointList.h"
-
-class PointCloud
+#include <memory>
+#include <vector>
+using namespace std;
+class OctreeNode
 {
 public:
-    PointCloud();
-    ~PointCloud();
-    shared_ptr<PointList> points;
+    OctreeNode();
+    ~OctreeNode();
+protected:
+    bool is_leaf = true;
+    vector<unique_ptr<OctreeNode>> nodes;
 };
 #endif

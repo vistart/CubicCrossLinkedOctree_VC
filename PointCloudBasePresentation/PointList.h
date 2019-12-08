@@ -11,8 +11,6 @@
 
 #ifndef __POINT_LIST_H__
 #define __POINT_LIST_H__
-#endif
-
 #include "Point.h"
 #include <vector>
 
@@ -23,10 +21,8 @@ class PointList
 public:
     PointList() = default;
     ~PointList();
-    vector<Point> GetPoints() const&;
-    Point& operator[](int const);
-    Point& back();
-protected:
     vector<Point> points;
 };
+#endif
+
 

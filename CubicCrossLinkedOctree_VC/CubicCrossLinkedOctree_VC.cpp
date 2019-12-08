@@ -10,6 +10,7 @@
 */
 //
 #include "PlyFile.h"
+#include "CubicCrossLinkedOctree.h"
 #include <iostream>
 #include <memory>
 
@@ -23,7 +24,10 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 	string file_path(argv[1]);
-	unique_ptr<PlyFile> plyfile = make_unique<PlyFile>(file_path);
+	shared_ptr<PlyFile> plyfile = make_shared<PlyFile>(file_path);
+    shared_ptr<PlyVertexList> points_list = plyfile->points;
+    cout << "The last point is: " << points_list->points.back() << endl;
+    unique_ptr<CubicCrossLinkedOctree> octree = make_unique<CubicCrossLinkedOctree>(points_list);
     //cout << "Hello World!\n";
     return 0;
 }
