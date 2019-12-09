@@ -59,6 +59,7 @@ public:
 	bool has_confidence = false;
 	bool has_intensity = false;
 	void offset(double const, double const, double const);
+	double offset_of(double const, Coordination) const;
 	friend ostream& operator<<(ostream& stream, Point const& point)
 	{
 		stream << "(" << setprecision(10) << point.__X << "," << setprecision(10) << point.__Y << "," << setprecision(10) << point.__Z << ")";

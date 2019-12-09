@@ -239,4 +239,19 @@ void Point::offset(double const offset_x, double const offset_y, double const of
 	__Y += offset_y;
 	__Z += offset_z;
 }
+
+double Point::offset_of(double const offset , Coordination coord) const
+{
+	switch (coord)
+	{
+	case Coordination::X:
+		return __X - offset;
+	case Coordination::Y:
+		return __Y - offset;
+	case Coordination::Z:
+		return __Z - offset;
+	}
+	return 0;
+}
+
 #endif
