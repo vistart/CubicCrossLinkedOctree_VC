@@ -25,9 +25,9 @@ int main(int argc, char* argv[])
 	}
 	string file_path(argv[1]);
 	shared_ptr<PlyFile> plyfile = make_shared<PlyFile>(file_path);
-    shared_ptr<PlyVertexList> points_list = plyfile->points;
-    cout << "The last point is: " << points_list->points.back() << endl;
-    unique_ptr<CubicCrossLinkedOctree> octree = make_unique<CubicCrossLinkedOctree>(points_list);
+    PlyVertexList const &point_list = *plyfile->points;
+    cout << "The last point is: " << point_list.points.back() << endl;
+    CubicCrossLinkedOctree octree(point_list);
     //cout << "Hello World!\n";
     return 0;
 }

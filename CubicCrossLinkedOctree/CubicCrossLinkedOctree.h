@@ -13,15 +13,20 @@
 
 #include "PointList.h"
 #include "PlyFile.h"
+#include "OctreeNode.h"
+#include <algorithm>
+#include <tuple>
+#include <unordered_map>
 
 class CubicCrossLinkedOctree
 {
 public:
     CubicCrossLinkedOctree();
-    CubicCrossLinkedOctree(shared_ptr<PlyVertexList>);
+    CubicCrossLinkedOctree(PlyVertexList const&);
     ~CubicCrossLinkedOctree();
-    bool compare_coordination_X(Point a, Point b);
-    bool compare_coordination_Y(Point a, Point b);
-    bool compare_coordination_Z(Point a, Point b);
+protected:
+private:
+    tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> find_boundry(PlyVertexList const&);
+    double find_max_range(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const&) const;
 };
 #endif
