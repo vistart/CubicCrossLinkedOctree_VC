@@ -19,12 +19,12 @@ class Point
 public:
 	Point() = default;
 	~Point() = default;
-	double X() const;
-	Point& X(double const);
-	double Y() const;
-	Point& Y(double const);
-	double Z() const;
-	Point& Z(double const);
+	double X() const noexcept;
+	Point& X(double const) noexcept;
+	double Y() const noexcept;
+	Point& Y(double const) noexcept;
+	double Z() const noexcept;
+	Point& Z(double const) noexcept;
 	unsigned char R() const;
 	Point& R(unsigned char const);
 	unsigned char G() const;
@@ -48,18 +48,18 @@ public:
 	bool operator<(Point const&) const;
 	bool operator>(Point const&) const;
 	enum class Coordination { X, Y, Z };
-	bool is_less_than(Point const&, Coordination) const;
-	bool is_equal_to(Point const&, Coordination) const;
-	bool is_greater_than(Point const&, Coordination) const;
-	bool is_equal_or_less_than(Point const&, Coordination) const;
-	bool is_equal_or_greater_than(Point const&, Coordination) const;
+	bool is_less_than(Point const&, Coordination const&) const;
+	bool is_equal_to(Point const&, Coordination const&) const;
+	bool is_greater_than(Point const&, Coordination const&) const;
+	bool is_equal_or_less_than(Point const&, Coordination const&) const;
+	bool is_equal_or_greater_than(Point const&, Coordination const&) const;
 	bool has_RGB = false;
 	bool has_normal = false;
 	bool has_alpha = false;
 	bool has_confidence = false;
 	bool has_intensity = false;
 	void offset(double const, double const, double const);
-	double offset_of(double const, Coordination) const;
+	double offset_of(double const, Coordination const&) const;
 	friend ostream& operator<<(ostream& stream, Point const& point)
 	{
 		stream << "(" << setprecision(10) << point.__X << "," << setprecision(10) << point.__Y << "," << setprecision(10) << point.__Z << ")";
@@ -82,6 +82,8 @@ protected:
 						    unsigned char const, unsigned char const, unsigned char const,
 							double const, double const, double const,
 							unsigned char const, double const, double const);
+private:
+	const char* coord_no_out_of_range_message = "The coordination system code is out of range.";
 };
 
 #endif

@@ -12,29 +12,30 @@
 #endif
 
 #ifdef __POINT_H__
-double Point::X() const
+#include <exception>
+double Point::X() const noexcept
 {
 	return __X;
 }
-Point& Point::X(double const X)
+Point& Point::X(double const X) noexcept
 {
 	__X = X;
 	return *this;
 }
-double Point::Y() const
+double Point::Y() const noexcept
 {
 	return __Y;
 }
-Point& Point::Y(double const Y)
+Point& Point::Y(double const Y) noexcept
 {
 	__Y = Y;
 	return *this;
 }
-double Point::Z() const
+double Point::Z() const noexcept
 {
 	return __Z;
 }
-Point& Point::Z(double const Z)
+Point& Point::Z(double const Z) noexcept
 {
 	__Z = Z;
 	return *this;
@@ -162,7 +163,7 @@ bool Point::operator>(Point const& vertex) const
 	return __X > vertex.X() || __Y > vertex.Y() || __Z > vertex.Z();
 }
 
-bool Point::is_less_than(Point const& obj, Coordination coord) const
+bool Point::is_less_than(Point const& obj, Coordination const& coord) const
 {
 	switch (coord) {
 	case Coordination::X:
@@ -174,9 +175,10 @@ bool Point::is_less_than(Point const& obj, Coordination coord) const
 	case Coordination::Z:
 		return this->__Z < obj.Z();
 	}
+	throw exception(coord_no_out_of_range_message);
 }
 
-bool Point::is_equal_to(Point const& obj, Coordination coord) const
+bool Point::is_equal_to(Point const& obj, Coordination const& coord) const
 {
 	switch (coord) {
 	case Coordination::X:
@@ -188,9 +190,10 @@ bool Point::is_equal_to(Point const& obj, Coordination coord) const
 	case Coordination::Z:
 		return this->__Z == obj.Z();
 	}
+	throw exception(coord_no_out_of_range_message);
 }
 
-bool Point::is_greater_than(Point const& obj, Coordination coord) const
+bool Point::is_greater_than(Point const& obj, Coordination const& coord) const
 {
 	switch (coord) {
 	case Coordination::X:
@@ -202,14 +205,15 @@ bool Point::is_greater_than(Point const& obj, Coordination coord) const
 	case Coordination::Z:
 		return this->__Z > obj.Z();
 	}
+	throw exception(coord_no_out_of_range_message);
 }
 
-bool Point::is_equal_or_less_than(Point const& obj, Coordination coord) const
+bool Point::is_equal_or_less_than(Point const& obj, Coordination const& coord) const
 {
 	return this->is_less_than(obj, coord) || this->is_equal_to(obj, coord);
 }
 
-bool Point::is_equal_or_greater_than(Point const& obj, Coordination coord) const
+bool Point::is_equal_or_greater_than(Point const& obj, Coordination const& coord) const
 {
 	return this->is_greater_than(obj, coord) || this->is_equal_to(obj, coord);
 }
@@ -240,7 +244,7 @@ void Point::offset(double const offset_x, double const offset_y, double const of
 	__Z += offset_z;
 }
 
-double Point::offset_of(double const offset , Coordination coord) const
+double Point::offset_of(double const offset , Coordination const& coord) const
 {
 	switch (coord)
 	{
@@ -251,7 +255,7 @@ double Point::offset_of(double const offset , Coordination coord) const
 	case Coordination::Z:
 		return __Z - offset;
 	}
-	return 0;
+	throw exception(coord_no_out_of_range_message);
 }
 
 #endif
