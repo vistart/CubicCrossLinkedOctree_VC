@@ -13,11 +13,20 @@
 
 #include "PointList.h"
 
+template <typename T, typename TPoint, typename = typename enable_if<is_base_of<PointList<TPoint>, T>::value>::type>
 class PointCloud
 {
 public:
-    PointCloud();
-    ~PointCloud();
-    shared_ptr<PointList> points;
+    PointCloud() {
+        this->point_list = make_shared<T>();
+    }
+    ~PointCloud() {
+        this->point_list = nullptr;
+    }
+    virtual shared_ptr<T> GetPointList() {
+        return this->point_list;
+    }
+private:
+    shared_ptr<T> point_list;
 };
 #endif

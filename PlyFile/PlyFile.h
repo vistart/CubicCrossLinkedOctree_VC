@@ -24,7 +24,7 @@
 
 using namespace std;
 
-class PlyFile : public PointCloud
+class PlyFile : public PointCloud<PlyVertexList, PlyVertex>
 {
 public:
 #pragma region Constructor & Destructor
@@ -45,8 +45,7 @@ public:
 #pragma endregion
 
 #pragma region Vertex
-	shared_ptr<PlyVertexList> VertexList;
-	shared_ptr<PlyVertexList> points;
+	shared_ptr<PlyVertexList> GetPointList();
 #pragma endregion
 
 #pragma region Face
@@ -87,6 +86,7 @@ protected:
 	bool read_element_vertex_names(fstream&);
 	bool read_element_vertex_encoding(PlyFileEncoding const&);
 	bool read_element_vertex(fstream&);
+	shared_ptr<PlyVertexList> point_list;
 #pragma endregion
 
 #pragma region Face

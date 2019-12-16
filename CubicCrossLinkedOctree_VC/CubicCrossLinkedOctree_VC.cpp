@@ -24,10 +24,10 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 	string file_path(argv[1]);
-	shared_ptr<PlyFile> plyfile = make_shared<PlyFile>(file_path);
-    PlyVertexList const &point_list = *plyfile->points;
-    cout << "The last point is: " << point_list.points.back() << endl;
-    CubicCrossLinkedOctree octree(point_list);
+	const auto plyfile = make_shared<PlyFile>(file_path);
+    const auto point_list = plyfile->GetPointList();
+    cout << "The last point is: " << point_list->GetPoints()->back() << endl;
+    CubicCrossLinkedOctree<PlyVertexList, PlyVertex> octree(point_list);
     //cout << "Hello World!\n";
     return 0;
 }

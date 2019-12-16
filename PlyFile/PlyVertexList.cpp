@@ -13,28 +13,38 @@
 
 #ifdef __PLY_VERTEX_LIST_H__
 
+shared_ptr<vector<PlyVertex>> PlyVertexList::GetPoints()
+{
+	return this->points;
+}
+
+PlyVertexList::PlyVertexList()
+{
+	this->points = make_shared<vector<PlyVertex>>();
+}
+
 PlyVertexList::~PlyVertexList()
 {
-	points.~vector();
+	this->points = nullptr;
 }
 
 PlyVertexList& PlyVertexList::operator<<(string const& str_vertex)
 {
 	PlyVertex const vertex(names, str_vertex);
-	this->points.push_back(vertex);
+	this->points->push_back(vertex);
 	return *this;
 }
 
 PlyVertexList& PlyVertexList::operator<<(fstream& file)
 {
 	PlyVertex const vertex(names, file, this->file_encoding);
-	this->points.push_back(vertex);
+	this->points->push_back(vertex);
 	return *this;
 }
 
 PlyVertexList& PlyVertexList::operator<<(PlyVertex const& vertex)
 {
-	this->points.push_back(vertex);
+	this->points->push_back(vertex);
 	return *this;
 }
 

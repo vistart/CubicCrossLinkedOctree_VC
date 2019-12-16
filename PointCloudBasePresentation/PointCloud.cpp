@@ -12,13 +12,4 @@
 #endif
 
 #ifdef __POINT_CLOUD_H__
-PointCloud::PointCloud()
-{
-    this->points = make_unique<PointList>();
-}
-
-PointCloud::~PointCloud()
-{
-    this->points = nullptr;
-}
 #endif

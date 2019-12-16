@@ -30,10 +30,9 @@ PlyFile::PlyFile(string file_path)
 	this->filename = file_path;
 	this->FileEncoding = make_shared<PlyFileEncoding>();
 	this->CommentList = make_shared<PlyCommentList>();
-	this->VertexList = make_shared<PlyVertexList>();
+	this->point_list = make_shared<PlyVertexList>();
 	this->EdgeList = make_shared<PlyEdgeList>();
 	this->FaceList = make_shared<PlyFaceList>();
-	this->points = this->VertexList;
 	open(this->filename);
 	if (read(this->file))
 		this->valid = true;
@@ -44,10 +43,9 @@ PlyFile::~PlyFile()
 	if (this->file.is_open()) {
 		this->file.close();
 	}
-	this->points = nullptr;
 	this->FaceList = nullptr;
 	this->EdgeList = nullptr;
-	this->VertexList = nullptr;
+	this->point_list = nullptr;
 	this->CommentList = nullptr;
 	this->FileEncoding = nullptr;
 	this->filename = "";
@@ -117,24 +115,29 @@ bool PlyFile::open(string file_path)
 #pragma region Vertex
 bool PlyFile::read_element_vertex_names(fstream& file)
 {
-	(*this->VertexList).read_element_vertex_names(file);
-	PlyVertex::VertexName const back = (*this->VertexList).names.back();
+	this->point_list->read_element_vertex_names(file);
+	PlyVertex::VertexName const back = this->point_list->names.back();
 	cout << "Property: " << back.name << " | " << back.type << endl;
 	return true;
 }
 
 bool PlyFile::read_element_vertex_encoding(PlyFileEncoding const& file_encoding)
 {
-	auto& vertex_list = *this->VertexList;
+	auto& vertex_list = *this->point_list;
 	vertex_list << file_encoding;
 	return true;
 }
 
 bool PlyFile::read_element_vertex(fstream& file)
 {
-	auto& vertex_list = *this->VertexList;
+	auto& vertex_list = *this->point_list;
 	vertex_list << file;
 	return true;
+}
+
+shared_ptr<PlyVertexList> PlyFile::GetPointList()
+{
+	return this->point_list;
 }
 #pragma endregion
 
@@ -221,8 +224,9 @@ bool PlyFile::read_header(fstream& file)
 
 			if (element_name == "vertex") {
 				current_elements = VERTEX;
-				(*this->VertexList).SetCountInHeader(element_count);
-				cout << "Element: " << element_name << (*this->VertexList).GetCountInHeader() << endl;
+				auto point_list = this->GetPointList();
+				point_list->SetCountInHeader(element_count);
+				cout << "Element: " << element_name << point_list->GetCountInHeader() << endl;
 				continue;
 			}
 
@@ -250,7 +254,7 @@ bool PlyFile::read_body(fstream& file)
 {
 	file.get(); // throw out the last character ('\n').
 	read_element_vertex_encoding(*this->FileEncoding);
-	unsigned int const vertex_count_in_header = (*this->VertexList).GetCountInHeader();
+	unsigned int const vertex_count_in_header = this->GetPointList()->GetCountInHeader();
 	for (unsigned int i = 0; i < vertex_count_in_header; i++)
 	{
 		// cout << "file pointer: " << file.tellg() << endl;

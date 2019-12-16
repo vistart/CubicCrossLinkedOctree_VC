@@ -12,8 +12,4 @@
 #endif
 
 #ifdef __POINT_LIST_H__
-PointList::~PointList()
-{
-    this->points.~vector();
-}
 #endif
