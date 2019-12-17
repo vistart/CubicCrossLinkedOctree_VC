@@ -18,6 +18,7 @@
 #include <bitset>
 #include <cmath>
 #include <iostream>
+#include <map>
 #include <tuple>
 #include <unordered_map>
 
@@ -67,6 +68,7 @@ public:
     }
     ~CubicCrossLinkedOctree() = default;
 protected:
+    map<tuple<unsigned int, unsigned int, unsigned int>, OctreeNode> nodes;
 private:
     tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> find_boundry(shared_ptr<T> const& point_list)
     {
