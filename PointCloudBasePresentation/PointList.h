@@ -12,6 +12,7 @@
 #ifndef __POINT_LIST_H__
 #define __POINT_LIST_H__
 #include "Point.h"
+#include <memory>
 #include <type_traits>
 #include <vector>
 

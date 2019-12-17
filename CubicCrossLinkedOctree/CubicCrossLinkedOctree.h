@@ -11,12 +11,13 @@
 #ifndef __CUBIC_CROSS_LINKED_OCTREE_H__
 #define __CUBIC_CROSS_LINKED_OCTREE_H__
 
-#include "PointList.h"
-#include "PlyFile.h"
 #include "OctreeNode.h"
-#include <bitset>
-#include <iostream>
+#include "PlyFile.h"
+#include "PointList.h"
 #include <algorithm>
+#include <bitset>
+#include <cmath>
+#include <iostream>
 #include <tuple>
 #include <unordered_map>
 
@@ -36,20 +37,24 @@ public:
         tie(x_range_min, x_range_max) = x_range;
         tie(y_range_min, y_range_max) = y_range;
         tie(z_range_min, z_range_max) = z_range;
+        const auto x_mid = (x_range_max + x_range_min) / 2;
+        const auto y_mid = (y_range_max + y_range_min) / 2;
+        const auto z_mid = (z_range_max + z_range_min) / 2;
         const auto max_range = find_max_range(boundries);
 
-        cout << "X-axis extended range: " << setprecision(8) << x_range_min << " to " << setprecision(8) << x_range_max << endl;
-        cout << "Y-axis extended range: " << setprecision(8) << y_range_min << " to " << setprecision(8) << y_range_max << endl;
-        cout << "Z-axis extended range: " << setprecision(8) << z_range_min << " to " << setprecision(8) << z_range_max << endl;
-
         const unsigned char depth = 8; // The depth range is limited to between 1 and 31.
-        double leaf_width = max_range / pow(2, depth);
+        double leaf_width = max_range / (pow(2, depth) - 1);
+
+        cout << "Max extended range: " << setprecision(8) << max_range + leaf_width << endl;
+        cout << "X-axis extended range: " << setprecision(8) << x_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << x_mid + (max_range + leaf_width) / 2 << endl;
+        cout << "Y-axis extended range: " << setprecision(8) << y_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << y_mid + (max_range + leaf_width) / 2 << endl;
+        cout << "Z-axis extended range: " << setprecision(8) << z_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << z_mid + (max_range + leaf_width) / 2 << endl;
 
         cout << "Leaf node width: " << leaf_width << endl;
         auto& last = point_list->GetPoints()->back();
-        const auto offset_of_x = last.offset_of(x_range_min, Point::Coordination::X);
-        const auto offset_of_y = last.offset_of(y_range_min, Point::Coordination::Y);
-        const auto offset_of_z = last.offset_of(z_range_min, Point::Coordination::Z);
+        const auto offset_of_x = last.offset_of(x_mid - (max_range + leaf_width) / 2, Point::Coordination::X);
+        const auto offset_of_y = last.offset_of(y_mid - (max_range + leaf_width) / 2, Point::Coordination::Y);
+        const auto offset_of_z = last.offset_of(z_mid - (max_range + leaf_width) / 2, Point::Coordination::Z);
         const auto x_th = (int)(offset_of_x / leaf_width);
         const auto y_th = (int)(offset_of_y / leaf_width);
         const auto z_th = (int)(offset_of_z / leaf_width);
