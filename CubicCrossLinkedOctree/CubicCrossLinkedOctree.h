@@ -37,7 +37,6 @@ public:
         tie(x_mid, y_mid, z_mid) = middle_point;
         const auto max_range = find_max_range(boundries);
 
-        const unsigned char depth = 10; // The depth range is limited to between 1 and 31.
         double leaf_width = max_range / (pow(2, depth) - 1);
 
         cout << "Max extended range: " << setprecision(8) << max_range + leaf_width << endl;
@@ -52,13 +51,33 @@ public:
             insert_point(node_coordinate, i);
         }
 
-        //unordered_map<tuple<unsigned int, unsigned int, unsigned int>, OctreeNode> cubic;
-        //cubic.insert(new tuple<unsigned int, unsigned int, unsigned int>(x_th, y_th, z_th), new OctreeNode());
+        print_nodes_stats();
     }
     ~CubicCrossLinkedOctree() = default;
 protected:
     OctreeNode::node_type nodes;
 private:
+    unsigned char depth = 12; // The depth range is limited to between 1 and 31.
+    void print_nodes_stats()
+    {
+        cout << "Octree Stats:" << endl;
+        unsigned int count = 0;
+        map<unsigned int, unsigned int> count_per_node;
+        for (auto &p : this->nodes)
+        {
+            count += p.second.GetLeaves().size();
+            auto [iterator, success] = count_per_node.try_emplace(p.second.GetLeaves().size(), 1);
+            if (!success) {
+                iterator->second++;
+            }
+        }
+        cout << "Nodes: " << this->nodes.size() << ", Depth: " << (int)depth << ", Average Density: " << (float)count / this->nodes.size() << endl;
+        for (auto& c : count_per_node)
+        {
+            cout << "Count (" << c.first << "): " << c.second << endl;
+        }
+        cout << endl;
+    }
     void insert_point(OctreeNode::NodeCoordinate const& node_coordinate, unsigned int const index)
     {
         auto [iterator, success] = nodes.try_emplace(node_coordinate, index);

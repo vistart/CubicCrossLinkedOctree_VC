@@ -49,6 +49,14 @@ public:
             return stream;
         }
     }
+    OctreeNode* operator[](unsigned int const index) const
+    {
+        return &(*(*this->nodes)[index]);
+    }
+    set<unsigned int> GetLeaves() const
+    {
+        return *this->leaves;
+    }
 protected:
     bool is_leaf = true;
     unique_ptr<set<unsigned int>> leaves;
