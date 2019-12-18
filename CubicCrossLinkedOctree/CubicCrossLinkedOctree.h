@@ -31,19 +31,13 @@ public:
     CubicCrossLinkedOctree() = default;
     CubicCrossLinkedOctree(shared_ptr<T> const& point_list)
     {
-        double x_range_min, x_range_max, y_range_min, y_range_max, z_range_min, z_range_max;
-        tuple<double, double> x_range, y_range, z_range;
         const auto boundries = find_boundry(point_list);
-        tie(x_range, y_range, z_range) = boundries;
-        tie(x_range_min, x_range_max) = x_range;
-        tie(y_range_min, y_range_max) = y_range;
-        tie(z_range_min, z_range_max) = z_range;
-        const auto x_mid = (x_range_max + x_range_min) / 2;
-        const auto y_mid = (y_range_max + y_range_min) / 2;
-        const auto z_mid = (z_range_max + z_range_min) / 2;
+        const auto middle_point = OctreeNode::find_middle_point(boundries);
+        double x_mid, y_mid, z_mid;
+        tie(x_mid, y_mid, z_mid) = middle_point;
         const auto max_range = find_max_range(boundries);
 
-        const unsigned char depth = 8; // The depth range is limited to between 1 and 31.
+        const unsigned char depth = 10; // The depth range is limited to between 1 and 31.
         double leaf_width = max_range / (pow(2, depth) - 1);
 
         cout << "Max extended range: " << setprecision(8) << max_range + leaf_width << endl;
@@ -52,24 +46,26 @@ public:
         cout << "Z-axis extended range: " << setprecision(8) << z_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << z_mid + (max_range + leaf_width) / 2 << endl;
 
         cout << "Leaf node width: " << leaf_width << endl;
-        auto& last = point_list->GetPoints()->back();
-        const auto offset_of_x = last.offset_of(x_mid - (max_range + leaf_width) / 2, Point::Coordination::X);
-        const auto offset_of_y = last.offset_of(y_mid - (max_range + leaf_width) / 2, Point::Coordination::Y);
-        const auto offset_of_z = last.offset_of(z_mid - (max_range + leaf_width) / 2, Point::Coordination::Z);
-        const auto x_th = (int)(offset_of_x / leaf_width);
-        const auto y_th = (int)(offset_of_y / leaf_width);
-        const auto z_th = (int)(offset_of_z / leaf_width);
-        cout << "Offset of last point in X: " << offset_of_x << " X-th: " << x_th << " binary: " << bitset<depth>(x_th) << endl;
-        cout << "Offset of last point in Y: " << offset_of_y << " Y-th: " << y_th << " binary: " << bitset<depth>(y_th) << endl;
-        cout << "Offset of last point in Z: " << offset_of_z << " Z-th: " << z_th << " binary: " << bitset<depth>(z_th) << endl;
+        for (auto i = 0; i < point_list->GetPoints()->size(); i++) {
+            auto& point = (*point_list->GetPoints())[i];
+            const auto& node_coordinate = OctreeNode::find_node_coordinate(point, middle_point, max_range, depth);
+            insert_point(node_coordinate, i);
+        }
 
         //unordered_map<tuple<unsigned int, unsigned int, unsigned int>, OctreeNode> cubic;
         //cubic.insert(new tuple<unsigned int, unsigned int, unsigned int>(x_th, y_th, z_th), new OctreeNode());
     }
     ~CubicCrossLinkedOctree() = default;
 protected:
-    map<tuple<unsigned int, unsigned int, unsigned int>, OctreeNode> nodes;
+    OctreeNode::node_type nodes;
 private:
+    void insert_point(OctreeNode::NodeCoordinate const& node_coordinate, unsigned int const index)
+    {
+        auto [iterator, success] = nodes.try_emplace(node_coordinate, index);
+        if (!success) {
+            iterator->second.insert(index);
+        }
+    }
     tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> find_boundry(shared_ptr<T> const& point_list)
     {
         const auto comp_x = [](const Point& a, const Point& b) {return a.is_less_than(b, Point::Coordination::X); };
@@ -112,12 +108,10 @@ private:
     }
     double find_max_range(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundries) const
     {
-        double x_range_min, x_range_max, y_range_min, y_range_max, z_range_min, z_range_max;
-        tuple<double, double> x_range, y_range, z_range;
-        tie(x_range, y_range, z_range) = boundries;
-        tie(x_range_min, x_range_max) = x_range;
-        tie(y_range_min, y_range_max) = y_range;
-        tie(z_range_min, z_range_max) = z_range;
+        auto [x_range, y_range, z_range] = boundries;
+        auto [x_range_min, x_range_max] = x_range;
+        auto [y_range_min, y_range_max] = y_range;
+        auto [z_range_min, z_range_max] = z_range;
         return max(x_range_max - x_range_min, max(y_range_max - y_range_min, z_range_max - z_range_min));
     }
 };
