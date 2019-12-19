@@ -41,7 +41,7 @@ public:
         tie(x_mid, y_mid, z_mid) = middle_point;
         const auto max_range = find_max_range(boundries);
 
-        double leaf_width = max_range / (pow(2, depth) - 1);
+        double leaf_width = max_range / ((1 << depth) - 1);
 
         cout << "Max extended range: " << setprecision(8) << max_range + leaf_width << endl;
         cout << "X-axis extended range: " << setprecision(8) << x_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << x_mid + (max_range + leaf_width) / 2 << endl;
@@ -65,8 +65,8 @@ private:
     void print_nodes_stats()
     {
         cout << "Octree Stats:" << endl;
-        unsigned int count = 0;
-        map<unsigned int, unsigned int> count_per_node;
+        size_t count = 0;
+        map<size_t, unsigned int> count_per_node;
         for (auto &p : this->nodes)
         {
             count += p.second.GetLeaves().size();
