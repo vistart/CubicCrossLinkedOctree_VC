@@ -37,25 +37,26 @@ public:
         this->depth = depth;
         const auto boundries = find_boundry(point_list);
         const auto middle_point = OctreeNode::find_middle_point(boundries);
-        double x_mid, y_mid, z_mid;
-        tie(x_mid, y_mid, z_mid) = middle_point;
+        auto [x_mid, y_mid, z_mid] = middle_point;
         const auto max_range = find_max_range(boundries);
 
         double leaf_width = max_range / ((1 << depth) - 1);
-
+#if _DEBUG
         cout << "Max extended range: " << setprecision(8) << max_range + leaf_width << endl;
         cout << "X-axis extended range: " << setprecision(8) << x_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << x_mid + (max_range + leaf_width) / 2 << endl;
         cout << "Y-axis extended range: " << setprecision(8) << y_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << y_mid + (max_range + leaf_width) / 2 << endl;
         cout << "Z-axis extended range: " << setprecision(8) << z_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << z_mid + (max_range + leaf_width) / 2 << endl;
 
         cout << "Leaf node width: " << leaf_width << endl;
+#endif
         for (auto i = 0; i < point_list->GetPoints()->size(); i++) {
             auto& point = (*point_list->GetPoints())[i];
             const auto& node_coordinate = OctreeNode::find_node_coordinate(point, middle_point, max_range, depth);
             insert_point(node_coordinate, i);
         }
-
+#if _DEBUG
         print_nodes_stats();
+#endif
     }
     ~CubicCrossLinkedOctree() = default;
 protected:
@@ -102,6 +103,7 @@ private:
         const auto y_max = max_element(begin, end, comp_y);
         const auto z_min = min_element(begin, end, comp_z);
         const auto z_max = max_element(begin, end, comp_z);
+#if _DEBUG
         cout << fixed;
         cout << "X-axis lowest boundry:  " << setprecision(0) << "[" << distance(begin, x_min) << "]" << setprecision(8) << (*x_min).X() << endl;
         cout << "X-axis highest boundry: " << setprecision(0) << "[" << distance(begin, x_max) << "]" << setprecision(8) << (*x_max).X() << endl;
@@ -109,18 +111,22 @@ private:
         cout << "Y-axis highest boundry: " << setprecision(0) << "[" << distance(begin, y_max) << "]" << setprecision(8) << (*y_max).Y() << endl;
         cout << "Z-axis lowest boundry:  " << setprecision(0) << "[" << distance(begin, z_min) << "]" << setprecision(8) << (*z_min).Z() << endl;
         cout << "Z-axis highest boundry: " << setprecision(0) << "[" << distance(begin, z_max) << "]" << setprecision(8) << (*z_max).Z() << endl;
+#endif
         const auto x_range = (*x_max).X() - (*x_min).X();
         const auto y_range = (*y_max).Y() - (*y_min).Y();
         const auto z_range = (*z_max).Z() - (*z_min).Z();
         const auto x_mid = ((*x_max).X() + (*x_min).X()) / 2;
         const auto y_mid = ((*y_max).Y() + (*y_min).Y()) / 2;
         const auto z_mid = ((*z_max).Z() + (*z_min).Z()) / 2;
+#if _DEBUG
         cout << "X-axis range: " << setprecision(8) << x_range << " middle point: " << setprecision(8) << x_mid << endl;
         cout << "Y-axis range: " << setprecision(8) << y_range << " middle point: " << setprecision(8) << y_mid << endl;
         cout << "Z-axis range: " << setprecision(8) << z_range << " middle point: " << setprecision(8) << z_mid << endl;
-
+#endif
         const auto max_range = max(x_range, max(y_range, z_range));
+#if _DEBUG
         cout << "Max range: " << setprecision(8) << max_range << endl;
+#endif
         const auto x_range_min = x_mid - max_range / 2;
         const auto x_range_max = x_mid + max_range / 2;
         const auto y_range_min = y_mid - max_range / 2;
