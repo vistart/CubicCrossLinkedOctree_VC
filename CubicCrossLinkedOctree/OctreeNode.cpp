@@ -68,14 +68,6 @@ void OctreeNode::insert(unsigned int const& index)
 
 OctreeNode::NodeCoordinate OctreeNode::find_node_coordinate(Point const& point, OctreeNode::PointCoordinate const& middle_point, double const& max_range, unsigned char const depth = 8)
 {
-    /*
-    if (depth < 1 || depth > 31) {
-        throw "The depth out of range. It should be an integer from 1 to 31.";
-    }
-    if (max_range <= 0) {
-        throw "The max_range shouldn't be negative or zero.";
-    }
-    */
     double leaf_width = max_range / (pow(2, depth) - 1);
     auto [x_mid, y_mid, z_mid] = middle_point;
     const auto offset_of_x = point.offset_of(x_mid - (max_range + leaf_width) / 2, Point::Coordination::X);

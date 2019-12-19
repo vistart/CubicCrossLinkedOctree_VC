@@ -29,8 +29,12 @@ class CubicCrossLinkedOctree
 {
 public:
     CubicCrossLinkedOctree() = default;
-    CubicCrossLinkedOctree(shared_ptr<T> const& point_list)
+    CubicCrossLinkedOctree(shared_ptr<T> const& point_list, unsigned char depth = 12)
     {
+        if (depth < 1 || depth > 31) {
+            throw "The depth out of range. It should be an integer from 1 to 31.";
+        }
+        this->depth = depth;
         const auto boundries = find_boundry(point_list);
         const auto middle_point = OctreeNode::find_middle_point(boundries);
         double x_mid, y_mid, z_mid;
