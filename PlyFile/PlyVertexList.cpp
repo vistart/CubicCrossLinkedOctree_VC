@@ -31,20 +31,20 @@ PlyVertexList::~PlyVertexList()
 PlyVertexList& PlyVertexList::operator<<(string const& str_vertex)
 {
 	PlyVertex const vertex(names, str_vertex);
-	this->points->push_back(vertex);
+	this->points->emplace_back(vertex);
 	return *this;
 }
 
 PlyVertexList& PlyVertexList::operator<<(fstream& file)
 {
 	PlyVertex const vertex(names, file, this->file_encoding);
-	this->points->push_back(vertex);
+	this->points->emplace_back(vertex);
 	return *this;
 }
 
 PlyVertexList& PlyVertexList::operator<<(PlyVertex const& vertex)
 {
-	this->points->push_back(vertex);
+	this->points->emplace_back(vertex);
 	return *this;
 }
 
@@ -123,7 +123,7 @@ bool PlyVertexList::read_element_vertex_names(fstream& file)
 		vertex_name.type = PlyPropertyType::FLOAT64;
 	}
 
-	this->names.push_back(vertex_name);
+	this->names.emplace_back(vertex_name);
 	return true;
 }
 

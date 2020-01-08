@@ -18,6 +18,7 @@
 #include <bitset>
 #include <cmath>
 #include <iostream>
+#include <list>
 #include <map>
 #include <tuple>
 #include <unordered_map>
@@ -31,6 +32,10 @@ public:
     CubicCrossLinkedOctree() = default;
     CubicCrossLinkedOctree(shared_ptr<T> const& point_list, unsigned char depth = 12)
     {
+        for (int i = 1; i <= 5; i++) {
+            auto [x, y, z, d] = GetRelativeNodeCoordinate(make_tuple(16, 15, 14, 5), i);
+            cout << (int)x << " " << (int)y << " " << (int)z << " " << (int)d << endl;
+        } return;
         if (depth < 1 || depth > 31) {
             throw "The depth out of range. It should be an integer from 1 to 31.";
         }
@@ -40,8 +45,8 @@ public:
         auto [x_mid, y_mid, z_mid] = middle_point;
         const auto max_range = find_max_range(boundries);
 
-        double leaf_width = max_range / ((1 << depth) - 1);
-#if _DEBUG
+        double leaf_width = max_range / ((int)(1 << depth) - 1);
+#ifdef _DEBUG
         cout << "Max extended range: " << setprecision(8) << max_range + leaf_width << endl;
         cout << "X-axis extended range: " << setprecision(8) << x_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << x_mid + (max_range + leaf_width) / 2 << endl;
         cout << "Y-axis extended range: " << setprecision(8) << y_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << y_mid + (max_range + leaf_width) / 2 << endl;
@@ -54,13 +59,104 @@ public:
             const auto& node_coordinate = OctreeNode::find_node_coordinate(point, middle_point, max_range, depth);
             insert_point(node_coordinate, i);
         }
-#if _DEBUG
+#ifdef _DEBUG
         print_nodes_stats();
 #endif
     }
     ~CubicCrossLinkedOctree() = default;
 protected:
-    OctreeNode::node_type nodes;
+    OctreeNode::node_map nodes;
+    shared_ptr<OctreeNode> root = make_shared<OctreeNode>();
+    unique_ptr<OctreeNode> build_tree(OctreeNode::node_map nodes)
+    {
+        for (auto node : nodes)
+        {
+            auto coordinate = node.first;
+            build_tree(node.first, depth);
+        }
+    }
+    shared_ptr<OctreeNode> build_tree(OctreeNode::NodeCoordinate coordinate)
+    {
+        auto node = get_deepest_node(coordinate);
+        if (node->coordinate != coordinate) {
+            // There are two cases of inequality: either coordinate is deeper than node or shallower.
+            // If the former, build the tree node until it could meet the same depth; otherwise,
+            // return the pointer of the node with the coordinate.
+
+        }
+    }
+    /**
+     * 
+     */
+    shared_ptr<OctreeNode> get_deepest_node(OctreeNode::NodeCoordinate coordinate)
+    {
+        auto [x, y, z, d] = coordinate;
+        if (d <= 0) { // The Depth less than or equal to zero is abnormal.
+            throw exception("The depth shouldn't be less than zero.");
+        }
+        if (d > 1)
+        {
+            auto node = get_deepest_node(GetRelativeNodeCoordinate(coordinate, d - 1));
+            if (node)
+            {
+                if (node->is_leaf) {
+                    return node;
+                }
+                auto child = node->get_node((x << 2 + y << 1 + z) & 7);
+                return child ? child : node;
+            }
+            return nullptr;
+        }
+        if (d == 1)
+        {
+            auto child = root->get_node((x << 2 + y << 1 + z) & 7);
+            return child ? child : root;
+        }
+        return nullptr;
+    }
+
+    shared_ptr<OctreeNode> emplace(OctreeNode& parent, OctreeNode& child, OctreeNode::NodeCoordinate coordinate)
+    {
+        if (!parent) {
+            throw exception("The parent cannot be accessed.");
+        }
+        
+        return nullptr;
+    }
+
+    shared_ptr<OctreeNode> try_emplace(OctreeNode::NodeCoordinate parent, unsigned char index, OctreeNode& child)
+    {
+        if (!get_node(parent)) {
+            build_tree(parent);
+        }
+        return nullptr;
+    }
+
+    /**
+     * Get the coordinate of a specific depth difference relative to the current
+     * coordinates.
+     * If the specified depth is deeper than the depth of the specified coordinate,
+     * zero is added at the end of the coordinate; if the specified depth is
+     * shallower than the depth of the specified coordinate, the specified depth
+     * is truncated; otherwise, the output is as it is.
+     *
+     * @param OctreeNode::NodeCoordinate coordinate.
+     * @param unsigned char Depth difference relative to specified coordinate.
+     * @return OctreeNode::NodeCoordinate calculated coordinate.
+     */
+    OctreeNode::NodeCoordinate GetRelativeNodeCoordinate(OctreeNode::NodeCoordinate coordinate, unsigned char depth)
+    {
+        auto [x, y, z, d] = coordinate;
+        if (d < depth) {
+            return make_tuple(x << (depth - d), y << (depth - d), z << (depth - d), depth - d);
+        }
+        if (d > depth) {
+            return make_tuple(x >> (d - depth), y >> (d - depth), z >> (d - depth), d - depth);
+        }
+        return coordinate;
+    }
+
+    
 private:
     unsigned char depth = 12; // The depth range is limited to between 1 and 31.
     void print_nodes_stats()
@@ -70,8 +166,8 @@ private:
         map<size_t, unsigned int> count_per_node;
         for (auto &p : this->nodes)
         {
-            count += p.second.GetLeaves().size();
-            auto [iterator, success] = count_per_node.try_emplace(p.second.GetLeaves().size(), 1);
+            count += p.second.get_leaves().size();
+            auto [iterator, success] = count_per_node.try_emplace(p.second.get_leaves().size(), 1);
             if (!success) {
                 iterator->second++;
             }
@@ -103,7 +199,7 @@ private:
         const auto y_max = max_element(begin, end, comp_y);
         const auto z_min = min_element(begin, end, comp_z);
         const auto z_max = max_element(begin, end, comp_z);
-#if _DEBUG
+#ifdef _DEBUG
         cout << fixed;
         cout << "X-axis lowest boundry:  " << setprecision(0) << "[" << distance(begin, x_min) << "]" << setprecision(8) << (*x_min).X() << endl;
         cout << "X-axis highest boundry: " << setprecision(0) << "[" << distance(begin, x_max) << "]" << setprecision(8) << (*x_max).X() << endl;
@@ -118,13 +214,13 @@ private:
         const auto x_mid = ((*x_max).X() + (*x_min).X()) / 2;
         const auto y_mid = ((*y_max).Y() + (*y_min).Y()) / 2;
         const auto z_mid = ((*z_max).Z() + (*z_min).Z()) / 2;
-#if _DEBUG
+#ifdef _DEBUG
         cout << "X-axis range: " << setprecision(8) << x_range << " middle point: " << setprecision(8) << x_mid << endl;
         cout << "Y-axis range: " << setprecision(8) << y_range << " middle point: " << setprecision(8) << y_mid << endl;
         cout << "Z-axis range: " << setprecision(8) << z_range << " middle point: " << setprecision(8) << z_mid << endl;
 #endif
         const auto max_range = max(x_range, max(y_range, z_range));
-#if _DEBUG
+#ifdef _DEBUG
         cout << "Max range: " << setprecision(8) << max_range << endl;
 #endif
         const auto x_range_min = x_mid - max_range / 2;
@@ -137,11 +233,12 @@ private:
     }
     double find_max_range(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundries) const
     {
-        auto [x_range, y_range, z_range] = boundries;
-        auto [x_range_min, x_range_max] = x_range;
-        auto [y_range_min, y_range_max] = y_range;
-        auto [z_range_min, z_range_max] = z_range;
+        const auto [x_range, y_range, z_range] = boundries;
+        const auto [x_range_min, x_range_max] = x_range;
+        const auto [y_range_min, y_range_max] = y_range;
+        const auto [z_range_min, z_range_max] = z_range;
         return max(x_range_max - x_range_min, max(y_range_max - y_range_min, z_range_max - z_range_min));
     }
+    list<shared_ptr<OctreeNode::NodeCoordinate>> list_x;
 };
 #endif

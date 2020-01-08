@@ -20,14 +20,14 @@ OctreeNode::OctreeNode()
     }
     else {
         this->leaves = nullptr;
-        (*this->nodes)[0] = make_unique<OctreeNode>(); // First Octant
-        (*this->nodes)[1] = make_unique<OctreeNode>(); // Second Octant
-        (*this->nodes)[2] = make_unique<OctreeNode>(); // Third Octant
-        (*this->nodes)[3] = make_unique<OctreeNode>(); // Fourth Octant
-        (*this->nodes)[4] = make_unique<OctreeNode>(); // Fifth Octant
-        (*this->nodes)[5] = make_unique<OctreeNode>(); // Sixth Octant
-        (*this->nodes)[6] = make_unique<OctreeNode>(); // Seventh Octant
-        (*this->nodes)[7] = make_unique<OctreeNode>(); // Eighth Octant
+        (*this->nodes)[0] = nullptr; // First Octant
+        (*this->nodes)[1] = nullptr; // Second Octant
+        (*this->nodes)[2] = nullptr; // Third Octant
+        (*this->nodes)[3] = nullptr; // Fourth Octant
+        (*this->nodes)[4] = nullptr; // Fifth Octant
+        (*this->nodes)[5] = nullptr; // Sixth Octant
+        (*this->nodes)[6] = nullptr; // Seventh Octant
+        (*this->nodes)[7] = nullptr; // Eighth Octant
     }
 }
 
@@ -37,6 +37,17 @@ OctreeNode::OctreeNode(unsigned int const index)
     this->leaves = make_unique<set<unsigned int>>();
     this->insert(index);
     this->nodes = nullptr;
+}
+
+OctreeNode::OctreeNode(initializer_list<OctreeNode> children)
+{
+    this->is_leaf = false;
+    this->leaves = nullptr;
+    int i = 0;
+    for (auto iterator = children.begin(); iterator < children.end(); iterator++, i++)
+    {
+        //(*this->nodes)[i] = make_shared<OctreeNode>(*iterator);
+    }
 }
 
 OctreeNode::~OctreeNode()
@@ -77,7 +88,7 @@ OctreeNode::NodeCoordinate OctreeNode::find_node_coordinate(Point const& point, 
     const auto y_th = (unsigned int)(offset_of_y / leaf_width);
     const auto z_th = (unsigned int)(offset_of_z / leaf_width);
     // cout << "Offset of last point in (X,Y,Z): " << "(" << offset_of_x << "," << offset_of_y << "," << offset_of_z << ")" << " (X-th, Y-th, Z-th) in hexidecimal: " << "(" << bitset<10>(x_th) << "," << bitset<10>(y_th) << "," << bitset<10>(z_th) << ")" << endl;
-    return make_tuple(x_th, y_th, z_th);
+    return make_tuple(x_th, y_th, z_th, depth);
 }
 
 OctreeNode::PointCoordinate OctreeNode::find_middle_point(double const& x_range_min, double const& x_range_max, double const& y_range_min, double const& y_range_max, double const& z_range_min, double const& z_range_max)

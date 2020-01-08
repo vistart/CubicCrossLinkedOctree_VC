@@ -16,9 +16,13 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)CubicCrossLinkedOctree.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OctreeNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)OctreeNodeLeaf.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)OctreeNodeNonLeaf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CubicCrossLinkedOctree.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)OctreeNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OctreeNodeLeaf.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OctreeNodeNonLeaf.h" />
   </ItemGroup>
 </Project>
