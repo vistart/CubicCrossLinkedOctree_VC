@@ -186,6 +186,13 @@ private:
             iterator->second.insert(index);
         }
     }
+
+	/**
+	 * Find the boundry of the point cloud.
+	 *
+	 * @param shared_ptr<T> const& The list that contains all the points.
+	 * @return tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> The min & max coordinate of three dimensions.
+	 */
     tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> find_boundry(shared_ptr<T> const& point_list)
     {
         const auto comp_x = [](const Point& a, const Point& b) {return a.is_less_than(b, Point::Coordination::X); };
@@ -231,6 +238,10 @@ private:
         const auto z_range_max = z_mid + max_range / 2;
         return make_tuple(make_tuple((*x_min).X(), (*x_max).X()), make_tuple((*y_min).Y(), (*y_max).Y()), make_tuple((*z_min).Z(), (*z_max).Z()));
     }
+
+	/**
+	 * Find the value of the largest spanned dimension
+	 */
     double find_max_range(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundries) const
     {
         const auto [x_range, y_range, z_range] = boundries;
