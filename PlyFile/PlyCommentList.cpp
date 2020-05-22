@@ -14,7 +14,7 @@
 #ifdef __PLY_COMMENT_LIST_H__
 bool PlyCommentList::add(string comment)
 {
-	this->comments.push_back(comment);
+	this->comments.emplace_back(comment);
 	return true;
 }
 

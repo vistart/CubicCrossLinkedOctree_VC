@@ -24,6 +24,9 @@
 
 using namespace std;
 
+/*
+ This class is used to describe the ply file.
+ */
 class PlyFile : public PointCloud<PlyVertexList, PlyVertex>
 {
 public:
@@ -66,29 +69,32 @@ protected:
 	/* Indicates whether the file was read correctly. */
 	bool valid = false;
 	/**
-	 * Open the file.
-	 * @param string the filename to be opened.
+	 Open the file.
+
+	 @param string the filename to be opened.
+	 @return bool true if the file was opened successfully.
 	 */
 	bool open(string);
 	/* Supported header tags */
 	enum Tag { PLY, FORMAT, COMMENT, ELEMENT, PROPERTY, END_HEADER };
 	/**
-	 * Read from ply file.
-	 * The file format only supports ply, and the encoding format can be ASCII
-	 * and binary (both big and little endian).
-	 * To use this method, you need to use "fstream" to represent an open file
-	 * stream.
-	 *
-	 * @param fstream& the file to be read.
-	 * @return bool true if the file was read successfully.
+	 Read from ply file.
+	 The file format only supports ply, and the encoding format can be ASCII
+	 and binary (both big and little endian).
+	 To use this method, you need to use "fstream" to represent an open file
+	 stream.
+
+	 @param fstream& the file to be read.
+	 @return bool true if the file was read successfully.
 	 */
 	bool read(fstream&);
 	/**
 	 * Read header from ply file.
 	 * This method resets the file pointer to the beginning because the file
 	 * header is at the beginning of the file.
-	 * It is not recommended to call this method directly unless you know the
-	 * consequences of doing so.
+	 * 
+	 * Note: It is not recommended to call this method directly unless you know
+	 * the consequences of doing so.
 	 *
 	 * @param fstream& the file to be read.
 	 * @return bool true if the file was read successfully.
@@ -97,8 +103,9 @@ protected:
 	/**
 	 * This method starts at the position pointed to by the incoming file
 	 * stream parameter, and determines the amount of data to be read according
-	 * It is not recommended to call this method directly unless you know the
-	 * consequences of doing so. If you want to call this method separately,
+	 *
+	 * Note: It is not recommended to call this method directly unless you know
+	 * the consequences of doing so. If you want to call this method separately,
 	 * you need to make sure that the file pointer points to the appropriate
 	 * location yourself.
 	 *
@@ -174,6 +181,7 @@ protected:
 	 *
 	 * @param fstream& the file to be read.
 	 * @return bool true if the file was read successfully.
+	 * @TODO
 	 */
 	bool read_element_face(fstream&);
 #pragma endregion

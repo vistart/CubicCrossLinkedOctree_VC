@@ -18,12 +18,32 @@
 #define IS_LITTLE_ENDIAN (1 == *(unsigned char *)&(const int){1})
 
 using namespace std;
+
+/*
+ This class is used to describe the property type appeared in ply file.
+ */
 class PlyPropertyType
 {
 public:
+	/*
+	 There are nine data types: NOTYPE, INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64.
+	 */
 	enum PropertyDataType { NOTYPE, INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64 };
+	/*
+	 Two supported endians: LITTLE, BIG.
+	 */
 	enum class Endian { LITTLE = 0, BIG = 1 };
+	/*
+	 The corresponding data types are: NOTYPE, INT8, UINT8, INT16, UINT16, INT32, UINT32, FLOAT32, FLOAT64.
+	 */
 	static const int PropertyDataTypeSize[9];
+	/*
+	 Swap the endian of the variable. 
+	 Any arithmetic types are supported.
+	 
+	 @param typename T: the variable to be swapped.
+	 @return typename T: the variable which endian has been swapped.
+	 */
 	template <typename T>
 	static T swap_endian(T& s)
 	{
@@ -43,6 +63,18 @@ public:
 		return dest.u;
 	}
 
+	/*
+	 Read binary little-endian property from specified file (stream). 
+
+	 The number of bytes read depends on the specified type. 
+	 For example, when the specified type is float, this method reads four bytes. 
+
+	 If the endian of the current architecture is not little-endian, 
+	 it will be adjusted to little-endian after reading the property. 
+	 
+	 @param fstream& file: the file from which the property origin.
+	 @return typename T: property value.
+	 */
 	template<typename T>
 	static typename enable_if<is_arithmetic<T>::value, T>::type read_binary_le_property(fstream& file)
 	{
@@ -55,6 +87,18 @@ public:
 #endif
 	}
 
+	/*
+	 Read binary big-endian property from specified file (stream).
+
+	 The number of bytes read depends on the specified type.
+	 For example, when the specified type is float, this method reads four bytes.
+
+	 If the endian of the current architecture is not big-endian,
+	 it will be adjusted to big-endian after reading the property.
+
+	 @param fstream& file: the file from which the property origin.
+	 @return typename T: property value.
+	 */
 	template<typename T>
 	static typename enable_if<is_arithmetic<T>::value, T>::type read_binary_be_property(fstream& file)
 	{
@@ -67,6 +111,11 @@ public:
 #endif
 	}
 
+	/*
+	 Check the endianness of the current architecture.
+
+	 @return Endian: Endian::LITTLE or Endian::BIG.
+	 */
 	static Endian check_endian();
 
 	template <int N>

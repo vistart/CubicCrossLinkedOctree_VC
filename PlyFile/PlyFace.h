@@ -12,6 +12,9 @@
 #ifndef __PLY_FACE_H__
 #define __PLY_FACE_H__
 
+/*
+ @TODO: Implement it.
+ */
 class PlyFace
 {
 };

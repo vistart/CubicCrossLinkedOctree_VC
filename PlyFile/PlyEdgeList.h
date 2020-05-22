@@ -12,9 +12,16 @@
 #ifndef __PLY_EDGE_LIST_H__
 #define __PLY_EDGE_LIST_H__
 #include <iostream>
+
+/*
+ @TODO: Implement it.
+ */
 class PlyEdgeList
 {
 public:
+    /*
+     No action is required by default.
+     */
 	PlyEdgeList() = default;
 	~PlyEdgeList() = default;
 	void demo();

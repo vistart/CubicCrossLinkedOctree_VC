@@ -12,6 +12,9 @@
 #ifndef __PLY_EDGE_H__
 #define __PLY_EDGE_H__
 
+/*
+ @TODO: Implement it.
+ */
 class PlyEdge
 {
 };

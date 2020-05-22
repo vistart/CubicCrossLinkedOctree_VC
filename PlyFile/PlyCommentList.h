@@ -20,12 +20,42 @@ using namespace std;
 class PlyCommentList
 {
 public:
+    /**
+     No action is required by default.
+     */
 	PlyCommentList() = default;
+
+    /**
+     All comments need to be cleared first.
+     */
 	~PlyCommentList();
+
+    /**
+     Add comment.
+    
+     @param string: the comment to be added.
+     @return bool: True if comment added.
+     */
 	bool add(string);
+
+    /**
+     Get all the comments.
+    
+     @return vector<string>: the stored comments.
+     */
 	vector<string> getComments();
+
+    /**
+     Add comment.
+    
+     @param string: the comment to be added.
+     @return PlyCommentList&: itself.
+     */
 	PlyCommentList& operator<<(string);
 protected:
+    /**
+     * The stored comments.
+     */
 	vector<string> comments;
 };
 #endif
