@@ -24,7 +24,7 @@ using namespace std;
 /*
  This class is used to describe the list containing all the vertices.
  */
-class PlyVertexList : public PointList<PlyVertex>
+class PlyVertexList : public PointList<PlyVertex, PlyVertexList>
 {
 public:
 	/*

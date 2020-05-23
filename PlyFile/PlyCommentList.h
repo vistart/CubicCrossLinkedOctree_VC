@@ -16,7 +16,12 @@
 
 #include <vector>
 #include <string>
+
 using namespace std;
+
+/*
+ This class is used to describe the comment list of ply file.
+ */
 class PlyCommentList
 {
 public:

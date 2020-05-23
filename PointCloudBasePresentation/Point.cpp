@@ -12,7 +12,12 @@
 #endif
 
 #ifdef __POINT_H__
+#ifdef _MSC_VER
 #include <exception>
+#endif
+#ifdef __GNUC__
+#include <stdexcept>
+#endif
 double Point::X() const noexcept
 {
 	return __X;
@@ -175,7 +180,12 @@ bool Point::is_less_than(Point const& obj, Coordination const& coord) const
 	case Coordination::Z:
 		return this->__Z < obj.Z();
 	}
+#ifdef _MSC_VER
 	throw exception(coord_no_out_of_range_message);
+#endif
+#ifdef __GNUC__
+	throw runtime_error(coord_no_out_of_range_message);
+#endif
 }
 
 bool Point::is_equal_to(Point const& obj, Coordination const& coord) const
@@ -190,7 +200,12 @@ bool Point::is_equal_to(Point const& obj, Coordination const& coord) const
 	case Coordination::Z:
 		return this->__Z == obj.Z();
 	}
+#ifdef _MSC_VER
 	throw exception(coord_no_out_of_range_message);
+#endif
+#ifdef __GNUC__
+	throw runtime_error(coord_no_out_of_range_message);
+#endif
 }
 
 bool Point::is_greater_than(Point const& obj, Coordination const& coord) const
@@ -205,7 +220,12 @@ bool Point::is_greater_than(Point const& obj, Coordination const& coord) const
 	case Coordination::Z:
 		return this->__Z > obj.Z();
 	}
+#ifdef _MSC_VER
 	throw exception(coord_no_out_of_range_message);
+#endif
+#ifdef __GNUC__
+	throw runtime_error(coord_no_out_of_range_message);
+#endif
 }
 
 bool Point::is_equal_or_less_than(Point const& obj, Coordination const& coord) const
@@ -255,7 +275,12 @@ double Point::offset_of(double const offset , Coordination const& coord) const
 	case Coordination::Z:
 		return __Z - offset;
 	}
+#ifdef _MSC_VER
 	throw exception(coord_no_out_of_range_message);
+#endif
+#ifdef __GNUC__
+	throw runtime_error(coord_no_out_of_range_message);
+#endif
 }
 
 #endif

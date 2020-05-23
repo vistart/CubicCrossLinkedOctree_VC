@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 	const auto plyfile = make_shared<PlyFile>(file_path);
     const auto point_list = plyfile->GetPointList();
     cout << "The last point is: " << point_list->GetPoints()->back() << endl;
-    CubicCrossLinkedOctree<PlyVertexList, PlyVertex> octree(point_list);
+    CubicCrossLinkedOctree<PlyVertexList, PlyVertex, PlyFile> octree(point_list);
     //cout << "Hello World!\n";
     return 0;
 }

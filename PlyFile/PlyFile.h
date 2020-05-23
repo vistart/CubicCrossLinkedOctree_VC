@@ -27,7 +27,7 @@ using namespace std;
 /*
  This class is used to describe the ply file.
  */
-class PlyFile : public PointCloud<PlyVertexList, PlyVertex>
+class PlyFile : public PointCloud<PlyVertexList, PlyVertex, PlyFile>
 {
 public:
 #pragma region Constructor & Destructor
