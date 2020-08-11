@@ -30,12 +30,20 @@ class CubicCrossLinkedOctree
 {
 public:
     CubicCrossLinkedOctree() = default;
+    /**
+     * Construct the octree.
+     *
+     * @param shared_ptr<T> const& Points from which construct an octree.
+     * @param unsigned char Depth.
+     */
     CubicCrossLinkedOctree(shared_ptr<T> const& point_list, unsigned char depth = 12)
     {
+#ifdef _DEBUG
         for (int i = 1; i <= 5; i++) {
             auto [x, y, z, d] = GetRelativeNodeCoordinate(make_tuple(16, 15, 14, 5), i);
             cout << (int)x << " " << (int)y << " " << (int)z << " " << (int)d << endl;
         } return;
+#endif
         if (depth < 1 || depth > 31) {
             throw "The depth out of range. It should be an integer from 1 to 31.";
         }
@@ -240,11 +248,14 @@ private:
     }
 
 	/**
-	 * Find the value of the largest spanned dimension
+	 * Find the value of the largest spanned dimension.
+     *
+     * @param tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& Boundaries which contains three candidate dimensions.
+     * @return tuple<double, double> The upper and lower limits of the largest dimension of the range.
 	 */
-    double find_max_range(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundries) const
+    double find_max_range(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundaries) const
     {
-        const auto [x_range, y_range, z_range] = boundries;
+        const auto [x_range, y_range, z_range] = boundaries;
         const auto [x_range_min, x_range_max] = x_range;
         const auto [y_range_min, y_range_max] = y_range;
         const auto [z_range_min, z_range_max] = z_range;
