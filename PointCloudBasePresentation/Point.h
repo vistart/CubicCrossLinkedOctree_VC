@@ -4,7 +4,7 @@
  * | |/ // /(__  )  / / / /| || |     | |
  * |___//_//____/  /_/ /_/ |_||_|     |_|
  * @link https://vistart.me/
- * @copyright Copyright (c) 2019 vistart
+ * @copyright Copyright (c) 2019 - 2020 vistart
  * @license https://vistart.me/license/
 */
 
@@ -37,6 +37,7 @@ using namespace std;
 class Point
 {
 public:
+	/
 	Point() = default;
 	~Point() = default;
 	double X() const noexcept;
