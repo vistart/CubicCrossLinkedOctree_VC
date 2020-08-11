@@ -4,7 +4,7 @@
  * | |/ // /(__  )  / / / /| || |     | |
  * |___//_//____/  /_/ /_/ |_||_|     |_|
  * @link https://vistart.me/
- * @copyright Copyright (c) 2019 vistart
+ * @copyright Copyright (c) 2019 - 2020 vistart
  * @license https://vistart.me/license/
 */
 #pragma once
@@ -53,7 +53,8 @@ public:
         auto [x_mid, y_mid, z_mid] = middle_point;
         const auto max_range = find_max_range(boundries);
 
-        double leaf_width = max_range / ((int)(1 << depth) - 1);
+        long long base_depth = 1;
+        double leaf_width = max_range / ((base_depth << depth) - 1);
 #ifdef _DEBUG
         cout << "Max extended range: " << setprecision(8) << max_range + leaf_width << endl;
         cout << "X-axis extended range: " << setprecision(8) << x_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << x_mid + (max_range + leaf_width) / 2 << endl;
@@ -124,19 +125,19 @@ protected:
     }
 
     shared_ptr<OctreeNode> emplace(OctreeNode& parent, OctreeNode& child, OctreeNode::NodeCoordinate coordinate)
-    {
-        if (!parent) {
+    {/*
+        if (parent) {
             throw exception("The parent cannot be accessed.");
         }
-        
+        */
         return nullptr;
     }
 
     shared_ptr<OctreeNode> try_emplace(OctreeNode::NodeCoordinate parent, unsigned char index, OctreeNode& child)
-    {
+    {/*
         if (!get_node(parent)) {
             build_tree(parent);
-        }
+        }*/
         return nullptr;
     }
 

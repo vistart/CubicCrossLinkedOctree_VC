@@ -4,36 +4,40 @@
  * | |/ // /(__  )  / / / /| || |     | |
  * |___//_//____/  /_/ /_/ |_||_|     |_|
  * @link https://vistart.me/
- * @copyright Copyright (c) 2019 vistart
+ * @copyright Copyright (c) 2019 - 2020 vistart
  * @license https://vistart.me/license/
 */
-/*
- * This class is used to describe a point (or a vertex in discrete mathematics).
- * The currently supported attributes are:
- * - 3D Coordinates (X, Y, Z) (Required, double for each)
- * - Color (R, G, B) (Optional, unsigned char for each)
- * - Normal Vector (NX, NY, NZ) (Optional, double for each)
- * - Transparency (ALPHA) (Optional, unsigned char)
- * - Confidence (CONFIDENCE) (Optional, positive double-precision number or zero)
- * - Intensity (INTENSITY) (Optional, positive double-precision number or zero)
- *
- * If you think that this class definition cannot meet your needs, you can inherit
- * the current class and implement it yourself according to your needs.
- *
- * TODO:
- * - Enable to allocate memory for coordinates, colors, normal vector, transparency,
- *   confidence, and intensity as needed, that is, if not needed, it is not allocated.
-*/
+
 #pragma once
 #ifndef __POINT_H__
 #define __POINT_H__
 
 #include <iostream>
 #include <iomanip>
+
 using namespace std;
+
+/*
+ This class is used to describe a point (or a vertex in discrete mathematics).
+ The currently supported attributes are:
+ - 3D Coordinates (X, Y, Z) (Required, double for each)
+ - Color (R, G, B) (Optional, unsigned char for each)
+ - Normal Vector (NX, NY, NZ) (Optional, double for each)
+ - Transparency (ALPHA) (Optional, unsigned char)
+ - Confidence (CONFIDENCE) (Optional, positive double-precision number or zero)
+ - Intensity (INTENSITY) (Optional, positive double-precision number or zero)
+
+ If you think that this class definition cannot meet your needs, you can inherit
+ the current class and implement it yourself according to your needs.
+
+ TODO:
+ - Enable to allocate memory for coordinates, colors, normal vector, transparency,
+   confidence, and intensity as needed, that is, if not needed, it is not allocated.
+*/
 class Point
 {
 public:
+	/
 	Point() = default;
 	~Point() = default;
 	double X() const noexcept;

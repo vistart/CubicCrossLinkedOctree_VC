@@ -4,12 +4,19 @@
  * | |/ // /(__  )  / / / /| || |     | |
  * |___//_//____/  /_/ /_/ |_||_|     |_|
  * @link https://vistart.me/
- * @copyright Copyright (c) 2019 vistart
+ * @copyright Copyright (c) 2019 - 2020 vistart
  * @license https://vistart.me/license/
 */
+
+#pragma once
+#ifndef __POINT_CLOUD_H__
+#define __POINT_CLOUD_H__
+
+#include "PointList.h"
+
 /*
  * This class is used to describe the Point Cloud.
- * There is a point list property for all points and a shared pointer to it.
+ * There are a point list property for all points and a shared pointer to it.
  * The class that describes a point list can be the PointList class or its inherited class,
  * otherwise, the compilation fails.
  *
@@ -21,12 +28,6 @@
  * 2. Initialize the shared pointer of above point list property in Constructor.
  * 3. Make the point list to nullptr in Destructor.
 */
-#pragma once
-#ifndef __POINT_CLOUD_H__
-#define __POINT_CLOUD_H__
-
-#include "PointList.h"
-
 template <typename T, typename TPoint, typename = typename enable_if<is_base_of<PointList<TPoint>, T>::value>::type>
 class PointCloud
 {

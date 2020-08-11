@@ -5,7 +5,7 @@
  * | |/ // /(__  )  / / / /| || |     | |
  * |___//_//____/  /_/ /_/ |_||_|     |_|
  * @link https://vistart.me/
- * @copyright Copyright (c) 2019 vistart
+ * @copyright Copyright (c) 2019 - 2020 vistart
  * @license https://vistart.me/license/
 */
 //
@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 	const auto plyfile = make_shared<PlyFile>(file_path);
     const auto point_list = plyfile->GetPointList();
     cout << "The last point is: " << point_list->GetPoints()->back() << endl;
-    CubicCrossLinkedOctree<PlyVertexList, PlyVertex> octree(point_list);
+    CubicCrossLinkedOctree<PlyVertexList, PlyVertex, PlyFile> octree(point_list);
     //cout << "Hello World!\n";
     return 0;
 }

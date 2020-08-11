@@ -4,7 +4,7 @@
  * | |/ // /(__  )  / / / /| || |     | |
  * |___//_//____/  /_/ /_/ |_||_|     |_|
  * @link https://vistart.me/
- * @copyright Copyright (c) 2019 vistart
+ * @copyright Copyright (c) 2019 - 2020 vistart
  * @license https://vistart.me/license/
 */
 #pragma once
@@ -12,6 +12,9 @@
 #ifndef __PLY_FACE_H__
 #define __PLY_FACE_H__
 
+/*
+ @TODO: Implement it.
+ */
 class PlyFace
 {
 };
