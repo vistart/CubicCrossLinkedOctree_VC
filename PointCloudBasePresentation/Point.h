@@ -12,7 +12,6 @@
 #ifndef __POINT_H__
 #define __POINT_H__
 
-#include <iostream>
 #include <iomanip>
 #ifdef _MSC_VER
 #include <exception>
