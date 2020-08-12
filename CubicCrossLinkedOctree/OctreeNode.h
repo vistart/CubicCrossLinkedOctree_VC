@@ -29,12 +29,18 @@ public:
     /**
      * Insert Point.
      *
-     * @param unsigned int const& index of point to be inserted.
+     * @param index index of point to be inserted.
      */
-    void insert(unsigned int const&);
-    /* X, Y, X */
+    void insert(unsigned int const& index);
+    /*
+     * Point coordinate.
+     * Each point coordinate contains X, Y and Z.
+     */
     typedef tuple<double, double, double> PointCoordinate;
-    /* X, Y, Z, depth */
+    /*
+     * Node coordinate.
+     * Each node coordinate contains X, Y, Z and depth of octree.
+     */
     typedef tuple<unsigned int, unsigned int, unsigned int, unsigned char> NodeCoordinate;
     typedef map<NodeCoordinate, OctreeNode> node_map;
     OctreeNode();

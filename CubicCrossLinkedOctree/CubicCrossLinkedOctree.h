@@ -41,7 +41,7 @@ public:
 #ifdef _DEBUG
         for (int i = 1; i <= 5; i++) {
             auto [x, y, z, d] = GetRelativeNodeCoordinate(make_tuple(16, 15, 14, 5), i);
-            cout << x << " " << y << " " << z << " " << static_cast<unsigned short>(d) << endl;
+            cout << "X:" << x << " | Y:" << y << " | Z:" << z << " | Depth:" << static_cast<unsigned short>(d) << endl;
         }
 #endif
         if (depth < 1 || depth > 31) {
@@ -53,6 +53,8 @@ public:
 
     	// Find the the boundaries throughout the three dimensions.
         const auto boundaries = find_boundary(point_list);
+
+    	// Find the middle point of each dimension.
         const auto middle_point = OctreeNode::find_middle_point(boundaries);
         auto [x_mid, y_mid, z_mid] = middle_point;
         const auto max_range = find_max_range(boundaries);
@@ -153,18 +155,23 @@ protected:
      * shallower than the depth of the specified coordinate, the specified depth
      * is truncated; otherwise, the output is as it is.
      *
-     * @param OctreeNode::NodeCoordinate coordinate.
-     * @param unsigned char Depth difference relative to specified coordinate.
-     * @return OctreeNode::NodeCoordinate calculated coordinate.
+     * For example:
+     * The detail of a node coordinate is (X:16, Y:15, Z:14, D:5).
+     * 
+     * 
+     *
+     * @param coordinate
+     * @param depth Depth difference relative to specified coordinate.
+     * @return calculated coordinate.
      */
-    OctreeNode::NodeCoordinate GetRelativeNodeCoordinate(OctreeNode::NodeCoordinate coordinate, unsigned char depth)
+    static OctreeNode::NodeCoordinate GetRelativeNodeCoordinate(OctreeNode::NodeCoordinate coordinate, unsigned char depth)
     {
         auto [x, y, z, d] = coordinate;
         if (d < depth) {
-            return make_tuple(x << (depth - d), y << (depth - d), z << (depth - d), depth - d);
+            return make_tuple(x << depth - d, y << depth - d, z << depth - d, depth - d);
         }
         if (d > depth) {
-            return make_tuple(x >> (d - depth), y >> (d - depth), z >> (d - depth), d - depth);
+            return make_tuple(x >> d - depth, y >> d - depth, z >> d - depth, d - depth);
         }
         return coordinate;
     }
@@ -186,6 +193,8 @@ private:
             }
         }
         cout << "Nodes: " << this->nodes.size() << ", Depth: " << (int)depth << ", Average Density: " << (float)count / this->nodes.size() << endl;
+
+        cout << "Number of nodes containing # point(s):" << endl;
         for (auto& c : count_per_node)
         {
             cout << "Count (" << c.first << "): " << c.second << endl;
