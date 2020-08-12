@@ -286,7 +286,7 @@ bool PlyFile::read_body(fstream& file)
 	for (unsigned int i = 0; i < vertex_count_in_header; i++)
 	{
 #ifdef _DEBUG
-		cout << "file pointer: " << file.tellg() << endl;
+		// cout << "file pointer: " << file.tellg() << endl;
 #endif
 		read_element_vertex(file);
 	}
