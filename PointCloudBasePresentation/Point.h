@@ -45,7 +45,7 @@ class Point
 public:
     Point() = default;
     ~Point() = default;
-    double X() const noexcept
+    [[nodiscard]] double X() const noexcept
     {
         return __X;
     }
@@ -53,7 +53,7 @@ public:
         __X = X;
         return *this;
     }
-    double Y() const noexcept
+    [[nodiscard]] double Y() const noexcept
     {
         return __Y;
     }
@@ -61,7 +61,7 @@ public:
         __Y = Y;
         return *this;
     }
-    double Z() const noexcept
+    [[nodiscard]] double Z() const noexcept
     {
         return __Z;
     }
@@ -69,7 +69,7 @@ public:
         __Z = Z;
         return *this;
     }
-    unsigned char R() const
+    [[nodiscard]] unsigned char R() const
     {
         return __R;
     }
@@ -77,7 +77,7 @@ public:
         __R = R;
         return *this;
     }
-    unsigned char G() const
+    [[nodiscard]] unsigned char G() const
     {
         return __G;
     }
@@ -85,7 +85,7 @@ public:
         __G = G;
         return *this;
     }
-    unsigned char B() const
+    [[nodiscard]] unsigned char B() const
     {
         return __B;
     }
@@ -93,7 +93,7 @@ public:
         __B = B;
         return *this;
     }
-    double NX() const
+    [[nodiscard]] double NX() const
     {
         return __NX;
     }
@@ -101,7 +101,7 @@ public:
         __NX = NX;
         return *this;
     }
-    double NY() const
+    [[nodiscard]] double NY() const
     {
         return __NY;
     }
@@ -109,7 +109,7 @@ public:
         __NY = NY;
         return *this;
     }
-    double NZ() const
+    [[nodiscard]] double NZ() const
     {
         return __NZ;
     }
@@ -117,7 +117,7 @@ public:
         __NZ = NZ;
         return *this;
     }
-    unsigned char ALPHA() const
+    [[nodiscard]] unsigned char ALPHA() const
     {
         return __ALPHA;
     }
@@ -125,7 +125,7 @@ public:
         __ALPHA = ALPHA;
         return *this;
     }
-    double CONFIDENCE() const
+    [[nodiscard]] double CONFIDENCE() const
     {
         return __CONFIDENCE;
     }
@@ -133,7 +133,7 @@ public:
         __CONFIDENCE = CONFIDENCE;
         return *this;
     }
-    double INTENSITY() const
+    [[nodiscard]] double INTENSITY() const
     {
         return __INTENSITY;
     }
@@ -179,17 +179,35 @@ public:
         return __X > vertex.X() || __Y > vertex.Y() || __Z > vertex.Z();
     }
     enum class Coordination { X, Y, Z };
-    virtual bool is_less_than(Point const& obj, Coordination const& coord) const
+
+	/**
+	 * Determine whether a certain dimension coordinate is less than the target.
+	 *
+	 * For example:
+	 * ```
+	 * a.X = 1;
+	 * b.X = 2;
+	 * auto result = a.is_less_than(b, Coordination.X);
+	 * ```
+	 *
+	 * The result will be true.
+	 *
+	 * @param object the target to be compared.
+	 * @param coordination the specified dimension to be compared.
+	 * @return whether the current point is less than the target in specified dimension.
+	 * @exception thrown if Coordination is not in X, Y or Z.
+	 */
+    [[nodiscard]] virtual bool is_less_than(Point const& object, Coordination const& coordination) const
     {
-        switch (coord) {
+        switch (coordination) {
         case Coordination::X:
-            return this->__X < obj.X();
+            return this->__X < object.X();
 
         case Coordination::Y:
-            return this->__Y < obj.Y();
+            return this->__Y < object.Y();
 
         case Coordination::Z:
-            return this->__Z < obj.Z();
+            return this->__Z < object.Z();
         }
 #ifdef _MSC_VER
         throw exception(coord_no_out_of_range_message);
@@ -198,17 +216,36 @@ public:
         throw runtime_error(coord_no_out_of_range_message);
 #endif
     }
-    virtual bool is_equal_to(Point const& obj, Coordination const& coord) const
+
+    /**
+     * Determine whether a certain dimension coordinate is equal to the target.
+     *
+     * For example:
+     * ```
+     * a.X = 1;
+     * b.X = 1;
+     * auto result = a.is_equal_to(b, Coordination.X);
+     * ```
+     *
+     * The result will be true.
+     * 
+	 * @param object the target to be compared.
+	 * @param coordination the specified dimension to be compared.
+	 * @return whether the current point is equal to the target in specified dimension.
+	 * @exception thrown if Coordination is not in X, Y or Z.
+     * @exception
+     */
+    [[nodiscard]] virtual bool is_equal_to(Point const& object, Coordination const& coordination) const
     {
-        switch (coord) {
+        switch (coordination) {
         case Coordination::X:
-            return this->__X == obj.X();
+            return this->__X == object.X();
 
         case Coordination::Y:
-            return this->__Y == obj.Y();
+            return this->__Y == object.Y();
 
         case Coordination::Z:
-            return this->__Z == obj.Z();
+            return this->__Z == object.Z();
         }
 #ifdef _MSC_VER
         throw exception(coord_no_out_of_range_message);
@@ -217,17 +254,35 @@ public:
         throw runtime_error(coord_no_out_of_range_message);
 #endif
     }
-    virtual bool is_greater_than(Point const& obj, Coordination const& coord) const
+
+    /**
+     * Determine whether a certain dimension coordinate is greater than the target.
+     *
+     * For example:
+     * ```
+     * a.X = 2;
+     * b.X = 1;
+     * auto result = a.is_greater_to(b, Coordination.X);
+     * ```
+     *
+     * The result will be true.
+     *
+     * @param object the target to be compared.
+     * @param coordination the specified dimension to be compared.
+     * @return whether the current point is greater than the target in specified dimension.
+     * @exception thrown if Coordination is not in X, Y or Z.
+     */
+    [[nodiscard]] virtual bool is_greater_than(Point const& object, Coordination const& coordination) const
     {
-        switch (coord) {
+        switch (coordination) {
         case Coordination::X:
-            return this->__X > obj.X();
+            return this->__X > object.X();
 
         case Coordination::Y:
-            return this->__Y > obj.Y();
+            return this->__Y > object.Y();
 
         case Coordination::Z:
-            return this->__Z > obj.Z();
+            return this->__Z > object.Z();
         }
 #ifdef _MSC_VER
         throw exception(coord_no_out_of_range_message);
@@ -236,21 +291,88 @@ public:
         throw runtime_error(coord_no_out_of_range_message);
 #endif
     }
-    virtual bool is_equal_or_less_than(Point const& obj, Coordination const& coord) const
+
+    /**
+     * Determine whether a certain dimension coordinate is equal to or less than the target.
+     *
+     * For example:
+     * ```
+     * a.X = 1;
+     * b.X = 2;
+     * auto result = a.is_equal_or_less_than(b, Coordination.X);
+     * ```
+     *
+     * The result will be true.
+     *
+     * @param object the target to be compared.
+     * @param coordination the specified dimension to be compared.
+     * @return whether the current point is equal to or less than the target in specified dimension.
+     * @exception thrown if Coordination is not in X, Y or Z.
+     */
+    [[nodiscard]] virtual bool is_equal_or_less_than(Point const& object, Coordination const& coordination) const
     {
-        return this->is_less_than(obj, coord) || this->is_equal_to(obj, coord);
+        return this->is_less_than(object, coordination) || this->is_equal_to(object, coordination);
     }
-    virtual bool is_equal_or_greater_than(Point const& obj, Coordination const& coord) const
+
+    /**
+     * Determine whether a certain dimension coordinate is equal to or greater than the target.
+     *
+     * For example:
+     * ```
+     * a.X = 2;
+     * b.X = 1;
+     * auto result = a.is_equal_or_greater_than(b, Coordination.X);
+     * ```
+     *
+     * The result will be true.
+     *
+     * @param object the target to be compared.
+     * @param coordination the specified dimension to be compared.
+     * @return bool is equal to or greater than the target in specified dimension.
+     * @exception thrown if Coordination is not in X, Y or Z.
+     */
+    [[nodiscard]] virtual bool is_equal_or_greater_than(Point const& object, Coordination const& coordination) const
     {
-        return this->is_greater_than(obj, coord) || this->is_equal_to(obj, coord);
+        return this->is_greater_than(object, coordination) || this->is_equal_to(object, coordination);
     }
+
+	/* Determines whether the current point contains the RGB properties. */
     bool has_RGB = false;
+    /* Determines whether the current point contains the normal properties. */
     bool has_normal = false;
+    /* Determines whether the current point contains the alpha properties. */
     bool has_alpha = false;
+    /* Determines whether the current point contains the confidence properties. */
     bool has_confidence = false;
+    /* Determines whether the current point contains the intensity properties. */
     bool has_intensity = false;
-    void offset(double const, double const, double const);
-    double offset_of(double const, Coordination const&) const;
+
+    /**
+     * Offset the current point by a certain value.
+     *
+     * @param offset_x offset value in X coordinate. It can be negative.
+     * @param offset_y offset value in Y coordinate. It can be negative.
+     * @param offset_z offset value in Z coordinate. It can be negative.
+     */
+    void offset(double offset_x, double offset_y, double offset_z);
+
+	/**
+	 * Calculate the offset under a certain coordinate.
+	 *
+	 * @param offset target.
+	 * @param coordination specified dimension.
+	 * @return the offset between the current and the target in specified dimension.
+	 */
+    [[nodiscard]] double offset_of(double offset, Coordination const& coordination) const;
+
+	/**
+	 * Output the location of the current point.
+	 *
+     * @param stream the target stream to output to.
+     * @param point the point to be output.
+	 *
+	 * @return the received stream.
+	 */
     friend ostream& operator<<(ostream& stream, Point const& point)
     {
         stream << "(" << setprecision(10) << point.__X << "," << setprecision(10) << point.__Y << "," << setprecision(10) << point.__Z << ")";

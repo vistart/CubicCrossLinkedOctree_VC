@@ -19,16 +19,16 @@
 #include <stdexcept>
 #endif
 
-void Point::offset(double const offset_x, double const offset_y, double const offset_z)
+void Point::offset(double offset_x, double offset_y, double offset_z)
 {
     __X += offset_x;
     __Y += offset_y;
     __Z += offset_z;
 }
 
-double Point::offset_of(double const offset, Coordination const& coord) const
+double Point::offset_of(double offset, Coordination const& coordination) const
 {
-    switch (coord)
+    switch (coordination)
     {
     case Coordination::X:
         return __X - offset;
