@@ -79,14 +79,14 @@ void OctreeNode::insert(unsigned int const& index)
 
 OctreeNode::NodeCoordinate OctreeNode::find_node_coordinate(Point const& point, OctreeNode::PointCoordinate const& middle_point, double const& max_range, unsigned char const depth = 8)
 {
-    double leaf_width = max_range / (pow(2, depth) - 1);
-    auto [x_mid, y_mid, z_mid] = middle_point;
+    const double leaf_width = max_range / (pow(2, depth) - 1);
+    const auto& [x_mid, y_mid, z_mid] = middle_point;
     const auto offset_of_x = point.offset_of(x_mid - (max_range + leaf_width) / 2, Point::Coordination::X);
     const auto offset_of_y = point.offset_of(y_mid - (max_range + leaf_width) / 2, Point::Coordination::Y);
     const auto offset_of_z = point.offset_of(z_mid - (max_range + leaf_width) / 2, Point::Coordination::Z);
-    const auto x_th = (unsigned int)(offset_of_x / leaf_width);
-    const auto y_th = (unsigned int)(offset_of_y / leaf_width);
-    const auto z_th = (unsigned int)(offset_of_z / leaf_width);
+    const auto x_th = static_cast<unsigned int>(offset_of_x / leaf_width);
+    const auto y_th = static_cast<unsigned int>(offset_of_y / leaf_width);
+    const auto z_th = static_cast<unsigned int>(offset_of_z / leaf_width);
     // cout << "Offset of last point in (X,Y,Z): " << "(" << offset_of_x << "," << offset_of_y << "," << offset_of_z << ")" << " (X-th, Y-th, Z-th) in hexidecimal: " << "(" << bitset<10>(x_th) << "," << bitset<10>(y_th) << "," << bitset<10>(z_th) << ")" << endl;
     return make_tuple(x_th, y_th, z_th, depth);
 }
@@ -98,7 +98,7 @@ OctreeNode::PointCoordinate OctreeNode::find_middle_point(double const& x_range_
 
 OctreeNode::PointCoordinate OctreeNode::find_middle_point(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundaries)
 {
-    auto [x_range, y_range, z_range] = boundaries;
+    const auto& [x_range, y_range, z_range] = boundaries;
     auto [x_range_min, x_range_max] = x_range;
     auto [y_range_min, y_range_max] = y_range;
     auto [z_range_min, z_range_max] = z_range;
