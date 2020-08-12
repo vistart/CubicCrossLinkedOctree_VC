@@ -170,10 +170,10 @@ protected:
     {
         auto [x, y, z, d] = coordinate;
         if (d < depth) {
-            return make_tuple(x << depth - d, y << depth - d, z << depth - d, depth - d);
+            return make_tuple(x << (depth - d), y << (depth - d), z << (depth - d), depth - d);
         }
         if (d > depth) {
-            return make_tuple(x >> d - depth, y >> d - depth, z >> d - depth, d - depth);
+            return make_tuple(x >> (d - depth), y >> (d - depth), z >> (d - depth), d - depth);
         }
         return make_tuple(x, y, z, 0);
     }
