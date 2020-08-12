@@ -256,7 +256,7 @@ private:
 	 * Find the value of the largest spanned dimension.
      *
      * @param tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& Boundaries which contains three candidate dimensions.
-     * @return tuple<double, double> The upper and lower limits of the largest dimension of the range.
+     * @return double The upper and lower limits of the largest dimension of the range.
 	 */
     double find_max_range(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundaries) const
     {
