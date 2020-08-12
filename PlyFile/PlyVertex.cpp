@@ -363,7 +363,6 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEnco
 	this->set_all_properties(X, Y, Z, R, G, B, NX, NY, NZ, ALPHA, CONFIDENCE, INTENSITY);
 }
 
-
 PlyVertex::PlyVertex(double const X, double const Y, double const Z, unsigned char const R = 0, unsigned char const G = 0, unsigned char const B = 0)
 {
 	this->set_all_properties(X, Y, Z, R, G, B, 0, 0, 0, 255, 1, 0.5);
