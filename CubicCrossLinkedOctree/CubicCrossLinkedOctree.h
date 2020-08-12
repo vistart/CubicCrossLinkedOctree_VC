@@ -153,18 +153,20 @@ protected:
      * If the specified depth is deeper than the depth of the specified coordinate,
      * zero is added at the end of the coordinate; if the specified depth is
      * shallower than the depth of the specified coordinate, the specified depth
-     * is truncated; otherwise, the output is as it is.
+     * is truncated; otherwise, the output is as it is, but the depth is 0.
      *
      * For example:
      * The detail of a node coordinate is (X:16, Y:15, Z:14, D:5).
      * 
-     * 
+     * if parameter `depth` is 3, the output is (2, 1, 1, 3);
+     * if parameter `depth` is 5, the output is as it is, but the depth is 0.
+     * if parameter `depth` is 7, the output is (64, 60, 56, 2);
      *
      * @param coordinate
      * @param depth Depth difference relative to specified coordinate.
      * @return calculated coordinate.
      */
-    static OctreeNode::NodeCoordinate GetRelativeNodeCoordinate(OctreeNode::NodeCoordinate coordinate, unsigned char depth)
+    static OctreeNode::NodeCoordinate GetRelativeNodeCoordinate(OctreeNode::NodeCoordinate const& coordinate, unsigned char depth)
     {
         auto [x, y, z, d] = coordinate;
         if (d < depth) {
@@ -173,7 +175,7 @@ protected:
         if (d > depth) {
             return make_tuple(x >> d - depth, y >> d - depth, z >> d - depth, d - depth);
         }
-        return coordinate;
+        return make_tuple(x, y, z, 0);
     }
 
     
