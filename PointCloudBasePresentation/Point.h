@@ -37,7 +37,6 @@ using namespace std;
 class Point
 {
 public:
-	/
 	Point() = default;
 	~Point() = default;
 	double X() const noexcept;
