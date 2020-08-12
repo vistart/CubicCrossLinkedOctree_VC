@@ -24,9 +24,16 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 	string file_path(argv[1]);
+
+	// This statement (construct the PlyFile) will read the ply file.
+	cout << "Reading the ply file: " << file_path << endl;
 	const auto plyfile = make_shared<PlyFile>(file_path);
+	cout << endl;
+	
     const auto point_list = plyfile->GetPointList();
     cout << "The last point is: " << point_list->GetPoints()->back() << endl;
+
+	cout << "Construct the Octree of Point Cloud: " << endl;
     CubicCrossLinkedOctree<PlyVertexList, PlyVertex, PlyFile> octree(point_list);
     //cout << "Hello World!\n";
     return 0;

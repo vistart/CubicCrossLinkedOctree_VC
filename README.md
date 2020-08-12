@@ -7,7 +7,7 @@ Cubic Cross Linked Octree, implemented in C++.
 
 ## Intention
 
-This project is designed for three-dimensional orthogonal listed octree of point cloud.
+This project is designed for represent the point cloud by three-dimensional orthogonal listed octree.
 
 ## Features
 
