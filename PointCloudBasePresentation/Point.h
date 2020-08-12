@@ -44,6 +44,12 @@ class Point
 public:
     Point() = default;
     ~Point() = default;
+	struct XYZ
+	{
+        double X;
+        double Y;
+        double Z;
+	};
     [[nodiscard]] double X() const noexcept
     {
         return __X;
@@ -347,7 +353,7 @@ public:
     bool has_intensity = false;
 
     /**
-     * Offset the current point by a certain value.
+     * Offset the current point by three values.
      *
      * @param offset_x offset value in X coordinate. It can be negative.
      * @param offset_y offset value in Y coordinate. It can be negative.
@@ -355,6 +361,23 @@ public:
      */
     void offset(double offset_x, double offset_y, double offset_z);
 
+	/**
+	 * Offset the current point by a three-dimensional value.
+	 *
+	 * @param target offset value in X,Y and Z.
+	 */
+    void offset(XYZ const& target);
+
+    /**
+     * Offset the current point by another point.
+     *
+     * @param target offset value in X,Y and Z.
+     */
+    void offset(Point const& target);
+
+    Point* operator+(Point const& target);
+    Point* operator+(XYZ const& target);
+	
 	/**
 	 * Calculate the offset under a certain coordinate.
 	 *

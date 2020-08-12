@@ -19,11 +19,36 @@
 #include <stdexcept>
 #endif
 
+
+Point* Point::operator+(Point const& target)
+{
+    __X += target.X();
+    __Y += target.Y();
+    __Z += target.Z();
+    return this;
+}
+
+Point* Point::operator+(XYZ const& target)
+{
+    offset(target.X, target.Y, target.Z);
+    return this;
+}
+
 void Point::offset(double offset_x, double offset_y, double offset_z)
 {
     __X += offset_x;
     __Y += offset_y;
     __Z += offset_z;
+}
+
+void Point::offset(Point const& target)
+{
+    offset(target.X(), target.Y(), target.Z());
+}
+
+void Point::offset(XYZ const& target)
+{
+    offset(target.X, target.Y, target.Z);
 }
 
 double Point::offset_of(double offset, Coordination const& coordination) const
