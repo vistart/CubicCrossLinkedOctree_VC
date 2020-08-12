@@ -44,12 +44,24 @@ class Point
 public:
     Point() = default;
     ~Point() = default;
-	struct XYZ
-	{
+    struct XYZ
+    {
         double X;
         double Y;
         double Z;
-	};
+    };
+    struct RGB
+    {
+        double R;
+        double G;
+        double B;
+    };
+    struct NXYZ
+    {
+        double NX;
+        double NY;
+        double NZ;
+    };
     [[nodiscard]] double X() const noexcept
     {
         return __X;
