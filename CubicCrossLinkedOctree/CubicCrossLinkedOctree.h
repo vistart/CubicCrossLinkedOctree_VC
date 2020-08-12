@@ -41,8 +41,8 @@ public:
 #ifdef _DEBUG
         for (int i = 1; i <= 5; i++) {
             auto [x, y, z, d] = GetRelativeNodeCoordinate(make_tuple(16, 15, 14, 5), i);
-            cout << (int)x << " " << (int)y << " " << (int)z << " " << (int)d << endl;
-        } return;
+            cout << x << " " << y << " " << z << " " << static_cast<unsigned short>(d) << endl;
+        }
 #endif
         if (depth < 1 || depth > 31) {
             throw "The depth out of range. It should be an integer from 1 to 31.";
