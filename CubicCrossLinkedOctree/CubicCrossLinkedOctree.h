@@ -201,7 +201,7 @@ private:
     }
 
 	/**
-	 * Find the boundry of the point cloud.
+	 * Find the boundary of the point cloud.
 	 *
 	 * @param shared_ptr<T> const& The list that contains all the points.
 	 * @return tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> The min & max coordinate of three dimensions.
