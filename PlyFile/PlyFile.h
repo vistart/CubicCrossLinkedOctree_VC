@@ -48,7 +48,7 @@ public:
 #pragma endregion
 
 #pragma region Vertex
-	shared_ptr<PlyVertexList> GetPointList();
+	shared_ptr<PlyVertexList> GetPointList() override;
 #pragma endregion
 
 #pragma region Face
