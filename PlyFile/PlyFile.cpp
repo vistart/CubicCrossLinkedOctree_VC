@@ -4,7 +4,7 @@
  * | |/ // /(__  )  / / / /| || |     | |
  * |___//_//____/  /_/ /_/ |_||_|     |_|
  * @link https://vistart.me/
- * @copyright Copyright (c) 2019 vistart
+ * @copyright Copyright (c) 2019 - 2020 vistart
  * @license https://vistart.me/license/
 */
 #ifndef __PLY_FILE_H__
@@ -117,7 +117,9 @@ bool PlyFile::read_element_vertex_names(fstream& file)
 {
 	this->point_list->read_element_vertex_names(file);
 	PlyVertex::VertexName const back = this->point_list->names.back();
+#ifdef _DEBUG
 	cout << "Property: " << back.name << " | " << back.type << endl;
+#endif
 	return true;
 }
 
@@ -146,7 +148,9 @@ bool PlyFile::read_element_face_names(fstream& file)
 {
 	string face;
 	getline(file, face);
+#ifdef _DEBUG
 	cout << "Element: " << face << endl;
+#endif
 	return true;
 }
 #pragma endregion
@@ -156,7 +160,9 @@ bool PlyFile::read_element_edge_names(fstream& file)
 {
 	string edge;
 	getline(file, edge);
+#ifdef _DEBUG
 	cout << "Element: " << edge << endl;
+#endif
 	return true;
 }
 #pragma endregion
@@ -174,11 +180,19 @@ bool PlyFile::read_header(fstream& file)
 	string buffer;
 	enum ELEMENTS { NONE, VERTEX, FACE, EDGE, USER_DEFINED };
 	int current_elements = NONE;
+
+	// Regardless of the status of the current file, it searches from the beginning.
 	file.seekg(0, ios::beg);
+
+    // Reading the header of a ply file.
 	while (file >> buffer)
 	{
+		// Regardless of the case of the current word, it is converted to lower case for comparison.
 		transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+
+		// If `buffer` equals to "property", the content after it is regarded as the property name.
 		if (buffer.c_str() == string("property")) {
+			// There are three default property names: vertex, face and edge.
 			if (current_elements == VERTEX) {
 				read_element_vertex_names(file);
 				continue;
@@ -191,6 +205,7 @@ bool PlyFile::read_header(fstream& file)
 				read_element_edge_names(file);
 				continue;
 			}
+			// All others are user-defined.
 			if (current_elements == USER_DEFINED) {
 				read_element_user_defined_names(file);
 				continue;
@@ -199,25 +214,34 @@ bool PlyFile::read_header(fstream& file)
 
 		current_elements = NONE;
 
+		// If `buffer` equals to "ply", it indicates that the current file format is ply.
 		if (buffer.c_str() == string("ply")) {
 			cout << "PLY" << endl;
 			this->set_file_format("ply");
 			continue;
 		}
 
+
+		// If `buffer` equals to "format", it indicates that the following content is format and encoding.
 		if (read_file_encoding(buffer.c_str(), file)) {
+#ifdef _DEBUG
 			cout << "FORMAT: " << (*this->FileEncoding).Encoding() << " VERSION:" << (*this->FileEncoding).Version() << endl;
+#endif
 			continue;
 		}
 
+		// If `buffer` equals to "comment", it indicates that the following content is comment.
 		if (read_comment(buffer.c_str(), file)) {
+#ifdef _DEBUG
 			for (auto comment : (*this->CommentList).getComments())
 			{
 				cout << "Comment: " << comment << endl;
 			}
+#endif
 			continue;
 		}
 
+		// If `buffer` equals to "element", it indicates that the following content is element names.
 		if (buffer.c_str() == string("element")) {
 			string element_name;
 			file >> element_name >> element_count;
@@ -226,7 +250,9 @@ bool PlyFile::read_header(fstream& file)
 				current_elements = VERTEX;
 				auto point_list = this->GetPointList();
 				point_list->SetCountInHeader(element_count);
+#ifdef _DEBUG
 				cout << "Element: " << element_name << point_list->GetCountInHeader() << endl;
+#endif
 				continue;
 			}
 
@@ -243,7 +269,9 @@ bool PlyFile::read_header(fstream& file)
 		}
 
 		if (buffer.c_str() == string("end_header")) {
+#ifdef _DEBUG
 			cout << "END of HEADER" << endl;
+#endif
 			break;
 		}
 	}
@@ -257,7 +285,9 @@ bool PlyFile::read_body(fstream& file)
 	unsigned int const vertex_count_in_header = this->GetPointList()->GetCountInHeader();
 	for (unsigned int i = 0; i < vertex_count_in_header; i++)
 	{
-		// cout << "file pointer: " << file.tellg() << endl;
+#ifdef _DEBUG
+		cout << "file pointer: " << file.tellg() << endl;
+#endif
 		read_element_vertex(file);
 	}
 	return true;
