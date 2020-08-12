@@ -47,11 +47,15 @@ public:
         if (depth < 1 || depth > 31) {
             throw "The depth out of range. It should be an integer from 1 to 31.";
         }
+
+    	// Specify the parameter `depth`. This parameter is recognized as the depth of octree.
         this->depth = depth;
-        const auto boundries = find_boundry(point_list);
-        const auto middle_point = OctreeNode::find_middle_point(boundries);
+
+    	// Find the the boundaries throughout the three dimensions.
+        const auto boundaries = find_boundary(point_list);
+        const auto middle_point = OctreeNode::find_middle_point(boundaries);
         auto [x_mid, y_mid, z_mid] = middle_point;
-        const auto max_range = find_max_range(boundries);
+        const auto max_range = find_max_range(boundaries);
 
         long long base_depth = 1;
         double leaf_width = max_range / ((base_depth << depth) - 1);
@@ -202,7 +206,7 @@ private:
 	 * @param shared_ptr<T> const& The list that contains all the points.
 	 * @return tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> The min & max coordinate of three dimensions.
 	 */
-    tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> find_boundry(shared_ptr<T> const& point_list)
+    tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> find_boundary(shared_ptr<T> const& point_list)
     {
         const auto comp_x = [](const Point& a, const Point& b) {return a.is_less_than(b, Point::Coordination::X); };
         const auto comp_y = [](const Point& a, const Point& b) {return a.is_less_than(b, Point::Coordination::Y); };

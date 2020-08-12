@@ -96,9 +96,9 @@ OctreeNode::PointCoordinate OctreeNode::find_middle_point(double const& x_range_
     return make_tuple((x_range_max + x_range_min) / 2, (y_range_max + y_range_min) / 2, (z_range_max + z_range_min) / 2);
 }
 
-OctreeNode::PointCoordinate OctreeNode::find_middle_point(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundries)
+OctreeNode::PointCoordinate OctreeNode::find_middle_point(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundaries)
 {
-    auto [x_range, y_range, z_range] = boundries;
+    auto [x_range, y_range, z_range] = boundaries;
     auto [x_range_min, x_range_max] = x_range;
     auto [y_range_min, y_range_max] = y_range;
     auto [z_range_min, z_range_max] = z_range;
