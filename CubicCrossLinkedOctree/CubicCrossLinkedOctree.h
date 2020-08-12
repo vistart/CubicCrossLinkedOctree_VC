@@ -12,16 +12,13 @@
 #define __CUBIC_CROSS_LINKED_OCTREE_H__
 
 #include "OctreeNode.h"
-#include "PlyFile.h"
 #include "PointList.h"
 #include <algorithm>
-#include <bitset>
-#include <cmath>
 #include <iostream>
 #include <list>
 #include <map>
 #include <tuple>
-#include <unordered_map>
+
 
 using namespace std;
 
@@ -33,16 +30,18 @@ public:
     /**
      * Construct the octree.
      *
-     * @param shared_ptr<T> const& Points from which construct an octree.
-     * @param unsigned char Depth.
+     * @param point_list Points from which construct an octree.
+     * @param depth Depth of the octree.
      */
     CubicCrossLinkedOctree(shared_ptr<T> const& point_list, unsigned char depth = 12)
     {
 #ifdef _DEBUG
+    	/* The following loop will be discarded.
         for (int i = 1; i <= 5; i++) {
             auto [x, y, z, d] = GetRelativeNodeCoordinate(make_tuple(16, 15, 14, 5), i);
             cout << "X:" << x << " | Y:" << y << " | Z:" << z << " | Depth:" << static_cast<unsigned short>(d) << endl;
         }
+        */
 #endif
         if (depth < 1 || depth > 31) {
             throw "The depth out of range. It should be an integer from 1 to 31.";
@@ -52,7 +51,9 @@ public:
         this->depth = depth;
 
     	// Find the the boundaries throughout the three dimensions.
+        cout << "The boundaries of three dimensions are following:" << endl;
         const auto boundaries = find_boundary(point_list);
+        cout << endl;
 
     	// Find the middle point of each dimension.
         const auto middle_point = OctreeNode::find_middle_point(boundaries);
@@ -62,12 +63,12 @@ public:
         long long base_depth = 1;
         double leaf_width = max_range / ((base_depth << depth) - 1);
 #ifdef _DEBUG
-        cout << "Max extended range: " << setprecision(8) << max_range + leaf_width << endl;
+        cout << "Leaf node width: " << leaf_width << endl;
+        cout << "Max extended range (= Max range + Leaf node width): " << setprecision(8) << max_range + leaf_width << endl;
         cout << "X-axis extended range: " << setprecision(8) << x_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << x_mid + (max_range + leaf_width) / 2 << endl;
         cout << "Y-axis extended range: " << setprecision(8) << y_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << y_mid + (max_range + leaf_width) / 2 << endl;
         cout << "Z-axis extended range: " << setprecision(8) << z_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << z_mid + (max_range + leaf_width) / 2 << endl;
 
-        cout << "Leaf node width: " << leaf_width << endl;
 #endif
         for (auto i = 0; i < point_list->GetPoints()->size(); i++) {
             auto& point = (*point_list->GetPoints())[i];
@@ -214,8 +215,8 @@ private:
 	/**
 	 * Find the boundary of the point cloud.
 	 *
-	 * @param shared_ptr<T> const& The list that contains all the points.
-	 * @return tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> The min & max coordinate of three dimensions.
+	 * @param point_list The list that contains all the points.
+	 * @return The min & max coordinate of three dimensions.
 	 */
     tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> find_boundary(shared_ptr<T> const& point_list)
     {
@@ -232,12 +233,12 @@ private:
         const auto z_max = max_element(begin, end, comp_z);
 #ifdef _DEBUG
         cout << fixed;
-        cout << "X-axis lowest boundry:  " << setprecision(0) << "[" << distance(begin, x_min) << "]" << setprecision(8) << (*x_min).X() << endl;
-        cout << "X-axis highest boundry: " << setprecision(0) << "[" << distance(begin, x_max) << "]" << setprecision(8) << (*x_max).X() << endl;
-        cout << "Y-axis lowest boundry:  " << setprecision(0) << "[" << distance(begin, y_min) << "]" << setprecision(8) << (*y_min).Y() << endl;
-        cout << "Y-axis highest boundry: " << setprecision(0) << "[" << distance(begin, y_max) << "]" << setprecision(8) << (*y_max).Y() << endl;
-        cout << "Z-axis lowest boundry:  " << setprecision(0) << "[" << distance(begin, z_min) << "]" << setprecision(8) << (*z_min).Z() << endl;
-        cout << "Z-axis highest boundry: " << setprecision(0) << "[" << distance(begin, z_max) << "]" << setprecision(8) << (*z_max).Z() << endl;
+        cout << "X-axis:" << "[" << setw(8) << setprecision(8) << distance(begin, x_min) << "]" << setw(8) << (*x_min).X() << " to "
+             << setw(0) << "[" << setw(8) << distance(begin, x_max) << "]" << setprecision(8) << (*x_max).X() << endl;
+        cout << "Y-axis:" << "[" << setw(8) << setprecision(8) << distance(begin, y_min) << "]" << setw(8) << (*y_min).Y() << " to "
+             << setw(0) << "[" << setw(8) << distance(begin, y_max) << "]" << setprecision(8) << (*y_max).Y() << endl;
+        cout << "Z-axis:" << "[" << setw(8) << setprecision(8) << distance(begin, z_min) << "]" << setw(8) << (*z_min).Z() << " to "
+             << setw(0) << "[" << setw(8) << distance(begin, z_max) << "]" << setprecision(8) << (*z_max).Z() << endl;
 #endif
         const auto x_range = (*x_max).X() - (*x_min).X();
         const auto y_range = (*y_max).Y() - (*y_min).Y();
@@ -266,12 +267,12 @@ private:
 	/**
 	 * Find the value of the largest spanned dimension.
      *
-     * @param tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& Boundaries which contains three candidate dimensions.
+     * @param boundaries which contains three candidate dimensions.
      * @return double The upper and lower limits of the largest dimension of the range.
 	 */
     double find_max_range(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundaries) const
     {
-        const auto [x_range, y_range, z_range] = boundaries;
+        const auto& [x_range, y_range, z_range] = boundaries;
         const auto [x_range_min, x_range_max] = x_range;
         const auto [y_range_min, y_range_max] = y_range;
         const auto [z_range_min, z_range_max] = z_range;
