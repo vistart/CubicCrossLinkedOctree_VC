@@ -189,8 +189,8 @@ private:
         map<size_t, unsigned int> count_per_node;
         for (auto &p : this->nodes)
         {
-            count += p.second.get_leaves().size();
-            auto [iterator, success] = count_per_node.try_emplace(p.second.get_leaves().size(), 1);
+            count += p.second.get_leaves()->size();
+            auto [iterator, success] = count_per_node.try_emplace(p.second.get_leaves()->size(), 1);
             if (!success) {
                 iterator->second++;
             }

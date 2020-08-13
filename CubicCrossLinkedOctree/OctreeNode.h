@@ -67,9 +67,9 @@ public:
     {
         return &(*(*this->nodes)[index]);
     }
-    set<unsigned int> get_leaves() const
+    shared_ptr<set<unsigned int>> get_leaves() const
     {
-        return *this->leaves;
+        return this->leaves;
     }
     NodeCoordinate get_coordinate()
     {
@@ -84,7 +84,7 @@ public:
 protected:
     bool is_leaf = true;
     NodeCoordinate coordinate;
-    unique_ptr<set<unsigned int>> leaves;
+    shared_ptr<set<unsigned int>> leaves;
     /* Eight Octants. */
     unique_ptr<array<shared_ptr<OctreeNode>, 8>> nodes;
 };
