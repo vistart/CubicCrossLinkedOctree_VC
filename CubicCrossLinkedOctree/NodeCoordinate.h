@@ -24,6 +24,13 @@ public:
 	}
 	~NodeCoordinate() = default;
 
+	/**
+	 * Determine whether the two coordinates are equal.
+	 * Return true if XYZ and the depth must be completely equal.
+	 *
+	 * @param node_coordinate The coordinate to be compared.
+	 * @return true if XYZ and the depth completely equal.
+	 */
     virtual bool operator==(NodeCoordinate const& node_coordinate) const;
 
 	struct Hash
@@ -58,9 +65,21 @@ public:
 	};
 	*/
 
+	/**
+	 * Node coordinate X.
+	 */
     unsigned int X = 0;
+	/**
+	 * Node coordinate Y.
+	 */
     unsigned int Y = 0;
+	/**
+	 * Node coordinate Z.
+	 */
     unsigned int Z = 0;
+	/**
+	 * Node coordinate depth.
+	 */
     unsigned char depth = 1;
 };
 #endif
