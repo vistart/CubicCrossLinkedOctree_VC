@@ -37,15 +37,15 @@ public:
     CubicCrossLinkedOctree(shared_ptr<T> const& point_list, unsigned char depth = 12)
     {
 #ifdef _DEBUG
-    	/* The following loop will be discarded.
+    	/* The following loop will be discarded. */
         for (int i = 1; i <= 5; i++) {
-            auto [x, y, z, d] = GetRelativeNodeCoordinate(make_tuple(16, 15, 14, 5), i);
+            auto [x, y, z, d] = GetRelativeNodeCoordinate(NodeCoordinate(16, 15, 14, 5), i);
             cout << "X:" << x << " | Y:" << y << " | Z:" << z << " | Depth:" << static_cast<unsigned short>(d) << endl;
         }
-        */
+        
 #endif
-        if (depth < 1 || depth > 31) {
-            throw "The depth out of range. It should be an integer from 1 to 31.";
+        if (depth < 1 || depth > 127) {
+            throw "The depth out of range. It should be an integer from 1 to 127.";
         }
 
     	// Specify the parameter `depth`. This parameter is recognized as the depth of octree.
@@ -186,10 +186,10 @@ protected:
     {
         auto [x, y, z, d] = coordinate;
         if (d < depth) {
-            return make_tuple(x << (depth - d), y << (depth - d), z << (depth - d), depth - d);
+            return NodeCoordinate(x << (depth - d), y << (depth - d), z << (depth - d), depth - d);
         }
         if (d > depth) {
-            return make_tuple(x >> (d - depth), y >> (d - depth), z >> (d - depth), d - depth);
+            return NodeCoordinate(x >> (d - depth), y >> (d - depth), z >> (d - depth), d - depth);
         }
         return NodeCoordinate(x, y, z, 0);
     }
