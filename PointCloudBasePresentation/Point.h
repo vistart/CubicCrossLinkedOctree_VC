@@ -189,11 +189,11 @@ public:
     }
     virtual bool operator<(Point const& vertex) const
     {
-        return __X < vertex.X() || __Y < vertex.Y() || __Z < vertex.Z();
+        return __X < vertex.X() && __Y < vertex.Y() && __Z < vertex.Z();
     }
     virtual bool operator>(Point const& vertex) const
     {
-        return __X > vertex.X() || __Y > vertex.Y() || __Z > vertex.Z();
+        return __X > vertex.X() && __Y > vertex.Y() && __Z > vertex.Z();
     }
     enum class Coordination { X, Y, Z };
 
