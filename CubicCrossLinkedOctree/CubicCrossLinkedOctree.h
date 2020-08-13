@@ -248,12 +248,12 @@ private:
         const auto z_max = max_element(begin, end, comp_z);
 #ifdef _DEBUG
         cout << fixed;
-        cout << "X-axis:" << "[" << setw(8) << setprecision(8) << distance(begin, x_min) << "]" << setw(8) << (*x_min).X() << " to "
-             << setw(0) << "[" << setw(8) << distance(begin, x_max) << "]" << setprecision(8) << (*x_max).X() << endl;
-        cout << "Y-axis:" << "[" << setw(8) << setprecision(8) << distance(begin, y_min) << "]" << setw(8) << (*y_min).Y() << " to "
-             << setw(0) << "[" << setw(8) << distance(begin, y_max) << "]" << setprecision(8) << (*y_max).Y() << endl;
-        cout << "Z-axis:" << "[" << setw(8) << setprecision(8) << distance(begin, z_min) << "]" << setw(8) << (*z_min).Z() << " to "
-             << setw(0) << "[" << setw(8) << distance(begin, z_max) << "]" << setprecision(8) << (*z_max).Z() << endl;
+        cout << "X-axis:" << "[" << setw(8) << setprecision(8) << distance(begin, x_min) << "]" << setw(11) << (*x_min).X() << " to "
+             << setw(0) << "[" << setw(8) << distance(begin, x_max) << "]" << setw(11) << (*x_max).X() << endl;
+        cout << "Y-axis:" << "[" << setw(8) << setprecision(8) << distance(begin, y_min) << "]" << setw(11) << (*y_min).Y() << " to "
+             << setw(0) << "[" << setw(8) << distance(begin, y_max) << "]" << setw(11) << (*y_max).Y() << endl;
+        cout << "Z-axis:" << "[" << setw(8) << setprecision(8) << distance(begin, z_min) << "]" << setw(11) << (*z_min).Z() << " to "
+             << setw(0) << "[" << setw(8) << distance(begin, z_max) << "]" << setw(11) << (*z_max).Z() << endl;
 #endif
         const auto x_range = (*x_max).X() - (*x_min).X();
         const auto y_range = (*y_max).Y() - (*y_min).Y();
