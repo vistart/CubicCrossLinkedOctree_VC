@@ -77,7 +77,7 @@ void OctreeNode::insert(unsigned int const& index)
     */
 }
 
-OctreeNode::NodeCoordinate OctreeNode::find_node_coordinate(Point const& point, OctreeNode::PointCoordinate const& middle_point, double const& max_range, unsigned char const depth = 8)
+NodeCoordinate OctreeNode::find_node_coordinate(Point const& point, PointCoordinate const& middle_point, double const& max_range, unsigned char const depth = 8)
 {
     const double leaf_width = max_range / (pow(2, depth) - 1);
     const auto& [x_mid, y_mid, z_mid] = middle_point;
@@ -88,7 +88,7 @@ OctreeNode::NodeCoordinate OctreeNode::find_node_coordinate(Point const& point, 
     const auto y_th = static_cast<unsigned int>(offset_of_y / leaf_width);
     const auto z_th = static_cast<unsigned int>(offset_of_z / leaf_width);
     // cout << "Offset of last point in (X,Y,Z): " << "(" << offset_of_x << "," << offset_of_y << "," << offset_of_z << ")" << " (X-th, Y-th, Z-th) in hexidecimal: " << "(" << bitset<10>(x_th) << "," << bitset<10>(y_th) << "," << bitset<10>(z_th) << ")" << endl;
-    return make_tuple(x_th, y_th, z_th, depth);
+    return NodeCoordinate(x_th, y_th, z_th, depth);
 }
 
 OctreeNode::PointCoordinate OctreeNode::find_middle_point(double const& x_range_min, double const& x_range_max, double const& y_range_min, double const& y_range_max, double const& z_range_min, double const& z_range_max)

@@ -12,13 +12,14 @@
 #define __CUBIC_CROSS_LINKED_OCTREE_H__
 
 #include "OctreeNode.h"
+#include "NodeCoordinate.h"
 #include "PointList.h"
 #include <algorithm>
 #include <iostream>
 #include <list>
 #include <map>
 #include <tuple>
-
+#include <unordered_map>
 
 using namespace std;
 
@@ -80,18 +81,25 @@ public:
 #endif
     }
     ~CubicCrossLinkedOctree() = default;
+    /*
+     * The mapping between node coordinates and octree nodes.
+     */
+    typedef unordered_map<NodeCoordinate, OctreeNode, NodeCoordinate::Hash> node_map;
 protected:
-    OctreeNode::node_map nodes;
+    node_map nodes;
     shared_ptr<OctreeNode> root = make_shared<OctreeNode>();
-    unique_ptr<OctreeNode> build_tree(OctreeNode::node_map nodes)
+    unique_ptr<OctreeNode> build_tree(node_map nodes)
     {
-        for (auto node : nodes)
+        for (auto& node : nodes)
         {
             auto coordinate = node.first;
             build_tree(node.first, depth);
         }
     }
-    shared_ptr<OctreeNode> build_tree(OctreeNode::NodeCoordinate coordinate)
+	/**
+	 * 
+	 */
+    shared_ptr<OctreeNode> build_tree(NodeCoordinate coordinate)
     {
         auto node = get_deepest_node(coordinate);
         if (node->coordinate != coordinate) {
@@ -101,10 +109,11 @@ protected:
 
         }
     }
+	
     /**
      * 
      */
-    shared_ptr<OctreeNode> get_deepest_node(OctreeNode::NodeCoordinate coordinate)
+    shared_ptr<OctreeNode> get_deepest_node(NodeCoordinate coordinate)
     {
         auto [x, y, z, d] = coordinate;
         if (d <= 0) { // The Depth less than or equal to zero is abnormal.
@@ -131,7 +140,10 @@ protected:
         return nullptr;
     }
 
-    shared_ptr<OctreeNode> emplace(OctreeNode& parent, OctreeNode& child, OctreeNode::NodeCoordinate coordinate)
+	/**
+	 * 
+	 */
+    shared_ptr<OctreeNode> emplace(OctreeNode& parent, OctreeNode& child, NodeCoordinate coordinate)
     {/*
         if (parent) {
             throw exception("The parent cannot be accessed.");
@@ -140,7 +152,10 @@ protected:
         return nullptr;
     }
 
-    shared_ptr<OctreeNode> try_emplace(OctreeNode::NodeCoordinate parent, unsigned char index, OctreeNode& child)
+	/**
+	 * 
+	 */
+    shared_ptr<OctreeNode> try_emplace(NodeCoordinate parent, unsigned char index, OctreeNode& child)
     {/*
         if (!get_node(parent)) {
             build_tree(parent);
@@ -167,7 +182,7 @@ protected:
      * @param depth Depth difference relative to specified coordinate.
      * @return calculated coordinate.
      */
-    static OctreeNode::NodeCoordinate GetRelativeNodeCoordinate(OctreeNode::NodeCoordinate const& coordinate, unsigned char depth)
+    static NodeCoordinate GetRelativeNodeCoordinate(NodeCoordinate const& coordinate, unsigned char depth)
     {
         auto [x, y, z, d] = coordinate;
         if (d < depth) {
@@ -176,7 +191,7 @@ protected:
         if (d > depth) {
             return make_tuple(x >> (d - depth), y >> (d - depth), z >> (d - depth), d - depth);
         }
-        return make_tuple(x, y, z, 0);
+        return NodeCoordinate(x, y, z, 0);
     }
 
     
@@ -204,7 +219,7 @@ private:
         }
         cout << endl;
     }
-    void insert_point(OctreeNode::NodeCoordinate const& node_coordinate, unsigned int const index)
+    void insert_point(NodeCoordinate const& node_coordinate, unsigned int const index)
     {
         auto [iterator, success] = nodes.try_emplace(node_coordinate, index);
         if (!success) {
@@ -278,6 +293,6 @@ private:
         const auto [z_range_min, z_range_max] = z_range;
         return max(x_range_max - x_range_min, max(y_range_max - y_range_min, z_range_max - z_range_min));
     }
-    list<shared_ptr<OctreeNode::NodeCoordinate>> list_x;
+    list<shared_ptr<NodeCoordinate>> list_x;
 };
 #endif
