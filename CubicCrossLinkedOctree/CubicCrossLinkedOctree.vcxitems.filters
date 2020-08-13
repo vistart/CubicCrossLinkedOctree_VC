@@ -21,7 +21,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)OctreeNodeNonLeaf.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)NodeCoordinate.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NodeCoordinate.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CubicCrossLinkedOctree.h">
@@ -36,6 +38,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)OctreeNodeNonLeaf.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)NodeCoordinate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NodeCoordinate.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
