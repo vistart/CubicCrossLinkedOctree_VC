@@ -43,6 +43,16 @@ public:
          * that is, the value of each dimension ranges from 0 to 524287.
          * If the coordinate value exceeds this range, only the last 19 bits will be accepted,
          * and the high bits will be discarded.
+         *
+         * For example:
+         * The NodeCoordinate instance is (X:16, Y:15, Z:14, depth:5)
+         *
+         * The calculated hash value is 0x0A0004000078000E.
+         * The corresponding binary is:
+         * 0000 1010 0000 0000
+         * 0000 0100 0000 0000
+         * 0000 0000 0111 1000
+         * 0000 0000 0000 1110
 		 * 
 		 * @param i The node to be calculated.
 		 * @return hash value.
