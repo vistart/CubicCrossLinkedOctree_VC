@@ -161,6 +161,7 @@ public:
     virtual bool operator==(Point const& vertex) const
     {
         bool result = (__X == vertex.X() && __Y == vertex.Y() && __Z == vertex.Z());
+    	/*
         if (has_RGB)
         {
             result = (result && __R == vertex.R() && __G == vertex.G() && __B == vertex.B());
@@ -181,6 +182,7 @@ public:
         {
             result = (result && __INTENSITY == vertex.INTENSITY());
         }
+        */
         return result;
     }
     virtual bool operator!=(Point const& vertex) const
