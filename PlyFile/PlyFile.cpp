@@ -232,7 +232,8 @@ bool PlyFile::read_header(fstream& file)
 		// If `buffer` equals to "comment", it indicates that the following content is comment.
 		if (read_comment(buffer.c_str(), file)) {
 #ifdef _DEBUG
-			for (const auto& comment : (*this->CommentList).getComments())
+			auto comments = *CommentList->getComments();
+			for (const auto& comment :comments)
 			{
 				cout << "Comment: " << comment << endl;
 			}

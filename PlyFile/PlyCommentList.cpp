@@ -12,18 +12,18 @@
 #endif
 
 #ifdef __PLY_COMMENT_LIST_H__
-bool PlyCommentList::add(string comment)
+bool PlyCommentList::add(string const& comment) const
 {
-	this->comments.emplace_back(comment);
+	this->comments->emplace_back(comment);
 	return true;
 }
 
-vector<string> PlyCommentList::getComments()
+shared_ptr<vector<string>> PlyCommentList::getComments() const
 {
 	return this->comments;
 }
 
-PlyCommentList& PlyCommentList::operator<<(string comment)
+PlyCommentList& PlyCommentList::operator<<(string const& comment)
 {
 	if (this->add(comment)) {
 		
@@ -33,6 +33,6 @@ PlyCommentList& PlyCommentList::operator<<(string comment)
 
 PlyCommentList::~PlyCommentList()
 {
-	this->comments.erase(this->comments.begin(), this->comments.end());
+	this->comments->erase(this->comments->begin(), this->comments->end());
 }
 #endif

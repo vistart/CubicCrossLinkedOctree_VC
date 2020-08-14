@@ -12,8 +12,9 @@
 #ifndef __PLY_COMMENT_LIST_H__
 #define __PLY_COMMENT_LIST_H__
 
-#define PLY_TAG_COMMENT "comment"
+constexpr auto PLY_TAG_COMMENT = "comment";
 
+#include <memory>
 #include <vector>
 #include <string>
 
@@ -38,29 +39,29 @@ public:
     /**
      Add comment.
     
-     @param string: the comment to be added.
-     @return bool: True if comment added.
+     @param comment the comment to be added.
+     @return True if comment added.
      */
-	bool add(string);
+	[[nodiscard]] bool add(string const& comment) const;
 
     /**
      Get all the comments.
     
      @return vector<string>: the stored comments.
      */
-	vector<string> getComments();
+	[[nodiscard]] shared_ptr<vector<string>> getComments() const;
 
     /**
      Add comment.
     
-     @param string: the comment to be added.
+     @param comment the comment to be added.
      @return PlyCommentList&: itself.
      */
-	PlyCommentList& operator<<(string);
+	PlyCommentList& operator<<(string const& comment);
 protected:
     /**
      * The stored comments.
      */
-	vector<string> comments;
+	shared_ptr<vector<string>> comments;
 };
 #endif
