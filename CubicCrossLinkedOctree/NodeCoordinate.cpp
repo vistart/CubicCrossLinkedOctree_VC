@@ -15,6 +15,6 @@
 
 bool NodeCoordinate::operator==(NodeCoordinate const& node_coordinate) const
 {
-	return (X == node_coordinate.X && Y == node_coordinate.Y && Z == node_coordinate.Z&& depth == node_coordinate.depth);
+	return (X == node_coordinate.X && Y == node_coordinate.Y && Z == node_coordinate.Z && depth == node_coordinate.depth);
 }
 #endif
