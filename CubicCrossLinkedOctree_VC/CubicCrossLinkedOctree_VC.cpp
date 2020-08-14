@@ -25,11 +25,13 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 	string file_path(argv[1]);
-	unsigned short depth = 8;
+	unsigned char depth = 8;
 	if (argc > 2)
 	{
 		istringstream str1(argv[2]);
-		str1 >> depth;
+		unsigned int received = 0;
+		str1 >> received;
+		depth = received & 0xFF;
 	}
 
 	// This statement (construct the PlyFile) will read the ply file.
