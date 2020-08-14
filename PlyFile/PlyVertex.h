@@ -13,10 +13,8 @@
 #define __PLY_VERTEX_H__
 
 #include "PlyFileEncoding.h"
-#include "PlyPropertyType.h"
 #include "Point.h"
 #include <vector>
-#include <fstream>
 #include <sstream>
 
 using namespace std;
@@ -82,12 +80,12 @@ public:
 	   length in turn according to the first parameter (property name list), 
 	   and convert them to the corresponding properties.
 
-	 @param vector<VertexName> const&: List of property names. The order of property names
+	 @param names List of property names. The order of property names
 	 determines the content type of the sub-string.
-	 @param fstream&: the file from which the property origin.
-	 @param PlyFileEncoding::FileEncoding const&: The encoding of the vertex property of this file.
+	 @param file the file from which the property origin.
+	 @param file_encoding The encoding of the vertex property of this file.
 	 */
-	PlyVertex(vector<VertexName> const&, fstream&, PlyFileEncoding::FileEncoding const&);
+	PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEncoding::FileEncoding const& file_encoding);
 
 	/*
 	 Initialize a vertex based on specified X,Y,Z,R,G,B.
@@ -112,9 +110,9 @@ public:
 	 Pass location of vertex to the output stream.
 	 The output format is: (X, Y, Z)
 
-	 @param ostream& stream: The stream of vertex to be output.
-	 @param PlyVertex const& vertex: Vertex to output.
-	 @return ostream&: The stream that has been passed with the vertex.
+	 @param stream The stream of vertex to be output.
+	 @param vertex Vertex to output.
+	 @return The stream that has been passed with the vertex.
 	 */
 	friend ostream& operator<<(ostream& stream, PlyVertex const& vertex)
 	{
