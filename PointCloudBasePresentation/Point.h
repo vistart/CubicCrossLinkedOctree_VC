@@ -43,7 +43,7 @@ class Point
 {
 public:
     Point() = default;
-    ~Point() = default;
+    virtual ~Point() = default;
     struct XYZ
     {
         double X;
