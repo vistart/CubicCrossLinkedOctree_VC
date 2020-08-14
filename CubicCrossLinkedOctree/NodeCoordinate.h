@@ -22,7 +22,7 @@ public:
 	NodeCoordinate(unsigned int X, unsigned int Y, unsigned int Z, unsigned char depth) : X(X), Y(Y), Z(Z), depth(depth)
 	{
 	}
-	~NodeCoordinate() = default;
+	virtual ~NodeCoordinate() = default;
 
 	/**
 	 * Determine whether the two coordinates are equal.
