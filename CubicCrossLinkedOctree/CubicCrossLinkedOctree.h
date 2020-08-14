@@ -72,7 +72,8 @@ public:
 
 #endif
         for (auto i = 0; i < point_list->GetPoints()->size(); i++) {
-            auto& point = (*point_list->GetPoints())[i];
+            auto points = *point_list->GetPoints();
+            auto& point = points[i];
             const auto& node_coordinate = OctreeNode::find_node_coordinate(point, middle_point, max_range, depth);
             insert_point(node_coordinate, i);
         }
