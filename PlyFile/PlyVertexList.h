@@ -15,9 +15,6 @@
 #include "PlyVertex.h"
 #include "PointList.h"
 #include "PlyFileEncoding.h"
-#include "PlyPropertyType.h"
-#include <fstream>
-#include <sstream>
 #include <vector>
 using namespace std;
 
@@ -40,26 +37,26 @@ public:
 	/*
 	 Add a vertex to this list.
 	 
-	 @param string const&: the string describing the vertex.
-	 @return PlyVertexList&: self.
+	 @param str_vertex the string describing the vertex.
+	 @return self.
 	 */
-	PlyVertexList& operator<<(string const&);
+	PlyVertexList& operator<<(string const& str_vertex);
 
 	/*
 	 Add a vertex to this list.
 
-	 @param fstream&: the file stream containing the vertex.
+	 @param file the file stream containing the vertex.
 	 @return PlyVertexList&: self.
 	 */
-	PlyVertexList& operator<<(fstream&);
+	PlyVertexList& operator<<(fstream& file);
 
 	/*
 	 Add a vertex to this list.
 
-	 @param PlyVertex const&: the vertex to be added.
-	 @return PlyVertexList&: self.
+	 @param vertex the vertex to be added.
+	 @return self.
 	 */
-	PlyVertexList& operator<<(PlyVertex const&);
+	PlyVertexList& operator<<(PlyVertex const& vertex);
 
 	/*
 	 Specify the current file encoding.
@@ -71,31 +68,31 @@ public:
 	 @param PlyFileEncoding const&: the target file encoding.
 	 @return PlyVertexList&: self.
 	 */
-	PlyVertexList& operator<<(PlyFileEncoding const&);
+	PlyVertexList& operator<<(PlyFileEncoding const& file_encoding);
 
 	/*
 	 Read property names and corresponding types.
 
-	 @param fstream&: the target file.
-	 @return bool: true if no exceptions occured.
+	 @param file the target file.
+	 @return true if no exceptions occured.
 	 */
-	bool read_element_vertex_names(fstream&);
+	bool read_element_vertex_names(fstream& file);
 
 	/*
 	 Set the count of vertex according to the value stored in ply file header.
 	 Note: It is strongly recommended to set it only once before reading the
 	 vertex properties.
 	 
-	 @param unsigned int const: the target count.
+	 @param count the target count.
 	 */
-	void SetCountInHeader(unsigned int const);
+	void SetCountInHeader(unsigned int const count);
 
 	/*
 	 Get the count of vertex.
 
 	 @return unsigned int const: the target count.
 	 */
-	unsigned int GetCountInHeader() const;
+	[[nodiscard]] unsigned int GetCountInHeader() const;
 
 	/*
 	 Names of all properties.
