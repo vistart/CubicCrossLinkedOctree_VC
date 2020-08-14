@@ -35,7 +35,7 @@ public:
     PointCloud() {
         this->point_list = make_shared<T>();
     }
-    ~PointCloud() {
+    virtual ~PointCloud() {
         this->point_list = nullptr;
     }
     virtual shared_ptr<T> GetPointList() {

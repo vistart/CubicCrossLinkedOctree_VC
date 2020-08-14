@@ -40,7 +40,7 @@ public:
     PointList() {
         this->points = make_shared<vector<T>>();
     }
-    ~PointList() {
+    virtual ~PointList() {
         this->points = nullptr;
     }
     virtual shared_ptr<vector<T>> GetPoints() {
