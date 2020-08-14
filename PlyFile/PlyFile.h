@@ -31,12 +31,15 @@ class PlyFile : public PointCloud<PlyVertexList, PlyVertex, PlyFile>
 {
 public:
 #pragma region Constructor & Destructor
-	explicit PlyFile(string);
+	/**
+	 * 
+	 */
+	explicit PlyFile(string const& file_path);
 	~PlyFile();
 #pragma endregion
 
 #pragma region File Format
-	string GetFileFormat();
+	[[nodiscard]] string GetFileFormat() const;
 #pragma endregion
 
 #pragma region File Encoding
@@ -59,7 +62,7 @@ public:
 	shared_ptr<PlyEdgeList> EdgeList;
 #pragma endregion
 
-	bool GetIsValid();
+	bool GetIsValid() const;
 
 protected:
 	/* The file currently being accessed. */
@@ -71,10 +74,10 @@ protected:
 	/**
 	 Open the file.
 
-	 @param string the filename to be opened.
+	 @param file_path the filename to be opened.
 	 @return bool true if the file was opened successfully.
 	 */
-	bool open(string);
+	bool open(string const& file_path);
 	/* Supported header tags */
 	enum Tag { PLY, FORMAT, COMMENT, ELEMENT, PROPERTY, END_HEADER };
 	/**
@@ -84,10 +87,10 @@ protected:
 	 To use this method, you need to use "fstream" to represent an open file
 	 stream.
 
-	 @param fstream& the file to be read.
+	 @param file the file to be read.
 	 @return bool true if the file was read successfully.
 	 */
-	bool read(fstream&);
+	bool read(fstream& file);
 	/**
 	 * Read header from ply file.
 	 * This method resets the file pointer to the beginning because the file
@@ -96,10 +99,10 @@ protected:
 	 * Note: It is not recommended to call this method directly unless you know
 	 * the consequences of doing so.
 	 *
-	 * @param fstream& the file to be read.
+	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_header(fstream&);
+	bool read_header(fstream& file);
 	/**
 	 * This method starts at the position pointed to by the incoming file
 	 * stream parameter, and determines the amount of data to be read according
@@ -109,26 +112,44 @@ protected:
 	 * you need to make sure that the file pointer points to the appropriate
 	 * location yourself.
 	 *
-	 * @param fstream& the file to be read.
+	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_body(fstream&);
+	bool read_body(fstream& file);
 
 #pragma region File Format
 	enum FileFormatType { FILE_FORMAT_PLY };
 	int file_format = FILE_FORMAT_PLY;
-	bool set_file_format(string);
+	/**
+	 * Set file format. The only supported format is "ply".
+	 *
+	 * False returned if you pass another string.
+	 *
+	 * @param file_format
+	 * @return true only "ply" passed.
+	 */
+	bool set_file_format(string const& file_format);
 #pragma endregion
 
 #pragma region File Encoding
-	bool read_file_encoding(string, fstream&);
+	/**
+	 *
+	 * @param tag
+	 * @param file
+	 * @return
+	 */
+	bool read_file_encoding(string const& tag, fstream& file);
 #pragma endregion
 
 #pragma region Comment
 	/**
 	 * When the tag is "comment", everything after this tag in the current line is a comment.
+	 *
+	 * @param tag
+	 * @param file
+	 * @return
 	 */
-	bool read_comment(string, fstream&);
+	bool read_comment(string const& tag, fstream& file) const;
 #pragma endregion
 
 #pragma region Vertex
@@ -137,29 +158,29 @@ protected:
 	 * This method is called when the tag of a line is "vertex". Therefore, the
 	 * file pointer should point to the content after "vertex".
 	 *
-	 * @param fstream& the file to be read.
+	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_vertex_names(fstream&);
+	bool read_element_vertex_names(fstream& file) const;
 	/**
 	 * Read Vertex Encoding from ply file.
 	 * This method is called before reading vertex to determine the specific
 	 * file encoding.
 	 *
-	 * @param PlyFileEncoding const& the file encoding.
+	 * @param file_encoding the file encoding.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_vertex_encoding(PlyFileEncoding const&);
+	bool read_element_vertex_encoding(PlyFileEncoding const& file_encoding) const;
 	/**
 	 * Read Vertex from ply file.
 	 * You need to determine the file encoding and number of points before
 	 * calling this method.
 	 * This method determines the meaning of each property based on vertex_names.
 	 *
-	 * @param fstream& the file to be read.
+	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_vertex(fstream&);
+	bool read_element_vertex(fstream& file) const;
 	shared_ptr<PlyVertexList> point_list;
 #pragma endregion
 
@@ -169,21 +190,21 @@ protected:
 	 * This method is called when the tag of a line is "face". Therefore, the
 	 * file pointer should point to the content after "face".
 	 *
-	 * @param fstream& the file to be read.
+	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_face_names(fstream&);
+	bool read_element_face_names(fstream& file) const;
 	/**
 	 * Read Face from ply file.
 	 * You need to determine the file encoding and number of points before
 	 * calling this method.
 	 * This method determines the meaning of each property based on face list.
 	 *
-	 * @param fstream& the file to be read.
+	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
-	 * @TODO
+	 * @todo
 	 */
-	bool read_element_face(fstream&);
+	bool read_element_face(fstream& file);
 #pragma endregion
 
 #pragma region Edge
@@ -195,31 +216,34 @@ protected:
 	 * @param fstream& the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_edge_names(fstream&);
+	bool read_element_edge_names(fstream&) const;
 	/**
 	 * Read Edge from ply file.
 	 * You need to determine the file encoding and number of points before
 	 * calling this method.
 	 * This method determines the meaning of each property based on edge list.
 	 *
-	 * @param fstream& the file to be read.
+	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_edge(fstream&);
+	bool read_element_edge(fstream& file);
 #pragma endregion
 
 #pragma region User-Defined Elements
-	bool read_element_user_defined_names(fstream&);
+	/**
+	 * @todo Implement this method.
+	 */
+	bool read_element_user_defined_names(fstream&) const;
 	/**
 	 * Read User-defined elements from ply file.
 	 * You need to determine the file encoding and number of points before
 	 * calling this method.
 	 * This method determines the meaning of each property based on user-defined list.
 	 *
-	 * @param fstream& the file to be read.
+	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_user_defined(fstream&);
+	bool read_element_user_defined(fstream& file);
 #pragma endregion
 };
 
