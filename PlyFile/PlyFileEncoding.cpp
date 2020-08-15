@@ -35,7 +35,7 @@ float PlyFileEncoding::Version() const
 	return this->file_encoding.version;
 }
 
-PlyFileEncoding& PlyFileEncoding::Version(float const& version)
+PlyFileEncoding& PlyFileEncoding::Version(float version)
 {
 	*this << version;
 	return *this;
@@ -76,7 +76,7 @@ PlyFileEncoding& PlyFileEncoding::operator<<(string const& format)
 	return *this;
 }
 
-PlyFileEncoding& PlyFileEncoding::operator<<(float const& version)
+PlyFileEncoding& PlyFileEncoding::operator<<(float version)
 {
 	this->file_encoding.version = version;
 	return *this;

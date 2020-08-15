@@ -12,14 +12,15 @@
 #ifndef __PLY_FILE_ENCODING_H__
 #define __PLY_FILE_ENCODING_H__
 
-#define PLY_TAG_FILE_ENCODING "format"
-#define PLY_FILE_ENCODING_ASCII "ascii"
-#define PLY_FILE_BINARY_BIG_ENDIAN "binary_big_endian"
-#define PLY_FILE_BINARY_LITTLE_ENDIAN "binary_little_endian"
+constexpr auto PLY_TAG_FILE_ENCODING = "format";
+constexpr auto PLY_FILE_ENCODING_ASCII = "ascii";
+constexpr auto PLY_FILE_BINARY_BIG_ENDIAN = "binary_big_endian";
+constexpr auto PLY_FILE_BINARY_LITTLE_ENDIAN = "binary_little_endian";
 
 #include "PlyPropertyType.h"
 #include <string>
 #include <fstream>
+
 using namespace std;
 
 /*
@@ -44,97 +45,97 @@ public:
 	/*
 	 Set the file encoding from the file stream.
 
-	 @param fstream&:
-	 @return PlyFileEncoding&:
+	 @param file the file to be read the file encoding.
+	 @return self
 	 */
-	PlyFileEncoding& operator<<(fstream&);
+	PlyFileEncoding& operator<<(fstream& file);
 
 	/*
 	 Set the file encoding according to the giving FileEncoding value.
 
-	 @param FileEncoding const&:
-	 @return PlyFileEncoding&: self.
+	 @param file_encoding target file encoding.
+	 @return self
 	 */
-	PlyFileEncoding& operator<<(FileEncoding const&);
+	PlyFileEncoding& operator<<(FileEncoding const& file_encoding);
 
 	/*
 	 Regard the string value as the encoding type.
 
-	 @param string const&: encoding type.
-	 @return PlyFileEncoding&: self.
+	 @param format Format.
+	 @return self
 	 */
-	PlyFileEncoding& operator<<(string const&);
+	PlyFileEncoding& operator<<(string const& format);
 
 	/*
 	 Regard the float value as the version of the encoding type.
 
-	 @param float const&: encoding version.
-	 @return PlyFileEncoding&: self.
+	 @param version encoding version.
+	 @return self
 	 */
-	PlyFileEncoding& operator<<(float const&);
-	FileEncoding GetDefinition() const&;
+	PlyFileEncoding& operator<<(float version);
+	[[nodiscard]] FileEncoding GetDefinition() const&;
 
 	/*
 	 Get the encoding title.
 	 
 	 @return string: "ascii", "binary_big_endian" or " binary_little_endian".
 	 */
-	string Encoding() const;
+	[[nodiscard]] string Encoding() const;
 
 	/*
 	 Set the encoding type.
 
-	 @param string const&: encoding type.
-	 @return PlyFileEncoding&: self.
+	 @param encoding encoding type.
+	 @return selfW
 	 */
-	PlyFileEncoding& Encoding(string const&);
+	PlyFileEncoding& Encoding(string const& encoding);
 	
 	/*
 	 Get the version.
 
-	 @return float: version.
+	 @return version.
 	 */
-	float Version() const;
+	[[nodiscard]] float Version() const;
 
 	/*
 	 Set the version of file encoding.
 
-	 @param float const&: version.
-	 @return PlyFileEncoding&: self.
+	 @param version Version.
+	 @return self
 	 */
-	PlyFileEncoding& Version(float const&);
+	PlyFileEncoding& Version(float version);
 
 	/*
 	 Check whether the current file encoding is equal to the specified one.
 	 
-	 @param PlyFileEncoding const&: object to compare.
-	 @return bool: true if equal.
+	 @param object object to compare.
+	 @return true if equal.
 	 */
-	bool operator==(PlyFileEncoding const&) const;
+	bool operator==(PlyFileEncoding const& object) const;
 
 	/*
 	 Check whether the current file encoding is not equal to the specified one.
 
-	 @param PlyFileEncoding const&: object to compare.
-	 @return bool: true if not equal.
+	 @param object object to compare.
+	 @return true if not equal.
 	 */
-	bool operator!=(PlyFileEncoding const&) const;
+	bool operator!=(PlyFileEncoding const& object) const;
 
 	/*
 	 Check whether the current file encoding is equal to the specified one.
 
-	 @param FileEncoding const&: object to compare.
-	 @return bool: true if equal.
+	 @param object object to compare.
+	 @return true if equal.
 	 */
-	bool operator==(FileEncoding const&) const;
+	bool operator==(FileEncoding const& object) const;
 
 	/*
 	 Check whether the current file encoding is not equal to the specified one.
 
-	 @param FileEncoding const&: object to compare.
-	 @return bool: true if not equal.
+	 @param object object to compare.
+	 @return true if not equal.
 	 */
-	bool operator!=(FileEncoding const&) const;
+	bool operator!=(FileEncoding const& object) const;
 
 	/*
 	 The attribute containing the endian of current situation.
