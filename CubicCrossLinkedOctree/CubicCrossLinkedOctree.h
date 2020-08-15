@@ -21,9 +21,7 @@
 #include <tuple>
 #include <unordered_map>
 
-using namespace std;
-
-template<typename T, typename TPoint, typename = typename enable_if<is_base_of<PointList<TPoint>, T>::value, T>::type>
+template<typename T, typename TPoint, typename = typename std::enable_if<std::is_base_of<PointList<TPoint>, T>::value, T>::type>
 class CubicCrossLinkedOctree
 {
 public:
@@ -34,13 +32,13 @@ public:
      * @param point_list Points from which construct an octree.
      * @param depth Depth of the octree.
      */
-    CubicCrossLinkedOctree(shared_ptr<T> const& point_list, unsigned char depth = 12)
+    CubicCrossLinkedOctree(std::shared_ptr<T> const& point_list, unsigned char depth = 12)
     {
 #ifdef _DEBUG
     	/* The following loop will be discarded. */
         for (int i = 1; i <= 5; i++) {
             auto [x, y, z, d] = GetRelativeNodeCoordinate(NodeCoordinate(16, 15, 14, 5), i);
-            cout << "X:" << x << " | Y:" << y << " | Z:" << z << " | Depth:" << static_cast<unsigned short>(d) << endl;
+            std::cout << "X:" << x << " | Y:" << y << " | Z:" << z << " | Depth:" << static_cast<unsigned short>(d) << endl;
         }
         
 #endif
@@ -52,9 +50,9 @@ public:
         this->depth = depth;
 
     	// Find the the boundaries throughout the three dimensions.
-        cout << "The boundaries of three dimensions are following:" << endl;
+        std::cout << "The boundaries of three dimensions are following:" << endl;
         const auto boundaries = find_boundary(point_list);
-        cout << endl;
+        std::cout << endl;
 
     	// Find the middle point of each dimension.
         const auto middle_point = OctreeNode::find_middle_point(boundaries);
@@ -64,11 +62,11 @@ public:
         long long base_depth = 1;
         double leaf_width = max_range / ((base_depth << depth) - 1);
 #ifdef _DEBUG
-        cout << "Leaf node width: " << leaf_width << endl;
-        cout << "Max extended range (= Max range + Leaf node width): " << setprecision(8) << max_range + leaf_width << endl;
-        cout << "X-axis extended range: " << setprecision(8) << x_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << x_mid + (max_range + leaf_width) / 2 << endl;
-        cout << "Y-axis extended range: " << setprecision(8) << y_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << y_mid + (max_range + leaf_width) / 2 << endl;
-        cout << "Z-axis extended range: " << setprecision(8) << z_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << z_mid + (max_range + leaf_width) / 2 << endl;
+        std::cout << "Leaf node width: " << leaf_width << endl;
+        std::cout << "Max extended range (= Max range + Leaf node width): " << setprecision(8) << max_range + leaf_width << endl;
+        std::cout << "X-axis extended range: " << setprecision(8) << x_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << x_mid + (max_range + leaf_width) / 2 << endl;
+        std::cout << "Y-axis extended range: " << setprecision(8) << y_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << y_mid + (max_range + leaf_width) / 2 << endl;
+        std::cout << "Z-axis extended range: " << setprecision(8) << z_mid - (max_range + leaf_width) / 2 << " to " << setprecision(8) << z_mid + (max_range + leaf_width) / 2 << endl;
 
 #endif
         for (auto i = 0; i < point_list->GetPoints()->size(); i++) {
@@ -88,8 +86,8 @@ public:
     typedef unordered_map<NodeCoordinate, OctreeNode, NodeCoordinate::Hash> node_map;
 protected:
     node_map nodes;
-    shared_ptr<OctreeNode> root = make_shared<OctreeNode>();
-    unique_ptr<OctreeNode> build_tree(node_map nodes)
+    std::shared_ptr<OctreeNode> root = std::make_shared<OctreeNode>();
+    std::unique_ptr<OctreeNode> build_tree(node_map nodes)
     {
         for (auto& node : nodes)
         {
@@ -100,7 +98,7 @@ protected:
 	/**
 	 * 
 	 */
-    shared_ptr<OctreeNode> build_tree(NodeCoordinate coordinate)
+    std::shared_ptr<OctreeNode> build_tree(NodeCoordinate coordinate)
     {
         auto node = get_deepest_node(coordinate);
         if (node->coordinate != coordinate) {
@@ -114,7 +112,7 @@ protected:
     /**
      * 
      */
-    shared_ptr<OctreeNode> get_deepest_node(NodeCoordinate coordinate)
+    std::shared_ptr<OctreeNode> get_deepest_node(NodeCoordinate coordinate)
     {
         auto [x, y, z, d] = coordinate;
         if (d <= 0) { // The Depth less than or equal to zero is abnormal.
@@ -144,7 +142,7 @@ protected:
 	/**
 	 * 
 	 */
-    shared_ptr<OctreeNode> emplace(OctreeNode& parent, OctreeNode& child, NodeCoordinate coordinate)
+    std::shared_ptr<OctreeNode> emplace(OctreeNode& parent, OctreeNode& child, NodeCoordinate coordinate)
     {/*
         if (parent) {
             throw exception("The parent cannot be accessed.");
@@ -156,7 +154,7 @@ protected:
 	/**
 	 * 
 	 */
-    shared_ptr<OctreeNode> try_emplace(NodeCoordinate parent, unsigned char index, OctreeNode& child)
+    std::shared_ptr<OctreeNode> try_emplace(NodeCoordinate parent, unsigned char index, OctreeNode& child)
     {/*
         if (!get_node(parent)) {
             build_tree(parent);
@@ -200,7 +198,7 @@ private:
     unsigned char depth = 12; // The depth range is limited to between 1 and 31.
     void print_nodes_stats()
     {
-        cout << "Octree Stats:" << endl;
+        std::cout << "Octree Stats:" << std::endl;
         size_t count = 0;
         map<size_t, unsigned int> count_per_node;
         for (auto &p : this->nodes)
@@ -211,14 +209,14 @@ private:
                 iterator->second++;
             }
         }
-        cout << "Nodes: " << this->nodes.size() << ", Depth: " << (int)depth << ", Average Density: " << (float)count / this->nodes.size() << endl;
+        std::cout << "Nodes: " << this->nodes.size() << ", Depth: " << (int)depth << ", Average Density: " << (float)count / this->nodes.size() << std::endl;
 
-        cout << "Number of nodes containing # point(s):" << endl;
+        std::cout << "Number of nodes containing # point(s):" << std::endl;
         for (auto& c : count_per_node)
         {
-            cout << "Count (" << c.first << "): " << c.second << endl;
+            std::cout << "Count (" << c.first << "): " << c.second << std::endl;
         }
-        cout << endl;
+        std::cout << std::endl;
     }
     void insert_point(NodeCoordinate const& node_coordinate, unsigned int const index)
     {
@@ -234,7 +232,7 @@ private:
 	 * @param point_list The list that contains all the points.
 	 * @return The min & max coordinate of three dimensions.
 	 */
-    tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> find_boundary(shared_ptr<T> const& point_list)
+    tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> find_boundary(std::shared_ptr<T> const& point_list)
     {
         const auto comp_x = [](const Point& a, const Point& b) {return a.is_less_than(b, Point::Coordination::X); };
         const auto comp_y = [](const Point& a, const Point& b) {return a.is_less_than(b, Point::Coordination::Y); };
@@ -263,13 +261,13 @@ private:
         const auto y_mid = ((*y_max).Y() + (*y_min).Y()) / 2;
         const auto z_mid = ((*z_max).Z() + (*z_min).Z()) / 2;
 #ifdef _DEBUG
-        cout << "X-axis range: " << setprecision(8) << x_range << " middle point: " << setprecision(8) << x_mid << endl;
-        cout << "Y-axis range: " << setprecision(8) << y_range << " middle point: " << setprecision(8) << y_mid << endl;
-        cout << "Z-axis range: " << setprecision(8) << z_range << " middle point: " << setprecision(8) << z_mid << endl;
+        std::cout << "X-axis range: " << setprecision(8) << x_range << " middle point: " << setprecision(8) << x_mid << std::endl;
+        std::cout << "Y-axis range: " << setprecision(8) << y_range << " middle point: " << setprecision(8) << y_mid << std::endl;
+        std::cout << "Z-axis range: " << setprecision(8) << z_range << " middle point: " << setprecision(8) << z_mid << std::endl;
 #endif
         const auto max_range = max(x_range, max(y_range, z_range));
 #ifdef _DEBUG
-        cout << "Max range: " << setprecision(8) << max_range << endl;
+        std::cout << "Max range: " << setprecision(8) << max_range << endl;
 #endif
         const auto x_range_min = x_mid - max_range / 2;
         const auto x_range_max = x_mid + max_range / 2;

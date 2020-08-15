@@ -17,8 +17,6 @@
 
 #define IS_LITTLE_ENDIAN (1 == *(unsigned char *)&(const int){1})
 
-using namespace std;
-
 /*
  This class is used to describe the property type appeared in ply file.
  */
@@ -77,7 +75,7 @@ public:
 	 @return property value.
 	 */
 	template<typename T>
-	static typename enable_if<is_arithmetic<T>::value, T>::type read_binary_le_property(fstream& file)
+	static typename std::enable_if<std::is_arithmetic<T>::value, T>::type read_binary_le_property(std::fstream& file)
 	{
 		T p = 0;
 		file.read(reinterpret_cast<char*>(&p), sizeof(T));
@@ -101,7 +99,7 @@ public:
 	 @return  property value.
 	 */
 	template<typename T>
-	static typename enable_if<is_arithmetic<T>::value, T>::type read_binary_be_property(fstream& file)
+	static typename std::enable_if<std::is_arithmetic<T>::value, T>::type read_binary_be_property(std::fstream& file)
 	{
 		T p = 0;
 		file.read(reinterpret_cast<char*>(&p), sizeof(T));

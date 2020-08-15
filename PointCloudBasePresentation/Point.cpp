@@ -12,6 +12,7 @@
 #endif
 
 #ifdef __POINT_H__
+using namespace std;
 #ifdef _MSC_VER
 #include <exception>
 #endif

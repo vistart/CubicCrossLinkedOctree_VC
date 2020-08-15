@@ -12,7 +12,7 @@
 #endif
 
 #ifdef __PLY_FILE_ENCODING_H__
-
+using namespace std;
 string PlyFileEncoding::Encoding() const
 {
 	if (this->file_encoding.type == FILE_ENCODING_ASCII)

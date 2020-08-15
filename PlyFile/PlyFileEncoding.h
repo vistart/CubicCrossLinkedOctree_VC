@@ -21,8 +21,6 @@ constexpr auto PLY_FILE_BINARY_LITTLE_ENDIAN = "binary_little_endian";
 #include <string>
 #include <fstream>
 
-using namespace std;
-
 /*
  This class is used to describe the file encoding of ply file.
  */
@@ -48,7 +46,7 @@ public:
 	 @param file the file to be read the file encoding.
 	 @return self
 	 */
-	PlyFileEncoding& operator<<(fstream& file);
+	PlyFileEncoding& operator<<(std::fstream& file);
 
 	/*
 	 Set the file encoding according to the giving FileEncoding value.
@@ -64,7 +62,7 @@ public:
 	 @param format Format.
 	 @return self
 	 */
-	PlyFileEncoding& operator<<(string const& format);
+	PlyFileEncoding& operator<<(std::string const& format);
 
 	/*
 	 Regard the float value as the version of the encoding type.
@@ -80,7 +78,7 @@ public:
 	 
 	 @return string: "ascii", "binary_big_endian" or " binary_little_endian".
 	 */
-	[[nodiscard]] string Encoding() const;
+	[[nodiscard]] std::string Encoding() const;
 
 	/*
 	 Set the encoding type.
@@ -88,7 +86,7 @@ public:
 	 @param encoding encoding type.
 	 @return selfW
 	 */
-	PlyFileEncoding& Encoding(string const& encoding);
+	PlyFileEncoding& Encoding(std::string const& encoding);
 	
 	/*
 	 Get the version.

@@ -18,8 +18,6 @@ constexpr auto PLY_TAG_COMMENT = "comment";
 #include <vector>
 #include <string>
 
-using namespace std;
-
 /*
  This class is used to describe the comment list of ply file.
  */
@@ -42,14 +40,14 @@ public:
      @param comment the comment to be added.
      @return True if comment added.
      */
-	[[nodiscard]] bool add(string const& comment) const;
+	[[nodiscard]] bool add(std::string const& comment) const;
 
     /**
      Get all the comments.
     
      @return vector<string>: the stored comments.
      */
-	[[nodiscard]] shared_ptr<vector<string>> getComments() const;
+	[[nodiscard]] std::shared_ptr<std::vector<std::string>> getComments() const;
 
     /**
      Add comment.
@@ -57,11 +55,11 @@ public:
      @param comment the comment to be added.
      @return PlyCommentList&: itself.
      */
-	PlyCommentList& operator<<(string const& comment);
+	PlyCommentList& operator<<(std::string const& comment);
 protected:
     /**
      * The stored comments.
      */
-	shared_ptr<vector<string>> comments;
+    std::shared_ptr<std::vector<std::string>> comments;
 };
 #endif

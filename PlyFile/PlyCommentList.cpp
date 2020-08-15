@@ -12,6 +12,7 @@
 #endif
 
 #ifdef __PLY_COMMENT_LIST_H__
+using namespace std;
 bool PlyCommentList::add(string const& comment) const
 {
 	this->comments->emplace_back(comment);

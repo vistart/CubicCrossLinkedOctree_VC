@@ -20,8 +20,6 @@
 #include <stdexcept>
 #endif
 
-using namespace std;
-
 /*
  This class is used to describe a point (or a vertex in discrete mathematics).
  The currently supported attributes are:
@@ -229,7 +227,7 @@ public:
             return this->__Z < object.Z();
         }
 #ifdef _MSC_VER
-        throw exception(coord_no_out_of_range_message);
+        throw std::exception(coord_no_out_of_range_message);
 #endif
 #ifdef __GNUC__
         throw runtime_error(coord_no_out_of_range_message);
@@ -267,7 +265,7 @@ public:
             return this->__Z == object.Z();
         }
 #ifdef _MSC_VER
-        throw exception(coord_no_out_of_range_message);
+        throw std::exception(coord_no_out_of_range_message);
 #endif
 #ifdef __GNUC__
         throw runtime_error(coord_no_out_of_range_message);
@@ -304,7 +302,7 @@ public:
             return this->__Z > object.Z();
         }
 #ifdef _MSC_VER
-        throw exception(coord_no_out_of_range_message);
+        throw std::exception(coord_no_out_of_range_message);
 #endif
 #ifdef __GNUC__
         throw runtime_error(coord_no_out_of_range_message);
@@ -409,9 +407,9 @@ public:
 	 *
 	 * @return the received stream.
 	 */
-    friend ostream& operator<<(ostream& stream, Point const& point)
+    friend std::ostream& operator<<(std::ostream& stream, Point const& point)
     {
-        stream << "(" << setprecision(10) << point.__X << "," << setprecision(10) << point.__Y << "," << setprecision(10) << point.__Z << ")";
+        stream << "(" << std::setprecision(10) << point.__X << "," << std::setprecision(10) << point.__Y << "," << std::setprecision(10) << point.__Z << ")";
         return stream;
     }
 protected:

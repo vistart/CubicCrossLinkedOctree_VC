@@ -17,8 +17,6 @@
 #include <vector>
 #include <sstream>
 
-using namespace std;
-
 /*
  This class is used to describe a vertex in ply format.
  Compared with the base class Point, this class adds methods related to the ply file format.
@@ -58,7 +56,7 @@ public:
 	 determines the content type of the sub-string.
 	 @param string const&: A string describing all property values of a vertex.
 	 */
-	PlyVertex(vector<VertexName> const&, string const&);
+	PlyVertex(std::vector<VertexName> const&, std::string const&);
 
 	/*
 	 Initialize a vertex based on file stream and its encoding. 
@@ -85,7 +83,7 @@ public:
 	 @param file the file from which the property origin.
 	 @param file_encoding The encoding of the vertex property of this file.
 	 */
-	PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEncoding::FileEncoding const& file_encoding);
+	PlyVertex(std::vector<VertexName> const& names, std::fstream& file, PlyFileEncoding::FileEncoding const& file_encoding);
 
 	/*
 	 Initialize a vertex based on specified X,Y,Z,R,G,B.
@@ -114,9 +112,9 @@ public:
 	 @param vertex Vertex to output.
 	 @return The stream that has been passed with the vertex.
 	 */
-	friend ostream& operator<<(ostream& stream, PlyVertex const& vertex)
+	friend std::ostream& operator<<(std::ostream& stream, PlyVertex const& vertex)
 	{
-		stream << "(" << setprecision(10) << vertex.__X << "," << setprecision(10) << vertex.__Y << "," << setprecision(10) << vertex.__Z << ")";
+		stream << "(" << std::setprecision(10) << vertex.__X << "," << std::setprecision(10) << vertex.__Y << "," << std::setprecision(10) << vertex.__Z << ")";
 		return stream;
 	}
 };

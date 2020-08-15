@@ -17,8 +17,6 @@
 #include <type_traits>
 #include <vector>
 
-using namespace std;
-
 /*
  This class is used to describe point list that holds all points.
  All points are saved to a vector container and there is a shared pointer to it.
@@ -33,20 +31,20 @@ using namespace std;
  2. Initialize the shared pointer of above points property in Constructor.
  3. Make the points to nullptr in Destructor.
 */
-template <typename T, typename = typename enable_if<is_base_of<Point, T>::value, T>::type>
+template <typename T, typename = typename std::enable_if<std::is_base_of<Point, T>::value, T>::type>
 class PointList
 {
 public:
     PointList() {
-        this->points = make_shared<vector<T>>();
+        this->points = std::make_shared<std::vector<T>>();
     }
     virtual ~PointList() {
         this->points = nullptr;
     }
-    virtual shared_ptr<vector<T>> GetPoints() {
+    virtual std::shared_ptr<std::vector<T>> GetPoints() {
         return this->points;
     }
 private:
-    shared_ptr<vector<T>> points;
+    std::shared_ptr<std::vector<T>> points;
 };
 #endif

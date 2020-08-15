@@ -28,20 +28,20 @@
  * 2. Initialize the shared pointer of above point list property in Constructor.
  * 3. Make the point list to nullptr in Destructor.
 */
-template <typename T, typename TPoint, typename = typename enable_if<is_base_of<PointList<TPoint>, T>::value>::type>
+template <typename T, typename TPoint, typename = typename std::enable_if<std::is_base_of<PointList<TPoint>, T>::value>::type>
 class PointCloud
 {
 public:
     PointCloud() {
-        this->point_list = make_shared<T>();
+        this->point_list = std::make_shared<T>();
     }
     virtual ~PointCloud() {
         this->point_list = nullptr;
     }
-    virtual shared_ptr<T> GetPointList() {
+    virtual std::shared_ptr<T> GetPointList() {
         return this->point_list;
     }
 private:
-    shared_ptr<T> point_list;
+    std::shared_ptr<T> point_list;
 };
 #endif

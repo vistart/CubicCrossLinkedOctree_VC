@@ -12,8 +12,10 @@
 #endif
 
 #ifdef __PLY_EDGE_LIST_H__
+#include <iostream>
+using namespace std;
 void PlyEdgeList::demo()
 {
-	std::cout << "demo" << std::endl;
+	cout << "demo" << endl;
 }
 #endif

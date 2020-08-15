@@ -16,7 +16,6 @@
 #include "PointList.h"
 #include "PlyFileEncoding.h"
 #include <vector>
-using namespace std;
 
 /*
  This class is used to describe the list containing all the vertices.
@@ -40,7 +39,7 @@ public:
 	 @param str_vertex the string describing the vertex.
 	 @return self.
 	 */
-	PlyVertexList& operator<<(string const& str_vertex);
+	PlyVertexList& operator<<(std::string const& str_vertex);
 
 	/*
 	 Add a vertex to this list.
@@ -48,7 +47,7 @@ public:
 	 @param file the file stream containing the vertex.
 	 @return PlyVertexList&: self.
 	 */
-	PlyVertexList& operator<<(fstream& file);
+	PlyVertexList& operator<<(std::fstream& file);
 
 	/*
 	 Add a vertex to this list.
@@ -76,7 +75,7 @@ public:
 	 @param file the target file.
 	 @return true if no exceptions occured.
 	 */
-	bool read_element_vertex_names(fstream& file);
+	bool read_element_vertex_names(std::fstream& file);
 
 	/*
 	 Set the count of vertex according to the value stored in ply file header.
@@ -85,7 +84,7 @@ public:
 	 
 	 @param count the target count.
 	 */
-	void SetCountInHeader(unsigned int const count);
+	void SetCountInHeader(unsigned int count);
 
 	/*
 	 Get the count of vertex.
@@ -101,18 +100,18 @@ public:
 	 specify the property names once before reading the property value, and it is strongly not 
 	 recommended to change thereafter.
 	 */
-	vector<PlyVertex::VertexName> names;
+	std::vector<PlyVertex::VertexName> names;
 
 	/*
 	 Return the pointer pointing to all vertices stored in this instance.
 
 	 @return shared_ptr<vector<PlyVertex>>: the shared pointer to all vertices. 
 	 */
-	shared_ptr<vector<PlyVertex>> GetPoints() override;
+	std::shared_ptr<std::vector<PlyVertex>> GetPoints() override;
 protected:
 	unsigned int count_in_header = 0;
 	PlyFileEncoding::FileEncoding file_encoding = { PlyFileEncoding::FILE_ENCODING_ASCII, 1.0 };
-	shared_ptr<vector<PlyVertex>> points;
+	std::shared_ptr<std::vector<PlyVertex>> points;
 };
 
 #endif

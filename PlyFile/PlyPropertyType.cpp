@@ -12,6 +12,7 @@
 #endif
 
 #ifdef __PLY_PROPERTY_TYPE_H__
+using namespace std;
 const int PlyPropertyType::PropertyDataTypeSize[9] = { 0, 1, 1, 2, 2, 4, 4, 4, 8 };
 PlyPropertyType::Endian PlyPropertyType::check_endian()
 {
