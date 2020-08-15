@@ -19,7 +19,7 @@
 #include <memory>
 #include <set>
 #include <tuple>
-using namespace std;
+
 class OctreeNode
 {
 public:
@@ -28,15 +28,15 @@ public:
      *
      * @param index index of point to be inserted.
      */
-    void insert(unsigned int const& index);
+    void insert(unsigned int index);
     /*
      * Point coordinate.
      * Each point coordinate contains X, Y and Z.
      */
-    typedef tuple<double, double, double> PointCoordinate;
+    typedef std::tuple<double, double, double> PointCoordinate;
     OctreeNode();
-    OctreeNode(unsigned int const);
-    OctreeNode(initializer_list<OctreeNode>);
+    OctreeNode(unsigned int);
+    OctreeNode(std::initializer_list<OctreeNode>);
     ~OctreeNode();
 
 	/**
@@ -54,7 +54,7 @@ public:
 	 *
 	 * @return The coordinates of the node where the current point is located.
 	 */
-    static NodeCoordinate find_node_coordinate(Point const& point, PointCoordinate const& middle_point, double const& max_range, unsigned char const depth);
+    static NodeCoordinate find_node_coordinate(Point const& point, PointCoordinate const& middle_point, double const& max_range, unsigned char depth);
 
     /**
      * Calculate the coordinates of the midpoint in the specified space.
@@ -67,7 +67,7 @@ public:
      * @param z_range_max
      * @return the point coordinate of midpoint.
      */
-    static PointCoordinate find_middle_point(double const& x_range_min, double const& x_range_max, double const& y_range_min, double const& y_range_max, double const& z_range_min, double const& z_range_max);
+    static PointCoordinate find_middle_point(double x_range_min, double x_range_max, double y_range_min, double y_range_max, double z_range_min, double z_range_max);
 
 	/**
 	 * Calculate the coordinates of the midpoint in the specified space.
@@ -75,8 +75,8 @@ public:
 	 * @param boundaries The boundary of the space to be calculated.
 	 * @return the point coordinate of midpoint.
 	 */
-    static PointCoordinate find_middle_point(tuple<tuple<double, double>, tuple<double, double>, tuple<double, double>> const& boundaries);
-    friend ostream& operator<<(ostream& stream, OctreeNode const& node)
+    static PointCoordinate find_middle_point(std::tuple<std::tuple<double, double>, std::tuple<double, double>, std::tuple<double, double>> const& boundaries);
+    friend std::ostream& operator<<(std::ostream& stream, OctreeNode const& node)
     {
         if (node.is_leaf) {
             if (node.leaves->size()) {
@@ -89,11 +89,11 @@ public:
             return stream;
         }
     }
-    OctreeNode* operator[](unsigned int const index) const
+    OctreeNode* operator[](unsigned int index) const
     {
         return &(*(*this->nodes)[index]);
     }
-    [[nodiscard]] shared_ptr<set<unsigned int>> get_leaves() const
+    [[nodiscard]] std::shared_ptr<std::set<unsigned int>> get_leaves() const
     {
         return this->leaves;
     }
@@ -103,15 +103,15 @@ public:
             return coordinate;
         }
     }
-    shared_ptr<OctreeNode> get_node(unsigned char index) const
+    std::shared_ptr<OctreeNode> get_node(unsigned char index) const
     {
         return (*this->nodes)[index];
     }
 protected:
     bool is_leaf = true;
     NodeCoordinate coordinate;
-    shared_ptr<set<unsigned int>> leaves;
+    std::shared_ptr<std::set<unsigned int>> leaves;
     /* Eight Octants. */
-    unique_ptr<array<shared_ptr<OctreeNode>, 8>> nodes;
+    std::unique_ptr<std::array<std::shared_ptr<OctreeNode>, 8>> nodes;
 };
 #endif
