@@ -19,8 +19,20 @@
 PlyVertex::PlyVertex(vector<VertexName> const& names, string const& vertex)
 {
 	double X = 0, Y = 0, Z = 0;
+	/*
+	 * If you treat `char` as a number, you cannot directly stream the content of
+	 * a character or string to a `char` type variable. Instead, you need to output
+	 * it to an integer or unsigned integer variable first, and then perform bit
+	 * operations, otherwise it will be treated as a character.
+	 * For example:
+	 * If you would like to receive the number `7` and put it into a `char` variable,
+	 * you'll find that the value of variable is `55`, the ASCII code of character `7`,
+	 * not number `7`.
+	 */
+	unsigned int __R = 0, __G = 0, __B = 0;
 	unsigned char R = 0, G = 0, B = 0;
 	double NX = 0, NY = 0, NZ = 0, CONFIDENCE = 1, INTENSITY = 0.5;
+	unsigned int __ALPHA = 255;
 	unsigned char ALPHA = 255;
 	stringstream stream(vertex);
 	for (auto& name : names)
@@ -36,13 +48,16 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, string const& vertex)
 			stream >> Z;
 			break;
 		case PROPERTY_R:
-			stream >> R;
+			stream >> __R;
+			R = __R & 0xFF;
 			break;
 		case PROPERTY_G:
-			stream >> G;
+			stream >> __G;
+			G = __G & 0xFF;
 			break;
 		case PROPERTY_B:
-			stream >> B;
+			stream >> __B;
+			B = __B & 0xFF;
 			break;
 		case PROPERTY_NX:
 			stream >> NX;
@@ -54,7 +69,8 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, string const& vertex)
 			stream >> NZ;
 			break;
 		case PROPERTY_ALPHA:
-			stream >> ALPHA;
+			stream >> __ALPHA;
+			ALPHA = __ALPHA & 0xFF;
 			break;
 		case PROPERTY_CONFIDENCE:
 			stream >> CONFIDENCE;
@@ -363,7 +379,7 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEnco
 	this->set_all_properties(X, Y, Z, R, G, B, NX, NY, NZ, ALPHA, CONFIDENCE, INTENSITY);
 }
 
-PlyVertex::PlyVertex(double const X, double const Y, double const Z, unsigned char const R = 0, unsigned char const G = 0, unsigned char const B = 0)
+PlyVertex::PlyVertex(double X, double Y, double Z, unsigned char R = 0, unsigned char G = 0, unsigned char B = 0)
 {
 	this->set_all_properties(X, Y, Z, R, G, B, 0, 0, 0, 255, 1, 0.5);
 }

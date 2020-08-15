@@ -91,14 +91,14 @@ public:
 	 Initialize a vertex based on specified X,Y,Z,R,G,B.
 	 the ALPHA value is 255, the confidence is 1, and the intensity is 0.5.
 
-	 @param double const: X
-	 @param double const: Y
-	 @param double const: Z
-	 @param unsigned char const: R
-	 @param unsigned char const: G
-	 @param unsigned char const: B
+	 @param X
+	 @param Y
+	 @param Z
+	 @param R
+	 @param G
+	 @param B
 	 */
-	PlyVertex(double const, double const, double const, unsigned char const, unsigned char const, unsigned char const);
+	PlyVertex(double X, double Y, double Z, unsigned char R, unsigned char G, unsigned char B);
 	~PlyVertex() = default;
 	enum PropertyNames { PROPERTY_NONE,
 		                 PROPERTY_X, PROPERTY_Y, PROPERTY_Z,
