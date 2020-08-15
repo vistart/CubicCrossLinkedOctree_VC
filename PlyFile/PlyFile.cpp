@@ -152,6 +152,10 @@ bool PlyFile::read_element_face_names(fstream& file) const
 #endif
 	return true;
 }
+bool PlyFile::read_element_face(fstream& file)
+{
+	return false;
+}
 #pragma endregion
 
 #pragma region Edge
@@ -164,12 +168,20 @@ bool PlyFile::read_element_edge_names(fstream& file) const
 #endif
 	return true;
 }
+bool PlyFile::read_element_edge(fstream& file)
+{
+	return false;
+}
 #pragma endregion
 
 #pragma region User-Defined Elements
 bool PlyFile::read_element_user_defined_names(fstream& file) const
 {
 	return true;
+}
+bool PlyFile::read_element_user_defined(fstream& file)
+{
+	return false;
 }
 #pragma endregion
 

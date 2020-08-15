@@ -125,7 +125,7 @@ protected:
 	 *
 	 * False returned if you pass another string.
 	 *
-	 * @param file_format
+	 * @param file_format File format string.
 	 * @return true only "ply" passed.
 	 */
 	bool set_file_format(string const& file_format);
@@ -134,9 +134,9 @@ protected:
 #pragma region File Encoding
 	/**
 	 *
-	 * @param tag
-	 * @param file
-	 * @return
+	 * @param tag Tag string.
+	 * @param file File stream.
+	 * @return true if file encoding read.
 	 */
 	bool read_file_encoding(string const& tag, fstream& file);
 #pragma endregion
@@ -145,9 +145,9 @@ protected:
 	/**
 	 * When the tag is "comment", everything after this tag in the current line is a comment.
 	 *
-	 * @param tag
-	 * @param file
-	 * @return
+	 * @param tag Tag string.
+	 * @param file File stream.
+	 * @return true if comments read.
 	 */
 	bool read_comment(string const& tag, fstream& file) const;
 #pragma endregion
@@ -202,7 +202,7 @@ protected:
 	 *
 	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
-	 * @todo
+	 * @todo Implement this method.
 	 */
 	bool read_element_face(fstream& file);
 #pragma endregion
@@ -213,10 +213,10 @@ protected:
 	 * This method is called when the tag of a line is "edge". Therefore, the
 	 * file pointer should point to the content after "edge".
 	 *
-	 * @param fstream& the file to be read.
-	 * @return bool true if the file was read successfully.
+	 * @param file the file to be read.
+	 * @return true if the file was read successfully.
 	 */
-	bool read_element_edge_names(fstream&) const;
+	bool read_element_edge_names(fstream& file) const;
 	/**
 	 * Read Edge from ply file.
 	 * You need to determine the file encoding and number of points before
