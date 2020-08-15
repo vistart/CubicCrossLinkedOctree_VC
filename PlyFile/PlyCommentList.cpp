@@ -33,6 +33,6 @@ PlyCommentList& PlyCommentList::operator<<(string const& comment)
 
 PlyCommentList::~PlyCommentList()
 {
-	this->comments->erase(this->comments->begin(), this->comments->end());
+	this->comments = nullptr;
 }
 #endif
