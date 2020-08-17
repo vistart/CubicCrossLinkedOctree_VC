@@ -14,14 +14,14 @@
 
 #ifdef __PLY_VERTEX_LIST_H__
 using namespace std;
-shared_ptr<vector<PlyVertex>> PlyVertexList::GetPoints()
+shared_ptr<vector<shared_ptr<PlyVertex>>> PlyVertexList::GetPoints()
 {
 	return this->points;
 }
 
 PlyVertexList::PlyVertexList()
 {
-	this->points = make_shared<vector<PlyVertex>>();
+	this->points = make_shared<vector<shared_ptr<PlyVertex>>>();
 }
 
 PlyVertexList::~PlyVertexList()
@@ -31,19 +31,19 @@ PlyVertexList::~PlyVertexList()
 
 PlyVertexList& PlyVertexList::operator<<(string const& str_vertex)
 {
-	PlyVertex const vertex(names, str_vertex);
+	auto vertex = make_shared<PlyVertex>(names, str_vertex);
 	this->points->emplace_back(vertex);
 	return *this;
 }
 
 PlyVertexList& PlyVertexList::operator<<(fstream& file)
 {
-	PlyVertex const vertex(names, file, this->file_encoding);
+	auto vertex = make_shared<PlyVertex>(names, file, this->file_encoding);
 	this->points->emplace_back(vertex);
 	return *this;
 }
 
-PlyVertexList& PlyVertexList::operator<<(PlyVertex const& vertex)
+PlyVertexList& PlyVertexList::operator<<(shared_ptr<PlyVertex> const& vertex)
 {
 	this->points->emplace_back(vertex);
 	return *this;

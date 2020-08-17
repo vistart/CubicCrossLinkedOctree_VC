@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 	cout << endl;
 	
     const auto point_list = plyfile->GetPointList();
-    cout << "The last point is: " << point_list->GetPoints()->back() << endl;
+    cout << "The last point is: " << *point_list->GetPoints()->back() << endl;
 
 	cout << "Construct the Octree of Point Cloud: " << endl;
     CubicCrossLinkedOctree<PlyVertexList, PlyVertex, PlyFile> octree(point_list, depth);

@@ -415,16 +415,16 @@ public:
         return stream;
     }
 protected:
-    double __X = 0;
-    double __Y = 0;
-    double __Z = 0;
     unsigned char __R = 0;
     unsigned char __G = 0;
     unsigned char __B = 0;
+    unsigned char __ALPHA = 255;
+    double __X = 0;
+    double __Y = 0;
+    double __Z = 0;
     double __NX = 0;
     double __NY = 0;
     double __NZ = 0;
-    unsigned char __ALPHA = 255;
     double __CONFIDENCE = 1;
     double __INTENSITY = 0.5;
     void set_all_properties(double const X, double const Y, double const Z,

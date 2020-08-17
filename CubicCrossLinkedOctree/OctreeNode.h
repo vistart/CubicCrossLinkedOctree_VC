@@ -13,37 +13,50 @@
 
 #include "Point.h"
 #include "NodeCoordinate.h"
-#include <array>
 #include <bitset>
 #include <iostream>
 #include <memory>
 #include <set>
 #include <tuple>
+#include <unordered_set>
 
+/**
+ * 
+ */
+template<typename T, typename = typename std::enable_if<std::is_base_of<Point, T>::value, T>::type>
 class OctreeNode
 {
 public:
-    /**
-     * Insert Point.
-     *
-     * @param index index of point to be inserted.
-     */
-    void insert(unsigned int index);
     /*
      * Point coordinate.
      * Each point coordinate contains X, Y and Z.
      */
     typedef std::tuple<double, double, double> PointCoordinate;
-    OctreeNode();
-    OctreeNode(unsigned int);
-    OctreeNode(std::initializer_list<OctreeNode>);
-    ~OctreeNode();
+    OctreeNode() = default;
+	/**
+	 *
+	 * @param coordinate
+	 * @param point
+	 */
+    OctreeNode(NodeCoordinate const& coordinate, std::shared_ptr<T> point = nullptr)
+    {
+        this->coordinate = coordinate;
+        if (!point)
+            return;
+        *this << point;
+    }
+	OctreeNode(unsigned int X, unsigned int Y, unsigned int Z, unsigned char depth, std::shared_ptr<T> point = nullptr)
+    {
+        NodeCoordinate c(X, Y, Z, depth);
+        OctreeNode(c, point);
+    }
+    ~OctreeNode() = default;
 
 	/**
 	 * Calculate the coordinates of the node where a certain point is located.
 	 *
 	 * This method uses the point in space and the common maximum range of the three dimensions to determine the spatial range.
-	 * Before using this method, you can use find_middle_point to calculate the midpoint of the space, and then pass it in as a parameter.
+	 * Before using this method, you can use `find_middle_point()` to calculate the midpoint of the space, and then pass it in as a parameter.
 	 *
 	 * Then, you need to specify the depth of the node in the octree. This parameter determines the node coordinate value.
 	 *
@@ -54,8 +67,20 @@ public:
 	 *
 	 * @return The coordinates of the node where the current point is located.
 	 */
-    static NodeCoordinate find_node_coordinate(Point const& point, PointCoordinate const& middle_point, double const& max_range, unsigned char depth);
-
+    static NodeCoordinate find_node_coordinate(std::shared_ptr<T> const& point, PointCoordinate const& middle_point, double const& max_range, unsigned char depth)
+	{
+        const double leaf_width = max_range / (pow(2, depth) - 1);
+        const auto& [x_mid, y_mid, z_mid] = middle_point;
+        const auto offset_of_x = point->offset_of(x_mid - (max_range + leaf_width) / 2, Point::Coordination::X);
+        const auto offset_of_y = point->offset_of(y_mid - (max_range + leaf_width) / 2, Point::Coordination::Y);
+        const auto offset_of_z = point->offset_of(z_mid - (max_range + leaf_width) / 2, Point::Coordination::Z);
+        const auto x_th = static_cast<unsigned int>(offset_of_x / leaf_width);
+        const auto y_th = static_cast<unsigned int>(offset_of_y / leaf_width);
+        const auto z_th = static_cast<unsigned int>(offset_of_z / leaf_width);
+        // cout << "Offset of last point in (X,Y,Z): " << "(" << offset_of_x << "," << offset_of_y << "," << offset_of_z << ")" << " (X-th, Y-th, Z-th) in hexidecimal: " << "(" << bitset<10>(x_th) << "," << bitset<10>(y_th) << "," << bitset<10>(z_th) << ")" << endl;
+        return NodeCoordinate(x_th, y_th, z_th, depth);
+    }
+	
     /**
      * Calculate the coordinates of the midpoint in the specified space.
      *
@@ -67,51 +92,46 @@ public:
      * @param z_range_max
      * @return the point coordinate of midpoint.
      */
-    static PointCoordinate find_middle_point(double x_range_min, double x_range_max, double y_range_min, double y_range_max, double z_range_min, double z_range_max);
-
+    static PointCoordinate find_middle_point(double x_range_min, double x_range_max, double y_range_min, double y_range_max, double z_range_min, double z_range_max)
+    {
+        return std::make_tuple((x_range_max + x_range_min) / 2, (y_range_max + y_range_min) / 2, (z_range_max + z_range_min) / 2);
+    }
 	/**
 	 * Calculate the coordinates of the midpoint in the specified space.
 	 *
 	 * @param boundaries The boundary of the space to be calculated.
 	 * @return the point coordinate of midpoint.
 	 */
-    static PointCoordinate find_middle_point(std::tuple<std::tuple<double, double>, std::tuple<double, double>, std::tuple<double, double>> const& boundaries);
+    static PointCoordinate find_middle_point(std::tuple<std::tuple<double, double>, std::tuple<double, double>, std::tuple<double, double>> const& boundaries)
+    {
+        const auto& [x_range, y_range, z_range] = boundaries;
+        auto [x_range_min, x_range_max] = x_range;
+        auto [y_range_min, y_range_max] = y_range;
+        auto [z_range_min, z_range_max] = z_range;
+        return OctreeNode::find_middle_point(x_range_min, x_range_max, y_range_min, y_range_max, z_range_min, z_range_max);
+    }
+
+    OctreeNode<T>& operator<<(std::shared_ptr<T> point)
+    {
+        points.emplace(point);
+        return *this;
+    }
+	
     friend std::ostream& operator<<(std::ostream& stream, OctreeNode const& node)
     {
-        if (node.is_leaf) {
-            if (node.leaves->size()) {
+    	for (auto& p : node.GetPoints())
+    	{
+            stream << *p << std::endl;
+    	}
+        return stream;
+    }
 
-            }
-            return stream;
-        }
-        else {
-            stream << "This node is not a node.";
-            return stream;
-        }
-    }
-    OctreeNode* operator[](unsigned int index) const
+	std::unordered_set<std::shared_ptr<T>> GetPoints()
     {
-        return &(*(*this->nodes)[index]);
-    }
-    [[nodiscard]] std::shared_ptr<std::set<unsigned int>> get_leaves() const
-    {
-        return this->leaves;
-    }
-    NodeCoordinate get_coordinate()
-    {
-        if (is_leaf) {
-            return coordinate;
-        }
-    }
-    std::shared_ptr<OctreeNode> get_node(unsigned char index) const
-    {
-        return (*this->nodes)[index];
+        return points;
     }
 protected:
-    bool is_leaf = true;
     NodeCoordinate coordinate;
-    std::shared_ptr<std::set<unsigned int>> leaves;
-    /* Eight Octants. */
-    std::unique_ptr<std::array<std::shared_ptr<OctreeNode>, 8>> nodes;
+    std::unordered_set<std::shared_ptr<T>> points;
 };
 #endif

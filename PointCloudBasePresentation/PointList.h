@@ -36,15 +36,15 @@ class PointList
 {
 public:
     PointList() {
-        this->points = std::make_shared<std::vector<T>>();
+        this->points = std::make_shared<std::vector<std::shared_ptr<T>>>();
     }
     virtual ~PointList() {
         this->points = nullptr;
     }
-    virtual std::shared_ptr<std::vector<T>> GetPoints() {
+    virtual std::shared_ptr<std::vector<std::shared_ptr<T>>> GetPoints() {
         return this->points;
     }
 private:
-    std::shared_ptr<std::vector<T>> points;
+    std::shared_ptr<std::vector<std::shared_ptr<T>>> points;
 };
 #endif

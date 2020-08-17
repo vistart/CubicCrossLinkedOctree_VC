@@ -55,7 +55,7 @@ public:
 	 @param vertex the vertex to be added.
 	 @return self.
 	 */
-	PlyVertexList& operator<<(PlyVertex const& vertex);
+	PlyVertexList& operator<<(std::shared_ptr<PlyVertex> const& vertex);
 
 	/*
 	 Specify the current file encoding.
@@ -105,13 +105,13 @@ public:
 	/*
 	 Return the pointer pointing to all vertices stored in this instance.
 
-	 @return shared_ptr<vector<PlyVertex>>: the shared pointer to all vertices. 
+	 @return the shared pointer to all vertices. 
 	 */
-	std::shared_ptr<std::vector<PlyVertex>> GetPoints() override;
+	std::shared_ptr<std::vector<std::shared_ptr<PlyVertex>>> GetPoints() override;
 protected:
 	unsigned int count_in_header = 0;
 	PlyFileEncoding::FileEncoding file_encoding = { PlyFileEncoding::FILE_ENCODING_ASCII, 1.0 };
-	std::shared_ptr<std::vector<PlyVertex>> points;
+	std::shared_ptr<std::vector<std::shared_ptr<PlyVertex>>> points;
 };
 
 #endif
