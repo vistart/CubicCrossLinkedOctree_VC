@@ -20,6 +20,8 @@
 #include <stdexcept>
 #endif
 
+constexpr auto coord_no_out_of_range_message = "The coordination system code is out of range.";
+
 /*
  This class is used to describe a point (or a vertex in discrete mathematics).
  The currently supported attributes are:
@@ -443,8 +445,6 @@ protected:
         this->__CONFIDENCE = CONFIDENCE;
         this->__INTENSITY = INTENSITY;
     }
-private:
-    const char* coord_no_out_of_range_message = "The coordination system code is out of range.";
 };
 
 #endif
