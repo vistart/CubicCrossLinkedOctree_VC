@@ -27,7 +27,7 @@ public:
     /**
      No action is required by default.
      */
-	PlyCommentList() = default;
+	PlyCommentList();
 
     /**
      All comments need to be cleared first.

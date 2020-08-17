@@ -32,6 +32,14 @@ PlyCommentList& PlyCommentList::operator<<(string const& comment)
 	return *this;
 }
 
+PlyCommentList::PlyCommentList()
+{
+	/*
+	 * Initialize it before using.
+	 */
+	this->comments = make_unique<vector<string>>();
+}
+
 PlyCommentList::~PlyCommentList()
 {
 	this->comments = nullptr;
