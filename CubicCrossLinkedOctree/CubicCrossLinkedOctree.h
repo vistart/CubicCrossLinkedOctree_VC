@@ -69,9 +69,9 @@ public:
         std::cout << "Z-axis extended range: " << std::setprecision(8) << z_mid - (max_range + leaf_width) / 2 << " to " << std::setprecision(8) << z_mid + (max_range + leaf_width) / 2 << std::endl;
 
 #endif
-        for (auto i = 0; i < point_list->GetPoints()->size(); i++) {
-            auto points = *point_list->GetPoints();
-            auto& point = points[i];
+        auto points = point_list->GetPoints();
+        for (auto i = 0; i < points->size(); i++) {
+            auto& point = (*points)[i];
             const auto& node_coordinate = OctreeNode::find_node_coordinate(point, middle_point, max_range, depth);
             insert_point(node_coordinate, i);
         }
