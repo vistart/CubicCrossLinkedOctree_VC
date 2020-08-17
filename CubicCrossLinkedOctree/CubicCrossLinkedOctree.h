@@ -161,9 +161,12 @@ private:
     }
 
 	/**
+	 * Insert Node into Octree.
 	 *
-	 * @param node_coordinate
-	 * @param node
+	 * If the current node exists in the octree, it returns false, otherwise is inserted.
+	 * 
+	 * @param node_coordinate the coordinates of node.
+	 * @param node the node to inserted.
 	 * @return true only if `node_map` doesn't contain the passed-in `node`.
 	 */
 	bool insert_node(NodeCoordinate const& node_coordinate, std::shared_ptr<OctreeNode<TPoint>> const& node)
@@ -173,8 +176,8 @@ private:
          */
         if (node_exists(node_coordinate))
             return false;
-        this->nodes.insert({ node_coordinate, node });
-        return true;
+        auto result = this->nodes.insert({ node_coordinate, node });
+        return result.second;
     }
 
 	bool node_exists(NodeCoordinate const& node_coordinate)
@@ -182,8 +185,21 @@ private:
         return this->nodes.find(node_coordinate) != this->nodes.end();
     }
 
+	/**
+	 * Insert a Point into Octree.
+	 *
+	 * @param node_coordinate the coordinates of node to which the point belongs.
+	 * @param point the point to be inserted.
+	 *
+	 * @return true if inserted. 
+	 */
 	bool insert_point(NodeCoordinate const& node_coordinate, std::shared_ptr<TPoint> const& point)
     {
+    	if (!node_exists(node_coordinate) && !insert_node(node_coordinate, std::make_shared<OctreeNode<TPoint>>()))
+            return false;
+        const auto& result = nodes[node_coordinate];
+        *result << point;
+        return true;
     	if (node_exists(node_coordinate))
     	{
             const auto& result = nodes[node_coordinate];
@@ -191,8 +207,7 @@ private:
             return true;
     	}
         const auto& ptr = std::make_shared<OctreeNode<TPoint>>(point);
-        insert_node(node_coordinate, ptr);
-        return true;
+        return insert_node(node_coordinate, ptr);
     }
 
 	/**

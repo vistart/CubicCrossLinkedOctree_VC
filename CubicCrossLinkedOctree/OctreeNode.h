@@ -37,7 +37,7 @@ public:
 	 *
 	 * @param point
 	 */
-    OctreeNode(std::shared_ptr<T> point = nullptr)
+    OctreeNode(std::shared_ptr<T> point)
     {
         if (!point)
             return;
