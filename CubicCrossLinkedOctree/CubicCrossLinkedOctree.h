@@ -190,7 +190,7 @@ private:
             *result << point;
             return true;
     	}
-        const auto& ptr = std::make_shared<OctreeNode<TPoint>>(node_coordinate, point);
+        const auto& ptr = std::make_shared<OctreeNode<TPoint>>(point);
         insert_node(node_coordinate, ptr);
         return true;
     }

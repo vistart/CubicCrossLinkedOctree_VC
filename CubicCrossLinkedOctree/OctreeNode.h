@@ -35,12 +35,10 @@ public:
     OctreeNode() = default;
 	/**
 	 *
-	 * @param coordinate
 	 * @param point
 	 */
-    OctreeNode(NodeCoordinate const& coordinate, std::shared_ptr<T> point = nullptr)
+    OctreeNode(std::shared_ptr<T> point = nullptr)
     {
-        this->coordinate = coordinate;
         if (!point)
             return;
         *this << point;
@@ -131,7 +129,6 @@ public:
         return points;
     }
 protected:
-    NodeCoordinate coordinate;
     std::unordered_set<std::shared_ptr<T>> points;
 };
 #endif
