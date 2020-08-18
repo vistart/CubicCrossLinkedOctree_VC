@@ -232,7 +232,7 @@ public:
         throw std::exception(coord_no_out_of_range_message);
 #endif
 #ifdef __GNUC__
-        throw runtime_error(coord_no_out_of_range_message);
+        throw std::runtime_error(coord_no_out_of_range_message);
 #endif
     }
 
@@ -270,7 +270,7 @@ public:
         throw std::exception(coord_no_out_of_range_message);
 #endif
 #ifdef __GNUC__
-        throw runtime_error(coord_no_out_of_range_message);
+        throw std::runtime_error(coord_no_out_of_range_message);
 #endif
     }
 
@@ -307,7 +307,7 @@ public:
         throw std::exception(coord_no_out_of_range_message);
 #endif
 #ifdef __GNUC__
-        throw runtime_error(coord_no_out_of_range_message);
+        throw std::runtime_error(coord_no_out_of_range_message);
 #endif
     }
 
