@@ -62,21 +62,22 @@ public:
 	 * @param middle_point The midpoint of the space.
 	 * @param max_range Common maximum range of the three dimensions.
 	 * @param depth The depth of the node in the octree. The default depth is 8.
+     * @param leaf_width
 	 *
 	 * @return The coordinates of the node where the current point is located.
 	 */
-    static NodeCoordinate find_node_coordinate(std::shared_ptr<T> const& point, PointCoordinate const& middle_point, double const& max_range, unsigned char depth)
+    static NodeCoordinate find_node_coordinate(std::shared_ptr<T> const& point, PointCoordinate const& middle_point, double const& max_range, unsigned char const& depth, double const& leaf_width)
 	{
-        const double leaf_width = max_range / (pow(2, depth) - 1);
         const auto& [x_mid, y_mid, z_mid] = middle_point;
-        const auto offset_of_x = point->offset_of(x_mid - (max_range + leaf_width) / 2, Point::Coordination::X);
-        const auto offset_of_y = point->offset_of(y_mid - (max_range + leaf_width) / 2, Point::Coordination::Y);
-        const auto offset_of_z = point->offset_of(z_mid - (max_range + leaf_width) / 2, Point::Coordination::Z);
+        const auto half_leaf_width_with_max_range = (max_range + leaf_width) / 2;
+        const auto& [offset_of_x, offset_of_y, offset_of_z] = point->offset_of(x_mid - half_leaf_width_with_max_range, y_mid - half_leaf_width_with_max_range, z_mid - half_leaf_width_with_max_range);
+        //const auto offset_of_x = point->offset_of(x_mid - (max_range + leaf_width) / 2, Point::Coordination::X);
+        //const auto offset_of_y = point->offset_of(y_mid - (max_range + leaf_width) / 2, Point::Coordination::Y);
+        //const auto offset_of_z = point->offset_of(z_mid - (max_range + leaf_width) / 2, Point::Coordination::Z);
         const auto x_th = static_cast<unsigned int>(offset_of_x / leaf_width);
         const auto y_th = static_cast<unsigned int>(offset_of_y / leaf_width);
         const auto z_th = static_cast<unsigned int>(offset_of_z / leaf_width);
-        // cout << "Offset of last point in (X,Y,Z): " << "(" << offset_of_x << "," << offset_of_y << "," << offset_of_z << ")" << " (X-th, Y-th, Z-th) in hexidecimal: " << "(" << bitset<10>(x_th) << "," << bitset<10>(y_th) << "," << bitset<10>(z_th) << ")" << endl;
-        return NodeCoordinate(x_th, y_th, z_th, depth);
+        return NodeCoordinate (x_th, y_th, z_th, depth);
     }
 	
     /**
@@ -124,7 +125,7 @@ public:
         return stream;
     }
 
-	std::unordered_set<std::shared_ptr<T>> GetPoints()
+	std::unordered_set<std::shared_ptr<T>>& GetPoints()
     {
         return points;
     }
