@@ -200,14 +200,6 @@ private:
         const auto& result = nodes[node_coordinate];
         *result << point;
         return true;
-    	if (node_exists(node_coordinate))
-    	{
-            const auto& result = nodes[node_coordinate];
-            *result << point;
-            return true;
-    	}
-        const auto& ptr = std::make_shared<OctreeNode<TPoint>>(point);
-        return insert_node(node_coordinate, ptr);
     }
 
 	/**
