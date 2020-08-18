@@ -71,4 +71,15 @@ double Point::offset_of(double offset, Coordination const& coordination) const
 #endif
 }
 
+std::tuple<double, double, double> Point::offset_of(std::tuple<double, double, double> const& offset) const
+{
+    auto& [x, y, z] = offset;
+    return make_tuple<double, double, double>(__X - x, __Y - y, __Z - z);
+}
+
+std::tuple<double, double, double> Point::offset_of(double const& x, double const& y, double const& z) const
+{
+    return make_tuple<double, double, double>(__X - x, __Y - y, __Z - z);
+}
+
 #endif

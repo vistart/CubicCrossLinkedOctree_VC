@@ -402,6 +402,24 @@ public:
     [[nodiscard]] double offset_of(double offset, Coordination const& coordination) const;
 
 	/**
+	 * Calculate the offset under a certain coordinate.
+	 * 
+	 * @param offset target.
+	 * @return the offset between the current and the target in specified dimension.
+	 */
+	[[nodiscard]] std::tuple<double, double, double> offset_of(std::tuple<double, double, double> const& offset) const;
+
+	/**
+	 * Calculate the offset under a certain coordinate.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return the offset between the current and the target in specified dimension.
+	 */
+    [[nodiscard]] std::tuple<double, double, double> offset_of(double const& x, double const& y, double const& z) const;
+
+	/**
 	 * Output the location of the current point.
 	 *
      * @param stream the target stream to output to.
