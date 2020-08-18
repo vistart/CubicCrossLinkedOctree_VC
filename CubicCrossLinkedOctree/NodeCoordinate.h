@@ -11,6 +11,7 @@
 #ifndef __NODE_COORDINATE_H__
 #define __NODE_COORDINATE_H__
 
+#include <ostream>
 #include <unordered_map>
 
 class NodeCoordinate
@@ -57,10 +58,11 @@ public:
 		 */
 		size_t operator()(NodeCoordinate const& i) const
 		{
-            return static_cast<size_t>(i.depth) << 57 ^
-                   static_cast<size_t>(i.X & 0x7FFFF) << 38 ^
-                   static_cast<size_t>(i.Y & 0x7FFFF) << 19 ^
-                   static_cast<size_t>(i.Z & 0x7FFFF);
+            return
+			       // static_cast<size_t>(i.depth) << 57 ^
+                   static_cast<size_t>(i.X & 0x1FFFFF) << 42 ^
+                   static_cast<size_t>(i.Y & 0x1FFFFF) << 21 ^
+                   static_cast<size_t>(i.Z & 0x1FFFFF);
 		}
 	};
     /*
@@ -89,5 +91,11 @@ public:
 	 * Node coordinate depth.
 	 */
     unsigned char depth = 1;
+
+	friend std::ostream& operator<<(std::ostream& stream, NodeCoordinate node_coordinate)
+	{
+		stream << "(" << node_coordinate.X << ", " << node_coordinate.Y << ", " << node_coordinate.Z << " @ " << node_coordinate.depth << ")" << std::endl;
+		return stream;
+	}
 };
 #endif
