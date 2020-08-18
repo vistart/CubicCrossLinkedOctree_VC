@@ -75,17 +75,38 @@ public:
 #pragma endregion
         
 #pragma region Insert Point into Octree
-    	
+        std::cout << "Inserting all points into Octree:" << std::endl;
         auto points = point_list->GetPoints();
+        //nodes.rehash(points->size());
         for (auto i = 0; i < points->size(); i++) {
             auto& point = (*points)[i];
-            const auto& node_coordinate = OctreeNode<TPoint>::find_node_coordinate(point, middle_point, max_range, depth);
+            const auto& node_coordinate = OctreeNode<TPoint>::find_node_coordinate(point, middle_point, max_range, depth, leaf_width);
             auto result = insert_point(node_coordinate, point);
+        	if (!result)
+        	{
+                std::cout << node_coordinate << ":" << std::endl;
+        	}
+        	if (i % 10000 == 9999)
+        	{
+                std::cout << i + 1 << " points are inserted." << std::endl;
+        	}
         }
+        std::cout << "All points are inserted." << std::endl;
 #pragma endregion
 #ifdef _DEBUG
     	
         print_nodes_stats();
+
+        auto& first_point = (*points)[0];
+        std::cout << *first_point << std::endl;
+        first_point->offset(leaf_width / 3, 0, 0);
+        std::cout << *first_point << std::endl;
+
+        OctreeNode<TPoint> first_node(first_point);
+
+        const auto& first_coordinate = OctreeNode<TPoint>::find_node_coordinate(first_point, middle_point, max_range, depth, leaf_width);
+
+        merge_node(first_coordinate, first_node);
         
 #endif
     }
@@ -199,6 +220,27 @@ private:
             return false;
         const auto& result = nodes[node_coordinate];
         *result << point;
+        return true;
+    }
+
+	/**
+	 * Merge node.
+	 *
+	 * @param dest
+	 * @param source
+	 *
+	 * @return
+	 */
+	bool merge_node(NodeCoordinate const& dest, OctreeNode<TPoint> const& source)
+    {
+        if (!node_exists(dest))
+            return false;
+    	/*
+    	for (auto& p : source.GetPoints())
+    	{
+            if (!insert_point(dest, p))
+                return false;
+    	}*/
         return true;
     }
 
