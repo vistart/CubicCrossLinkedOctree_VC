@@ -91,7 +91,7 @@ public:
                 std::cout << i + 1 << " points are inserted." << std::endl;
         	}
         }
-        std::cout << "All points are inserted." << std::endl;
+        std::cout << "All(" << points->size() << ") points are inserted." << std::endl;
 #pragma endregion
 #ifdef _DEBUG
     	
