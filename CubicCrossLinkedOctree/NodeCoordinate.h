@@ -12,7 +12,6 @@
 #define __NODE_COORDINATE_H__
 
 #include <ostream>
-#include <unordered_map>
 
 class NodeCoordinate
 {
@@ -36,21 +35,22 @@ public:
 	{
 		/**
 		 * Calculate the hash value based on the coordinates and depth.
+		 *
+		 * The most four significant bits are temporarily not used.
 		 * 
-		 * Because the depth range is limited to 1~127, only 7 bits of binary are needed. 
-		 * The remaining 57 bits are divided equally into three dimensions, each of which occupies 19 bits, 
-         * that is, the value of each dimension ranges from 0 to 524287.
-         * If the coordinate value exceeds this range, only the last 19 bits will be accepted,
+		 * The remaining 60 bits are divided equally into three dimensions, each of which occupies 20 bits, 
+         * that is, the value of each dimension ranges from 0 to 1048575.
+         * If the coordinate value exceeds this range, only the last 20 bits will be accepted,
          * and the high bits will be discarded.
          *
          * For example:
          * The NodeCoordinate instance is (X:16, Y:15, Z:14, depth:5)
          *
-         * The calculated hash value is 0x0A0004000078000E.
+         * The calculated hash value is 0x0000 1000 00F0 000E.
          * The corresponding binary is:
-         * 0000 1010 0000 0000
-         * 0000 0100 0000 0000
-         * 0000 0000 0111 1000
+         * 0000 0000 0000 0000
+         * 0001 0000 0000 0000
+         * 0000 0000 1111 0000
          * 0000 0000 0000 1110
 		 * 
 		 * @param i The node to be calculated.
@@ -59,10 +59,10 @@ public:
 		size_t operator()(NodeCoordinate const& i) const
 		{
             return
-			       // static_cast<size_t>(i.depth) << 57 ^
-                   static_cast<size_t>(i.X & 0x1FFFFF) << 42 ^
-                   static_cast<size_t>(i.Y & 0x1FFFFF) << 21 ^
-                   static_cast<size_t>(i.Z & 0x1FFFFF);
+			       // static_cast<size_t>(i.depth) << 60 ^
+                   static_cast<size_t>(i.X & 0xFFFFF) << 40 ^
+                   static_cast<size_t>(i.Y & 0xFFFFF) << 20 ^
+                   static_cast<size_t>(i.Z & 0xFFFFF);
 		}
 	};
     /*
@@ -92,7 +92,7 @@ public:
 	 */
     unsigned char depth = 1;
 
-	friend std::ostream& operator<<(std::ostream& stream, NodeCoordinate node_coordinate)
+	friend std::ostream& operator<<(std::ostream& stream, NodeCoordinate const& node_coordinate)
 	{
 		stream << "(" << node_coordinate.X << ", " << node_coordinate.Y << ", " << node_coordinate.Z << " @ " << node_coordinate.depth << ")" << std::endl;
 		return stream;
