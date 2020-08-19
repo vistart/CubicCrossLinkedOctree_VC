@@ -24,7 +24,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PlyPropertyType.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PlyVertex.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PlyVertexList.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)SingletonBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)PlyCommentList.cpp" />
@@ -37,6 +36,5 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)PlyPropertyType.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PlyVertex.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PlyVertexList.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)SingletonBase.cpp" />
   </ItemGroup>
 </Project>
