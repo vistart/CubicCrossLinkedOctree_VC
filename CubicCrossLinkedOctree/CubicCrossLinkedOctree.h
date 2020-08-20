@@ -19,6 +19,12 @@
 #include <map>
 #include <tuple>
 #include <unordered_map>
+#ifdef _MSC_VER
+#include <exception>
+#endif
+#ifdef __GNUC__
+#include <stdexcept>
+#endif
 
 /**
  * 
@@ -44,7 +50,12 @@ public:
         }
 #endif
         if (depth < 1 || depth > 127) {
-            throw "The depth out of range. It should be an integer from 1 to 127.";
+#ifdef _MSC_VER
+            throw std::exception("The depth out of range. It should be an integer from 1 to 127.");
+#endif
+#ifdef __GNU_C__
+            throw std::runtime_error("The depth out of range. It should be an integer from 1 to 127.");
+#endif
         }
         
     	// Specify the parameter `depth`. This parameter is recognized as the depth of octree.
@@ -60,7 +71,6 @@ public:
     	// Find the middle point of each dimension.
     	
         const auto middle_point = OctreeNode<TPoint>::find_middle_point(boundaries);
-        auto [x_mid, y_mid, z_mid] = middle_point;
         max_range = find_max_range(boundaries);
 
         leaf_width = max_range / ((base_depth << depth) - 1);
@@ -68,6 +78,7 @@ public:
 #ifdef _DEBUG
         std::cout << "Leaf node width: " << leaf_width << std::endl;
         std::cout << "Max extended range (= Max range + Leaf node width): " << std::setprecision(8) << max_range + leaf_width << std::endl;
+        auto [x_mid, y_mid, z_mid] = middle_point;
         std::cout << "X-axis extended range: " << std::setprecision(8) << x_mid - (max_range + leaf_width) / 2 << " to " << std::setprecision(8) << x_mid + (max_range + leaf_width) / 2 << std::endl;
         std::cout << "Y-axis extended range: " << std::setprecision(8) << y_mid - (max_range + leaf_width) / 2 << " to " << std::setprecision(8) << y_mid + (max_range + leaf_width) / 2 << std::endl;
         std::cout << "Z-axis extended range: " << std::setprecision(8) << z_mid - (max_range + leaf_width) / 2 << " to " << std::setprecision(8) << z_mid + (max_range + leaf_width) / 2 << std::endl;
@@ -140,13 +151,7 @@ protected:
     static NodeCoordinate GetRelativeNodeCoordinate(NodeCoordinate const& coordinate, unsigned char depth)
     {
         auto [x, y, z, d] = coordinate;
-        if (d < depth) {
-            return NodeCoordinate(x << (depth - d), y << (depth - d), z << (depth - d), depth - d);
-        }
-        if (d > depth) {
-            return NodeCoordinate(x >> (d - depth), y >> (d - depth), z >> (d - depth), d - depth);
-        }
-        return NodeCoordinate(x, y, z, 0);
+        return NodeCoordinate(x << abs(depth - d), y << abs(depth - d), z << abs(depth - d), depth - d);
     }
 
     
@@ -154,7 +159,15 @@ private:
     unsigned char depth = 12; // The depth range is limited to between 1 and 127.
     std::tuple<std::tuple<double, double>, std::tuple<double, double>, std::tuple<double, double>> boundaries;
     double max_range = 1;
-    long long const base_depth = 1;
+	/**
+	 * Define the base of leaf node width.
+	 * 
+	 * The calculation method of the depth base is 2 to the power of `depth`.
+	 * For example:
+	 *
+	 * When the depth is 12, base_depth is 2 to the 12th power, which is 4096.
+	 */
+    unsigned long long const base_depth = 1;
     double leaf_width = 1;
 
     void print_nodes_stats()
@@ -260,9 +273,9 @@ private:
          *
          * The following lines are examples.
          */
-        const auto comp_x = [](std::shared_ptr<Point> a, std::shared_ptr<Point> b) {return a->is_less_than(*b, Point::Coordination::X); };
-        const auto comp_y = [](std::shared_ptr<Point> a, std::shared_ptr<Point> b) {return a->is_less_than(*b, Point::Coordination::Y); };
-        const auto comp_z = [](std::shared_ptr<Point> a, std::shared_ptr<Point> b) {return a->is_less_than(*b, Point::Coordination::Z); };
+        const auto comp_x = [](std::shared_ptr<Point> const& a, std::shared_ptr<Point> const& b) {return a->is_less_than(*b, Point::Coordination::X); };
+        const auto comp_y = [](std::shared_ptr<Point> const& a, std::shared_ptr<Point> const& b) {return a->is_less_than(*b, Point::Coordination::Y); };
+        const auto comp_z = [](std::shared_ptr<Point> const& a, std::shared_ptr<Point> const& b) {return a->is_less_than(*b, Point::Coordination::Z); };
         const auto begin = point_list->GetPoints()->begin();
         const auto end = point_list->GetPoints()->end();
         const auto x_min = min_element(begin, end, comp_x);
@@ -283,24 +296,18 @@ private:
         const auto x_range = (**x_max).X() - (**x_min).X();
         const auto y_range = (**y_max).Y() - (**y_min).Y();
         const auto z_range = (**z_max).Z() - (**z_min).Z();
+#ifdef _DEBUG
         const auto x_mid = ((**x_max).X() + (**x_min).X()) / 2;
         const auto y_mid = ((**y_max).Y() + (**y_min).Y()) / 2;
         const auto z_mid = ((**z_max).Z() + (**z_min).Z()) / 2;
-#ifdef _DEBUG
-        std::cout << "X-axis range: " << std::setprecision(8) << x_range << " middle point: " << std::setprecision(8) << x_mid << std::endl;
-        std::cout << "Y-axis range: " << std::setprecision(8) << y_range << " middle point: " << std::setprecision(8) << y_mid << std::endl;
-        std::cout << "Z-axis range: " << std::setprecision(8) << z_range << " middle point: " << std::setprecision(8) << z_mid << std::endl;
+        std::cout << "X-axis range: " << std::setprecision(8) << x_range << " middle point: " << x_mid << std::endl;
+        std::cout << "Y-axis range: " << std::setprecision(8) << y_range << " middle point: " << y_mid << std::endl;
+        std::cout << "Z-axis range: " << std::setprecision(8) << z_range << " middle point: " << z_mid << std::endl;
 #endif
         const auto max_range = std::max(x_range, std::max(y_range, z_range));
 #ifdef _DEBUG
         std::cout << "Max range: " << std::setprecision(8) << max_range << std::endl;
 #endif
-        const auto x_range_min = x_mid - max_range / 2;
-        const auto x_range_max = x_mid + max_range / 2;
-        const auto y_range_min = y_mid - max_range / 2;
-        const auto y_range_max = y_mid + max_range / 2;
-        const auto z_range_min = z_mid - max_range / 2;
-        const auto z_range_max = z_mid + max_range / 2;
         return std::make_tuple(std::make_tuple((**x_min).X(), (**x_max).X()), std::make_tuple((**y_min).Y(), (**y_max).Y()), std::make_tuple((**z_min).Z(), (**z_max).Z()));
     }
 
@@ -310,9 +317,9 @@ private:
      * @param boundaries which contains three candidate dimensions.
      * @return double The upper and lower limits of the largest dimension of the range.
 	 */
-    [[nodiscard]] double find_max_range(std::tuple<std::tuple<double, double>, std::tuple<double, double>, std::tuple<double, double>> const& boundaries) const
+    [[nodiscard]] double find_max_range(std::tuple<std::tuple<double, double>, std::tuple<double, double>, std::tuple<double, double>> const& b) const
     {
-        const auto& [x_range, y_range, z_range] = boundaries;
+        const auto& [x_range, y_range, z_range] = b;
         const auto [x_range_min, x_range_max] = x_range;
         const auto [y_range_min, y_range_max] = y_range;
         const auto [z_range_min, z_range_max] = z_range;
