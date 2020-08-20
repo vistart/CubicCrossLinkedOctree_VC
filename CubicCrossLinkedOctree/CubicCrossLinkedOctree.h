@@ -293,10 +293,10 @@ private:
         std::cout << "Z-axis:" << "[" << std::setw(8) << std::setprecision(8) << std::distance(begin, z_min) << "]" << std::setw(11) << (**z_min).Z() << " to "
              << std::setw(0) << "[" << std::setw(8) << std::distance(begin, z_max) << "]" << std::setw(11) << (**z_max).Z() << std::endl;
 #endif
+#ifdef _DEBUG
         const auto x_range = (**x_max).X() - (**x_min).X();
         const auto y_range = (**y_max).Y() - (**y_min).Y();
         const auto z_range = (**z_max).Z() - (**z_min).Z();
-#ifdef _DEBUG
         const auto x_mid = ((**x_max).X() + (**x_min).X()) / 2;
         const auto y_mid = ((**y_max).Y() + (**y_min).Y()) / 2;
         const auto z_mid = ((**z_max).Z() + (**z_min).Z()) / 2;
@@ -304,8 +304,8 @@ private:
         std::cout << "Y-axis range: " << std::setprecision(8) << y_range << " middle point: " << y_mid << std::endl;
         std::cout << "Z-axis range: " << std::setprecision(8) << z_range << " middle point: " << z_mid << std::endl;
 #endif
-        const auto max_range = std::max(x_range, std::max(y_range, z_range));
 #ifdef _DEBUG
+        const auto max_range = std::max(x_range, std::max(y_range, z_range));
         std::cout << "Max range: " << std::setprecision(8) << max_range << std::endl;
 #endif
         return std::make_tuple(std::make_tuple((**x_min).X(), (**x_max).X()), std::make_tuple((**y_min).Y(), (**y_max).Y()), std::make_tuple((**z_min).Z(), (**z_max).Z()));
@@ -314,7 +314,7 @@ private:
 	/**
 	 * Find the value of the largest spanned dimension.
      *
-     * @param boundaries which contains three candidate dimensions.
+     * @param b which contains three candidate dimensions.
      * @return double The upper and lower limits of the largest dimension of the range.
 	 */
     [[nodiscard]] double find_max_range(std::tuple<std::tuple<double, double>, std::tuple<double, double>, std::tuple<double, double>> const& b) const
