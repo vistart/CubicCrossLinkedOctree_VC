@@ -34,7 +34,7 @@ public:
      * @param point_list Points from which construct an octree.
      * @param depth Depth of the octree.
      */
-    CubicCrossLinkedOctree(std::shared_ptr<TPointList> const& point_list, unsigned char depth = 12)
+    explicit CubicCrossLinkedOctree(std::shared_ptr<TPointList> const& point_list, unsigned char depth = 12)
     {
 #ifdef _DEBUG
     	/* The following loop will be discarded. */
