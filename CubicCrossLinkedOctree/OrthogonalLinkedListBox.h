@@ -21,6 +21,7 @@ typedef struct
 template<typename T>
 class OrthogonalLinkedListBox
 {
+public:
 	int head_vex;
 	int tail_vex;
 	std::unique_ptr<OrthogonalLinkedListBox> head_ptr;

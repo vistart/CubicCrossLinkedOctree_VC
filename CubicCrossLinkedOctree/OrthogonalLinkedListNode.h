@@ -21,6 +21,7 @@ template<typename TOctreeNode,
          typename = typename std::enable_if<std::is_base_of<OctreeNode<TPoint>, TOctreeNode>::type, TOctreeNode>::type>
 class OrthogonalLinkedListNode
 {
+public:
     std::shared_ptr<TOctreeNode> data;
 	std::unique_ptr<OrthogonalLinkedListBox<BoxInfo>> first_in;
 	std::unique_ptr<OrthogonalLinkedListBox<BoxInfo>> first_out;
