@@ -9,9 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CubicCrossLinkedOctree.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)OctreeNode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -21,11 +18,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ThreadPool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)OrthogonalLinkedListNode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)OrthogonalLinkedListBox.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\lenovo\source\repos\vistart\CubicCrossLinkedOctree_VC\CubicCrossLinkedOctree\Octree.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)OrthogonalLinkedList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CubicCrossLinkedOctree.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)OctreeNode.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -33,6 +39,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ThreadPool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrthogonalLinkedListNode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrthogonalLinkedListBox.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\lenovo\source\repos\vistart\CubicCrossLinkedOctree_VC\CubicCrossLinkedOctree\Octree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrthogonalLinkedList.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

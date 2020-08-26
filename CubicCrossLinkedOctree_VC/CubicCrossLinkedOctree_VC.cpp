@@ -10,7 +10,7 @@
 */
 //
 #include "PlyFile.h"
-#include "CubicCrossLinkedOctree.h"
+#include "Octree.h"
 #include <iostream>
 #include <sstream>
 #include <memory>
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
     cout << "The last point is: " << *point_list->GetPoints()->back() << endl;
 
 	cout << "Construct the Octree of Point Cloud: " << endl;
-    CubicCrossLinkedOctree<PlyVertexList, PlyVertex, PlyFile> octree(point_list, depth);
+    Octree<PlyVertexList, PlyVertex, PlyFile> octree(point_list, depth);
     //cout << "Hello World!\n";
     return 0;
 }

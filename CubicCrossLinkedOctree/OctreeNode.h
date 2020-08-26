@@ -14,7 +14,6 @@
 #include "Point.h"
 #include "NodeCoordinate.h"
 #include <bitset>
-#include <iostream>
 #include <memory>
 #include <set>
 #include <tuple>

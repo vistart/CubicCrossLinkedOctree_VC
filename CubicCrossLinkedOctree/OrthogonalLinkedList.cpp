@@ -7,9 +7,11 @@
  * @copyright Copyright (c) 2019 - 2020 vistart
  * @license https://vistart.me/license/
 */
-#ifndef __CUBIC_CROSS_LINKED_OCTREE_H__
-#include "CubicCrossLinkedOctree.h"
+
+#ifndef __ORTHOGONAL_LINKED_LIST__
+#include "OrthogonalLinkedList.h"
 #endif
 
-#ifdef __CUBIC_CROSS_LINKED_OCTREE_H__
+#ifdef __ORTHOGONAL_LINKED_LIST__
+
 #endif

@@ -8,8 +8,8 @@
  * @license https://vistart.me/license/
 */
 #pragma once
-#ifndef __CUBIC_CROSS_LINKED_OCTREE_H__
-#define __CUBIC_CROSS_LINKED_OCTREE_H__
+#ifndef __OCTREE_H__
+#define __OCTREE_H__
 
 #include "OctreeNode.h"
 #include "NodeCoordinate.h"
@@ -29,18 +29,20 @@
 /**
  * 
  */
-template<typename TPointList, typename TPoint, typename = typename std::enable_if<std::is_base_of<PointList<TPoint>, TPointList>::value, TPointList>::type>
-class CubicCrossLinkedOctree
+template<typename TPointList,
+         typename TPoint,
+         typename = typename std::enable_if<std::is_base_of<PointList<TPoint>, TPointList>::value, TPointList>::type>
+class Octree
 {
 public:
-    CubicCrossLinkedOctree() = default;
+    Octree() = default;
     /**
      * Construct the octree.
      *
      * @param point_list Points from which construct an octree.
      * @param depth Depth of the octree.
      */
-    explicit CubicCrossLinkedOctree(std::shared_ptr<TPointList> const& point_list, unsigned char depth = 12)
+    explicit Octree(std::shared_ptr<TPointList> const& point_list, unsigned char depth = 12)
     {
 #ifdef _DEBUG
     	/* The following loop will be discarded. */
@@ -121,7 +123,7 @@ public:
         
 #endif
     }
-    ~CubicCrossLinkedOctree() = default;
+    ~Octree() = default;
     /*
      * The mapping between node coordinates and octree nodes.
      */

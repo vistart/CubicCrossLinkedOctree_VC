@@ -14,15 +14,21 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CubicCrossLinkedOctree.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Octree.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NodeCoordinate.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OctreeNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)OrthogonalLinkedList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)OrthogonalLinkedListBox.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)OrthogonalLinkedListNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ThreadPool.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CubicCrossLinkedOctree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Octree.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NodeCoordinate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)OctreeNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrthogonalLinkedList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrthogonalLinkedListBox.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrthogonalLinkedListNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ThreadPool.h" />
   </ItemGroup>
 </Project>
