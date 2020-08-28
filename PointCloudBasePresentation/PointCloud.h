@@ -35,6 +35,10 @@ public:
     PointCloud() {
         this->point_list = std::make_shared<T>();
     }
+    PointCloud(const PointCloud&) = default;
+    PointCloud& operator=(const PointCloud&) = default;
+    PointCloud(PointCloud&&) = default;
+    PointCloud& operator=(PointCloud&&) = default;
     virtual ~PointCloud() {
         this->point_list = nullptr;
     }

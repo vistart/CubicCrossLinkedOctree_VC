@@ -36,7 +36,32 @@ class PointList
 {
 public:
     PointList() {
-        this->points = std::make_shared<std::vector<std::shared_ptr<T>>>();
+        points = std::make_shared<std::vector<std::shared_ptr<T>>>();
+    }
+    PointList(const PointList& other)
+    {
+        points = other.points;
+    }
+    PointList& operator=(const PointList& other)
+	{
+        if (this == &other) return *this;
+        if (points != nullptr) points == nullptr;
+        points = other.points;
+        return *this;
+    }
+    PointList(PointList&& other) noexcept
+    {
+        points = other.points;
+        other.points = nullptr;
+        return *this;
+    }
+    PointList& operator=(PointList&& other) noexcept
+    {
+        if (this == &other) return *this;
+        if (points != nullptr) points = nullptr;
+        points = other.points;
+        other.points = nullptr;
+        return *this;
     }
     virtual ~PointList() {
         this->points = nullptr;

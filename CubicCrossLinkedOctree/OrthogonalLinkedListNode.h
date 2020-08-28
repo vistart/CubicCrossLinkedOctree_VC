@@ -16,8 +16,11 @@
 
 #include "OctreeNode.h"
 
-template<typename TOctreeNode,
-         typename TPoint,
+/**
+ * 
+ */
+template<class TOctreeNode,
+         class TPoint,
          typename = typename std::enable_if<std::is_base_of<OctreeNode<TPoint>, TOctreeNode>::type, TOctreeNode>::type>
 class OrthogonalLinkedListNode
 {

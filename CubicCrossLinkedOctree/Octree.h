@@ -29,8 +29,8 @@
 /**
  * 
  */
-template<typename TPointList,
-         typename TPoint,
+template<class TPointList,
+         class TPoint,
          typename = typename std::enable_if<std::is_base_of<PointList<TPoint>, TPointList>::value, TPointList>::type>
 class Octree
 {
@@ -156,8 +156,6 @@ protected:
         return NodeCoordinate(x << abs(depth - d), y << abs(depth - d), z << abs(depth - d), depth - d);
     }
 
-    
-private:
     unsigned char depth = 12; // The depth range is limited to between 1 and 127.
     std::tuple<std::tuple<double, double>, std::tuple<double, double>, std::tuple<double, double>> boundaries;
     double max_range = 1;

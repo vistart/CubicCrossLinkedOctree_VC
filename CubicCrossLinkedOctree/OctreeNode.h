@@ -22,7 +22,7 @@
 /**
  * 
  */
-template<typename T, typename = typename std::enable_if<std::is_base_of<Point, T>::value, T>::type>
+template<class T, typename = typename std::enable_if<std::is_base_of<Point, T>::value, T>::type>
 class OctreeNode
 {
 public:
