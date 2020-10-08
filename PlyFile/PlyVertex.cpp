@@ -94,7 +94,7 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEnco
 	unsigned char ALPHA = 255;
 	switch (file_encoding.type) {
 	case PlyFileEncoding::FILE_ENCODING_ASCII:
-		for (auto& name : names)
+		for (const auto& name : names)
 		{
 			switch (name.name) {
 			case PROPERTY_X:
@@ -140,7 +140,7 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEnco
 		}
 		break;
 	case PlyFileEncoding::FILE_ENCODING_BINARY_BIG_ENDIAN:
-		for (auto& name : names)
+		for (const auto& name : names)
 		{
 			switch (name.name) {
 			case PROPERTY_X:
@@ -258,7 +258,7 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEnco
 		}
 		break;
 	case PlyFileEncoding::FILE_ENCODING_BINARY_LITTLE_ENDIAN:
-		for (auto& name : names)
+		for (const auto& name : names)
 		{
 			switch (name.name) {
 			case PROPERTY_X:

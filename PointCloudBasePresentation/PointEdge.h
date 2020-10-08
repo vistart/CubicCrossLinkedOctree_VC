@@ -8,17 +8,9 @@
  * @license https://vistart.me/license/
 */
 #pragma once
-
-#ifndef __PLY_EDGE_H__
-#define __PLY_EDGE_H__
-
-#include "PointEdge.h"
-
-/*
- @TODO: Implement it.
- */
-class PlyEdge : public PointEdge
+#ifndef __POINT_EDGE__
+#define __POINT_EDGE__
+class PointEdge
 {
 };
-
 #endif

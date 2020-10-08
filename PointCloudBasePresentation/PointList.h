@@ -66,10 +66,10 @@ public:
     virtual ~PointList() {
         this->points = nullptr;
     }
-    virtual std::shared_ptr<std::vector<std::shared_ptr<T>>> GetPoints() {
+    [[nodiscard]] virtual std::shared_ptr<std::vector<std::shared_ptr<T>>> GetPoints() const {
         return this->points;
     }
-private:
+protected:
     std::shared_ptr<std::vector<std::shared_ptr<T>>> points;
 };
 #endif

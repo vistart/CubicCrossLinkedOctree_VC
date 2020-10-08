@@ -31,7 +31,7 @@ public:
 	/*
 	 Destroy the vertex list.
 	 */
-	~PlyVertexList();
+	~PlyVertexList() override;
 
 	/*
 	 Add a vertex to this list.
@@ -67,13 +67,13 @@ public:
 	 @param PlyFileEncoding const&: the target file encoding.
 	 @return PlyVertexList&: self.
 	 */
-	PlyVertexList& operator<<(PlyFileEncoding const& file_encoding);
+	PlyVertexList& operator<<(PlyFileEncoding const& fe);
 
 	/*
 	 Read property names and corresponding types.
 
 	 @param file the target file.
-	 @return true if no exceptions occured.
+	 @return true if no exceptions occurred.
 	 */
 	bool read_element_vertex_names(std::fstream& file);
 
@@ -107,11 +107,11 @@ public:
 
 	 @return the shared pointer to all vertices. 
 	 */
-	std::shared_ptr<std::vector<std::shared_ptr<PlyVertex>>> GetPoints() override;
+	[[nodiscard]] std::shared_ptr<std::vector<std::shared_ptr<PlyVertex>>> GetPoints() const override;
 protected:
 	unsigned int count_in_header = 0;
 	PlyFileEncoding::FileEncoding file_encoding = { PlyFileEncoding::FILE_ENCODING_ASCII, 1.0 };
-	std::shared_ptr<std::vector<std::shared_ptr<PlyVertex>>> points;
+	//std::shared_ptr<std::vector<std::shared_ptr<PlyVertex>>> points;
 };
 
 #endif

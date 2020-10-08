@@ -12,11 +12,47 @@
 #ifndef __PLY_FACE_H__
 #define __PLY_FACE_H__
 
+#include "PlyFileEncoding.h"
+#include "PointFace.h"
+#include <sstream>
+#include <vector>
+
 /*
  @TODO: Implement it.
  */
-class PlyFace
+class PlyFace : public PointFace
 {
+public:
+	struct FaceDescription
+	{
+		int list_name;
+		int list_type;
+		int vertex_type;
+		int vertex_name;
+	};
+	PlyFace() = default;
+	PlyFace(FaceDescription const&, std::string const&);
+	PlyFace(FaceDescription const&, std::fstream&, PlyFileEncoding::FileEncoding const&);
+	PlyFace(std::initializer_list<unsigned int> const&);
+	virtual ~PlyFace() = default;
+	enum PropertyNames {
+		PROPERTY_NONE,
+		PROPERTY_LIST,
+		PROPERTY_VERTEX_INDICES
+	};
+	friend std::ostream& operator<<(std::ostream& stream, PlyFace const& face)
+	{
+		stream << "(";
+		auto f = face.vertex_indices;
+		while (!f.empty())
+		{
+			stream << f.top();
+			f.pop();
+			if (!f.empty()) stream << ", ";
+		}
+		stream << ")";
+		return stream;
+	}
 };
 
 #endif

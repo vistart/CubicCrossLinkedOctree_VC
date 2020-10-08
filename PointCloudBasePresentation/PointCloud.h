@@ -13,6 +13,8 @@
 #define __POINT_CLOUD_H__
 
 #include "PointList.h"
+#include "PointEdgeList.h"
+#include "PointFaceList.h"
 
 /*
  * This class is used to describe the Point Cloud.
@@ -28,24 +30,47 @@
  * 2. Initialize the shared pointer of above point list property in Constructor.
  * 3. Make the point list to nullptr in Destructor.
 */
-template <typename T, typename TPoint, typename = typename std::enable_if<std::is_base_of<PointList<TPoint>, T>::value>::type>
+template <
+    typename TPointList,
+	typename TPoint,
+	typename TPointEdgeList,
+	typename TPointEdge,
+	typename TPointFaceList,
+	typename TPointFace,
+	typename = typename std::enable_if<std::is_base_of<PointList<TPoint>, TPointList>::value && 
+                                       std::is_base_of<PointEdgeList<TPointEdge>, TPointEdgeList>::value && 
+                                       std::is_base_of<PointFaceList<TPointFace>, TPointFaceList>::value
+	>::type
+>
 class PointCloud
 {
 public:
     PointCloud() {
-        this->point_list = std::make_shared<T>();
+        this->point_list = std::make_shared<TPointList>();
+        this->point_edge_list = std::make_shared<TPointEdgeList>();
+        this->point_face_list = std::make_shared<TPointFaceList>();
     }
     PointCloud(const PointCloud&) = default;
     PointCloud& operator=(const PointCloud&) = default;
     PointCloud(PointCloud&&) = default;
     PointCloud& operator=(PointCloud&&) = default;
     virtual ~PointCloud() {
+        this->point_face_list = nullptr;
+        this->point_edge_list = nullptr;
         this->point_list = nullptr;
     }
-    virtual std::shared_ptr<T> GetPointList() {
+    virtual std::shared_ptr<TPointList> GetPointList() {
         return this->point_list;
     }
-private:
-    std::shared_ptr<T> point_list;
+	virtual std::shared_ptr<TPointEdgeList> GetPointEdgeList() {
+        return this->point_edge_list;
+    }
+	virtual std::shared_ptr<TPointFaceList> GetPointFaceList() {
+        return this->point_face_list;
+    }
+protected:
+    std::shared_ptr<TPointList> point_list;
+    std::shared_ptr<TPointEdgeList> point_edge_list;
+    std::shared_ptr<TPointFaceList> point_face_list;
 };
 #endif

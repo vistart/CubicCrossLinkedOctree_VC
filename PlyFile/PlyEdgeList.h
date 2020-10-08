@@ -11,18 +11,54 @@
 
 #ifndef __PLY_EDGE_LIST_H__
 #define __PLY_EDGE_LIST_H__
+
+#include "PlyEdge.h"
+#include "PointEdgeList.h"
+#include "PlyFileEncoding.h"
+#include <vector>
+
 /*
  @TODO: Implement it.
  */
-class PlyEdgeList
+class PlyEdgeList : public PointEdgeList<PlyEdge, PlyEdgeList>
 {
 public:
     /*
      No action is required by default.
      */
 	PlyEdgeList() = default;
-	~PlyEdgeList() = default;
+	~PlyEdgeList() override = default;
+	PlyEdgeList& operator<<(std::string const&);
+	PlyEdgeList& operator<<(std::fstream &);
+	PlyEdgeList& operator<<(std::shared_ptr<PlyEdge> const&);
+	PlyEdgeList& operator<<(PlyFileEncoding const&);
+	bool read_element_edge_names(std::fstream& file);
 	void demo();
+	/*
+	 Set the count of edge according to the value stored in ply file header.
+	 Note: It is strongly recommended to set it only once before reading the
+	 edge properties.
+
+	 @param count the target count.
+	 */
+	void SetCountInHeader(unsigned int count);
+
+	/*
+	 Get the count of edge.
+
+	 @return unsigned int const: the target count.
+	 */
+	[[nodiscard]] unsigned int GetCountInHeader() const;
+	/*
+	 Return the pointer pointing to all edges stored in this instance.
+
+	 @return the shared pointer to all edges.
+	 */
+	[[nodiscard]] std::shared_ptr<std::vector<std::shared_ptr<PlyEdge>>> GetEdges() const override;
+protected:
+	unsigned int count_in_header = 0;
+	PlyFileEncoding::FileEncoding file_encoding = { PlyFileEncoding::FILE_ENCODING_ASCII, 1.0 };
+	//std::shared_ptr<std::vector<std::shared_ptr<PlyEdge>>> edges;
 };
 
 #endif

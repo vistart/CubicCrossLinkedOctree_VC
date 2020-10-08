@@ -30,8 +30,8 @@ PlyFile::PlyFile(string const& file_path)
 	this->FileEncoding = make_shared<PlyFileEncoding>();
 	this->CommentList = make_shared<PlyCommentList>();
 	this->point_list = make_shared<PlyVertexList>();
-	this->EdgeList = make_shared<PlyEdgeList>();
-	this->FaceList = make_shared<PlyFaceList>();
+	this->point_edge_list = make_shared<PlyEdgeList>();
+	this->point_face_list = make_shared<PlyFaceList>();
 	open(this->filename);
 	if (read(this->file))
 		this->valid = true;
@@ -42,8 +42,8 @@ PlyFile::~PlyFile()
 	if (this->file.is_open()) {
 		this->file.close();
 	}
-	this->FaceList = nullptr;
-	this->EdgeList = nullptr;
+	this->point_face_list = nullptr;
+	this->point_edge_list = nullptr;
 	this->point_list = nullptr;
 	this->CommentList = nullptr;
 	this->FileEncoding = nullptr;
@@ -66,9 +66,9 @@ string PlyFile::GetFileFormat() const
 	return "unknown type!";
 }
 
-bool PlyFile::set_file_format(string const& file_format)
+bool PlyFile::set_file_format(string const& ff)
 {
-	if (file_format == "ply") {
+	if (ff == "ply") {
 		this->file_format = FILE_FORMAT_PLY;
 		return true;
 	}
@@ -77,25 +77,25 @@ bool PlyFile::set_file_format(string const& file_format)
 #pragma endregion
 
 #pragma region File Encoding
-bool PlyFile::read_file_encoding(string const& tag, fstream& file)
+bool PlyFile::read_file_encoding(string const& tag, fstream& f)
 {
 	if (tag != string("format"))
 		return false;
 	auto& encoding = this->FileEncoding;
-	*encoding << file;
+	*encoding << f;
 	return true;
 }
 #pragma endregion
 
 #pragma region Comment
 
-bool PlyFile::read_comment(string const& tag, fstream& file) const
+bool PlyFile::read_comment(string const& tag, fstream& f) const
 {
 	if (tag != string(PLY_TAG_COMMENT))
 		return false;
 
 	string comment;
-	getline(file, comment);
+	getline(f, comment);
 	*this->CommentList << comment;
 	return true;
 }
@@ -112,9 +112,9 @@ bool PlyFile::open(string const& file_path)
 }
 
 #pragma region Vertex
-bool PlyFile::read_element_vertex_names(fstream& file) const
+bool PlyFile::read_element_vertex_names(fstream& f) const
 {
-	this->point_list->read_element_vertex_names(file);
+	this->point_list->read_element_vertex_names(f);
 	PlyVertex::VertexName const back = this->point_list->names.back();
 #ifdef _DEBUG
 	cout << "Property: " << back.name << " | " << back.type << endl;
@@ -129,10 +129,10 @@ bool PlyFile::read_element_vertex_encoding(PlyFileEncoding const& file_encoding)
 	return true;
 }
 
-bool PlyFile::read_element_vertex(fstream& file) const
+bool PlyFile::read_element_vertex(fstream& f) const
 {
 	auto& vertex_list = *this->point_list;
-	vertex_list << file;
+	vertex_list << f;
 	return true;
 }
 
@@ -143,49 +143,74 @@ shared_ptr<PlyVertexList> PlyFile::GetPointList()
 #pragma endregion
 
 #pragma region Face
-bool PlyFile::read_element_face_names(fstream& file) const
+bool PlyFile::read_element_face_names(fstream& f) const
 {
-	string face;
-	getline(file, face);
+	this->point_face_list->read_element_face_names(f);
+	const auto& fd = this->point_face_list->face_description;
 #ifdef _DEBUG
-	cout << "Element: " << face << endl;
+	cout << "List name: " << fd.list_name << "\tlist type:" << fd.list_type << "\tvertices index type:" << fd.vertex_type << "\tvertices index name: " << fd.vertex_name << endl;
 #endif
 	return true;
 }
-bool PlyFile::read_element_face(fstream& file)
+bool PlyFile::read_element_face_encoding(PlyFileEncoding const& file_encoding) const
 {
-	return false;
+	auto& face_list = *this->point_face_list;
+	face_list << file_encoding;
+	return true;
+}
+bool PlyFile::read_element_face(fstream& f) const
+{
+	auto& face_list = *this->point_face_list;
+	face_list << f;
+	return true;
+}
+
+shared_ptr<PlyFaceList> PlyFile::GetPointFaceList()
+{
+	return this->point_face_list;
 }
 #pragma endregion
 
 #pragma region Edge
-bool PlyFile::read_element_edge_names(fstream& file) const
+bool PlyFile::read_element_edge_names(fstream& f) const
 {
 	string edge;
-	getline(file, edge);
+	getline(f, edge);
 #ifdef _DEBUG
 	cout << "Element: " << edge << endl;
 #endif
 	return true;
 }
-bool PlyFile::read_element_edge(fstream& file)
+bool PlyFile::read_element_edge_encoding(PlyFileEncoding const& file_encoding) const
+{
+	auto& edge_list = *this->point_edge_list;
+	edge_list << file_encoding;
+	return true;
+}
+bool PlyFile::read_element_edge(fstream& f)
 {
 	return false;
 }
+
+std::shared_ptr<PlyEdgeList> PlyFile::GetPointEdgeList()
+{
+	return this->point_edge_list;
+}
+
 #pragma endregion
 
 #pragma region User-Defined Elements
-bool PlyFile::read_element_user_defined_names(fstream& file) const
+bool PlyFile::read_element_user_defined_names(fstream& f) const
 {
 	return true;
 }
-bool PlyFile::read_element_user_defined(fstream& file)
+bool PlyFile::read_element_user_defined(fstream& f)
 {
 	return false;
 }
 #pragma endregion
 
-bool PlyFile::read_header(fstream& file)
+bool PlyFile::read_header(fstream& f)
 {
 	unsigned int element_count = 0;
 	string buffer;
@@ -196,7 +221,7 @@ bool PlyFile::read_header(fstream& file)
 	file.seekg(0, ios::beg);
 
     // Reading the header of a ply file.
-	while (file >> buffer)
+	while (f >> buffer)
 	{
 		// Regardless of the case of the current word, it is converted to lower case for comparison.
 		transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
@@ -205,20 +230,20 @@ bool PlyFile::read_header(fstream& file)
 		if (buffer.c_str() == string("property")) {
 			// There are three default property names: vertex, face and edge.
 			if (current_elements == VERTEX) {
-				read_element_vertex_names(file);
+				read_element_vertex_names(f);
 				continue;
 			}
 			if (current_elements == FACE) {
-				read_element_face_names(file);
+				read_element_face_names(f);
 				continue;
 			}
 			if (current_elements == EDGE) {
-				read_element_edge_names(file);
+				read_element_edge_names(f);
 				continue;
 			}
 			// All others are user-defined.
 			if (current_elements == USER_DEFINED) {
-				read_element_user_defined_names(file);
+				read_element_user_defined_names(f);
 				continue;
 			}
 		}
@@ -234,7 +259,7 @@ bool PlyFile::read_header(fstream& file)
 
 
 		// If `buffer` equals to "format", it indicates that the following content is format and encoding.
-		if (read_file_encoding(buffer.c_str(), file)) {
+		if (read_file_encoding(buffer.c_str(), f)) {
 #ifdef _DEBUG
 			cout << "FORMAT: " << (*this->FileEncoding).Encoding() << " VERSION:" << (*this->FileEncoding).Version() << endl;
 #endif
@@ -242,7 +267,7 @@ bool PlyFile::read_header(fstream& file)
 		}
 
 		// If `buffer` equals to "comment", it indicates that the following content is comment.
-		if (read_comment(buffer.c_str(), file)) {
+		if (read_comment(buffer.c_str(), f)) {
 #ifdef _DEBUG
 			auto comments = *CommentList->getComments();
 			for (const auto& comment :comments)
@@ -256,7 +281,7 @@ bool PlyFile::read_header(fstream& file)
 		// If `buffer` equals to "element", it indicates that the following content is element names.
 		if (buffer.c_str() == string("element")) {
 			string element_name;
-			file >> element_name >> element_count;
+			f >> element_name >> element_count;
 
 			if (element_name == "vertex") {
 				current_elements = VERTEX;
@@ -270,11 +295,15 @@ bool PlyFile::read_header(fstream& file)
 
 			if (element_name == "face") {
 				current_elements = FACE;
+				auto face_list = this->GetPointFaceList();
+				face_list->SetCountInHeader(element_count);
 				continue;
 			}
 
 			if (element_name == "edge") {
 				current_elements = EDGE;
+				auto edge_list = this->GetPointEdgeList();
+				edge_list->SetCountInHeader(element_count);
 				continue;
 			}
 			continue;
@@ -290,28 +319,51 @@ bool PlyFile::read_header(fstream& file)
 	return true;
 }
 
-bool PlyFile::read_body(fstream& file)
+bool PlyFile::read_body(fstream& f)
 {
-	file.get(); // throw out the last character ('\n').
+	f.get(); // throw out the last character ('\n').
 	read_element_vertex_encoding(*this->FileEncoding);
-	unsigned int const vertex_count_in_header = this->GetPointList()->GetCountInHeader();
+	const auto vertex_count_in_header = this->GetPointList()->GetCountInHeader();
 	for (unsigned int i = 0; i < vertex_count_in_header; i++)
 	{
 #ifdef _DEBUG
 		// cout << "file pointer: " << file.tellg() << endl;
 #endif
-		read_element_vertex(file);
+		read_element_vertex(f);
+	}
+
+	read_element_face_encoding(*this->FileEncoding);
+	const auto face_count_in_header = this->GetPointFaceList()->GetCountInHeader();
+	for (unsigned int i = 0; i < face_count_in_header; i++)
+	{
+#ifdef _DEBUG
+		//cout << "file pointer: " << file.tellg() << endl;
+#endif
+		read_element_face(f);
+	}
+#ifdef _DEBUG
+	cout << "The last face: " << *this->GetPointFaceList()->GetFaces()->back() << endl;
+#endif
+
+	read_element_edge_encoding(*this->FileEncoding);
+	const auto edge_count_in_header = this->GetPointEdgeList()->GetCountInHeader();
+	for (unsigned int i = 0; i < edge_count_in_header; i++)
+	{
+#ifdef _DEBUG
+		//cout << "file pointer: " << file.tellg() << endl;
+#endif
+		read_element_edge(f);
 	}
 	return true;
 }
 
 
-bool PlyFile::read(fstream& file)
+bool PlyFile::read(fstream& f)
 {
-	if (!this->read_header(file)) {
+	if (!this->read_header(f)) {
 		return false;
 	}
-	if (!this->read_body(file)) {
+	if (!this->read_body(f)) {
 		return false;
 	}
 	return true;

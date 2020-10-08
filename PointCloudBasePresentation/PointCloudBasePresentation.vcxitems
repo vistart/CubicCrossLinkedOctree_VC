@@ -17,12 +17,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\PlyFile\SingletonBase.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Point.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PointCloud.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PointEdge.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PointEdgeList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PointFace.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PointFaceList.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PointList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\PlyFile\SingletonBase.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Point.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PointCloud.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PointEdge.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PointEdgeList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PointFace.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PointFaceList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PointList.h" />
   </ItemGroup>
 </Project>

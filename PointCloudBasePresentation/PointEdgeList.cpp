@@ -7,18 +7,9 @@
  * @copyright Copyright (c) 2019 - 2020 vistart
  * @license https://vistart.me/license/
 */
-#pragma once
+#ifndef __POINT_EDGE_LIST_H__
+#include "PointEdgeList.h"
+#endif
 
-#ifndef __PLY_EDGE_H__
-#define __PLY_EDGE_H__
-
-#include "PointEdge.h"
-
-/*
- @TODO: Implement it.
- */
-class PlyEdge : public PointEdge
-{
-};
-
+#ifdef __POINT_EDGE_LIST_H__
 #endif

@@ -21,6 +21,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\PlyFile\SingletonBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PointFaceList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PointFace.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PointEdgeList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PointEdge.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)PointCloud.h">
@@ -33,6 +45,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\PlyFile\SingletonBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PointFaceList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PointFace.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PointEdgeList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PointEdge.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

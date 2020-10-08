@@ -14,10 +14,6 @@
 
 #ifdef __PLY_VERTEX_LIST_H__
 using namespace std;
-shared_ptr<vector<shared_ptr<PlyVertex>>> PlyVertexList::GetPoints()
-{
-	return this->points;
-}
 
 PlyVertexList::PlyVertexList()
 {
@@ -49,9 +45,9 @@ PlyVertexList& PlyVertexList::operator<<(shared_ptr<PlyVertex> const& vertex)
 	return *this;
 }
 
-PlyVertexList& PlyVertexList::operator<<(PlyFileEncoding const& file_encoding)
+PlyVertexList& PlyVertexList::operator<<(PlyFileEncoding const& fe)
 {
-	this->file_encoding = file_encoding.GetDefinition();
+	this->file_encoding = fe.GetDefinition();
 	return *this;
 }
 
@@ -136,5 +132,9 @@ void PlyVertexList::SetCountInHeader(unsigned int const count)
 unsigned int PlyVertexList::GetCountInHeader() const
 {
 	return this->count_in_header;
+}
+std::shared_ptr<std::vector<std::shared_ptr<PlyVertex>>> PlyVertexList::GetPoints() const
+{
+	return this->points;
 }
 #endif

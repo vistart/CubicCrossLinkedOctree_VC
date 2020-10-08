@@ -24,7 +24,7 @@
 /*
  This class is used to describe the ply file.
  */
-class PlyFile : public PointCloud<PlyVertexList, PlyVertex, PlyFile>
+class PlyFile : public PointCloud<PlyVertexList, PlyVertex, PlyEdgeList, PlyEdge, PlyFaceList, PlyFace, PlyFile>
 {
 public:
 #pragma region Constructor & Destructor
@@ -52,11 +52,11 @@ public:
 #pragma endregion
 
 #pragma region Face
-	std::shared_ptr<PlyFaceList> FaceList;
+	std::shared_ptr<PlyFaceList> GetPointFaceList() override;
 #pragma endregion
 
 #pragma region Edge
-	std::shared_ptr<PlyEdgeList> EdgeList;
+	std::shared_ptr<PlyEdgeList> GetPointEdgeList() override;
 #pragma endregion
 
 	bool GetIsValid() const;
@@ -158,7 +158,7 @@ protected:
 	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_vertex_names(std::fstream& file) const;
+	bool read_element_vertex_names(std::fstream&) const;
 	/**
 	 * Read Vertex Encoding from ply file.
 	 * This method is called before reading vertex to determine the specific
@@ -167,7 +167,7 @@ protected:
 	 * @param file_encoding the file encoding.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_vertex_encoding(PlyFileEncoding const& file_encoding) const;
+	bool read_element_vertex_encoding(PlyFileEncoding const&) const;
 	/**
 	 * Read Vertex from ply file.
 	 * You need to determine the file encoding and number of points before
@@ -177,8 +177,8 @@ protected:
 	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_vertex(std::fstream& file) const;
-	std::shared_ptr<PlyVertexList> point_list;
+	bool read_element_vertex(std::fstream&) const;
+	// std::shared_ptr<PlyVertexList> point_list;
 #pragma endregion
 
 #pragma region Face
@@ -190,7 +190,8 @@ protected:
 	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_face_names(std::fstream& file) const;
+	bool read_element_face_names(std::fstream&) const;
+	bool read_element_face_encoding(PlyFileEncoding const&) const;
 	/**
 	 * Read Face from ply file.
 	 * You need to determine the file encoding and number of points before
@@ -201,7 +202,7 @@ protected:
 	 * @return bool true if the file was read successfully.
 	 * @todo Implement this method.
 	 */
-	bool read_element_face(std::fstream& file);
+	bool read_element_face(std::fstream&) const;
 #pragma endregion
 
 #pragma region Edge
@@ -214,6 +215,7 @@ protected:
 	 * @return true if the file was read successfully.
 	 */
 	bool read_element_edge_names(std::fstream& file) const;
+	bool read_element_edge_encoding(PlyFileEncoding const&) const;
 	/**
 	 * Read Edge from ply file.
 	 * You need to determine the file encoding and number of points before

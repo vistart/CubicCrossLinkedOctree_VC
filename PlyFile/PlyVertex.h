@@ -97,7 +97,7 @@ public:
 	 @param B
 	 */
 	PlyVertex(double X, double Y, double Z, unsigned char R, unsigned char G, unsigned char B);
-	~PlyVertex() = default;
+	virtual ~PlyVertex() = default;
 	enum PropertyNames { PROPERTY_NONE,
 		                 PROPERTY_X, PROPERTY_Y, PROPERTY_Z,
 		                 PROPERTY_R, PROPERTY_G, PROPERTY_B,
