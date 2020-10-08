@@ -25,7 +25,7 @@ PlyFace::PlyFace(FaceDescription const& fd, std::string const& str_face)
 	{
 		unsigned int index;
 		stream >> index;
-		this->vertex_indices.push(index);
+		this->vertex_indices->push(index);
 	}
 }
 
@@ -40,7 +40,7 @@ PlyFace::PlyFace(FaceDescription const& fd, std::fstream& file, PlyFileEncoding:
 		{
 			unsigned int index;
 			file >> index;
-			this->vertex_indices.push(index);
+			this->vertex_indices->push(index);
 		}
 		break;
 	case PlyFileEncoding::FILE_ENCODING_BINARY_BIG_ENDIAN:
@@ -71,7 +71,7 @@ PlyFace::PlyFace(FaceDescription const& fd, std::fstream& file, PlyFileEncoding:
 			// case PlyPropertyType::FLOAT64: index = READ_BE<double>(file); break;
 			default: index = 0;
 			}
-			this->vertex_indices.push(index);
+			this->vertex_indices->push(index);
 		}
 		break;
 	case PlyFileEncoding::FILE_ENCODING_BINARY_LITTLE_ENDIAN:
@@ -102,7 +102,7 @@ PlyFace::PlyFace(FaceDescription const& fd, std::fstream& file, PlyFileEncoding:
 			// case PlyPropertyType::FLOAT64: index = READ_LE<double>(file); break;
 			default: index = 0;
 			}
-			this->vertex_indices.push(index);
+			this->vertex_indices->push(index);
 		}
 		break;
 	}
@@ -110,7 +110,7 @@ PlyFace::PlyFace(FaceDescription const& fd, std::fstream& file, PlyFileEncoding:
 
 PlyFace::PlyFace(std::initializer_list<unsigned> const& faces)
 {
-	for (const auto& p : faces) this->vertex_indices.push(p);
+	for (const auto& p : faces) this->vertex_indices->push(p);
 }
 
 #endif

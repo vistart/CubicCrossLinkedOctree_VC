@@ -25,15 +25,15 @@
 class PointFace
 {
 public:
-	PointFace() = default;
+	PointFace();
 	PointFace(const PointFace&) = default;
 	PointFace& operator=(const PointFace&) = default;
 	PointFace(PointFace&&) = default;
 	PointFace& operator=(PointFace&&) = default;
-	virtual ~PointFace() = default;
+	virtual ~PointFace();
 	virtual bool operator==(PointFace const& face) const;
 	virtual bool operator!=(PointFace const& face) const;
 protected:
-	std::priority_queue<unsigned int, std::vector<unsigned int>, std::greater<>> vertex_indices;
+	std::shared_ptr<std::priority_queue<unsigned int, std::vector<unsigned int>, std::greater<>>> vertex_indices;
 };
 #endif

@@ -12,6 +12,11 @@
 #ifndef __PLY_EDGE_H__
 #define __PLY_EDGE_H__
 
+#include <string>
+#include <vector>
+
+
+#include "PlyFileEncoding.h"
 #include "PointEdge.h"
 
 /*
@@ -32,6 +37,16 @@ public:
 		int name;
 		int type;
 	};
+	PlyEdge() = default;
+	PlyEdge(std::vector<EdgeName> const&, std::string const&);
+	PlyEdge(std::vector<EdgeName> const&, std::fstream&, PlyFileEncoding::FileEncoding const&);
+	PlyEdge(int, int, unsigned char R = 0, unsigned char G = 0, unsigned char B = 0);
+	~PlyEdge() = default;
+	friend std::ostream& operator<<(std::ostream& stream, PlyEdge const& edge)
+	{
+		stream << "(" << ")";
+		return stream;
+	}
 };
 
 #endif

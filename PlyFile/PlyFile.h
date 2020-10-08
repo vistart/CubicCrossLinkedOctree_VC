@@ -225,7 +225,7 @@ protected:
 	 * @param file the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_edge(std::fstream& file);
+	bool read_element_edge(std::fstream& file) const;
 #pragma endregion
 
 #pragma region User-Defined Elements

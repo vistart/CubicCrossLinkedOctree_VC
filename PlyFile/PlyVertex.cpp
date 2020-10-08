@@ -35,7 +35,7 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, string const& vertex)
 	unsigned int __ALPHA = 255;
 	unsigned char ALPHA = 255;
 	stringstream stream(vertex);
-	for (auto& name : names)
+	for (const auto& name : names)
 	{
 		switch (name.name) {
 		case PROPERTY_X:
@@ -89,8 +89,10 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, string const& vertex)
 PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEncoding::FileEncoding const& file_encoding)
 {
 	double X = 0, Y = 0, Z = 0;
+	unsigned int __R = 0, __G = 0, __B = 0;
 	unsigned char R = 0, G = 0, B = 0;
 	double NX = 0, NY = 0, NZ = 0, CONFIDENCE = 1, INTENSITY = 0.5;
+	unsigned int __ALPHA = 255;
 	unsigned char ALPHA = 255;
 	switch (file_encoding.type) {
 	case PlyFileEncoding::FILE_ENCODING_ASCII:
@@ -107,13 +109,16 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEnco
 				file >> Z;
 				break;
 			case PROPERTY_R:
-				file >> R;
+				file >> __R;
+				R = __R & 0xFF;
 				break;
 			case PROPERTY_G:
-				file >> G;
+				file >> __G;
+				G = __G & 0xFF;
 				break;
 			case PROPERTY_B:
-				file >> B;
+				file >> __B;
+				B = __B & 0xFF;
 				break;
 			case PROPERTY_NX:
 				file >> NX;
@@ -125,7 +130,8 @@ PlyVertex::PlyVertex(vector<VertexName> const& names, fstream& file, PlyFileEnco
 				file >> NZ;
 				break;
 			case PROPERTY_ALPHA:
-				file >> ALPHA;
+				file >> __ALPHA;
+				ALPHA = __ALPHA & 0xFF;
 				break;
 			case PROPERTY_CONFIDENCE:
 				file >> CONFIDENCE;

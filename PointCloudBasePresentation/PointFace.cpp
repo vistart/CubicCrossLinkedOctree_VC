@@ -20,16 +20,26 @@ using namespace std;
 #include <stdexcept>
 #endif
 
+PointFace::PointFace()
+{
+	this->vertex_indices = std::make_shared<std::priority_queue<unsigned int, std::vector<unsigned int>, std::greater<>>>();
+}
+
+PointFace::~PointFace()
+{
+	this->vertex_indices = nullptr;
+}
+
 bool PointFace::operator==(PointFace const& face) const
 {
-	if (this->vertex_indices.size() != face.vertex_indices.size()) return false;
+	if (this->vertex_indices->size() != face.vertex_indices->size()) return false;
 	auto a = this->vertex_indices;
 	auto b = face.vertex_indices;
-	while (!a.empty())
+	while (!a->empty())
 	{
-		if (a.top() != b.top()) return false;
-		a.pop();
-		b.pop();
+		if (a->top() != b->top()) return false;
+		a->pop();
+		b->pop();
 	}
 	return true;
 }

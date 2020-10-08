@@ -26,8 +26,8 @@ public:
     /*
      No action is required by default.
      */
-	PlyEdgeList() = default;
-	~PlyEdgeList() override = default;
+	PlyEdgeList();
+	~PlyEdgeList() override;
 	PlyEdgeList& operator<<(std::string const&);
 	PlyEdgeList& operator<<(std::fstream &);
 	PlyEdgeList& operator<<(std::shared_ptr<PlyEdge> const&);

@@ -44,11 +44,11 @@ public:
 	{
 		stream << "(";
 		auto f = face.vertex_indices;
-		while (!f.empty())
+		while (!f->empty())
 		{
-			stream << f.top();
-			f.pop();
-			if (!f.empty()) stream << ", ";
+			stream << f->top();
+			f->pop();
+			if (!f->empty()) stream << ", ";
 		}
 		stream << ")";
 		return stream;

@@ -187,9 +187,11 @@ bool PlyFile::read_element_edge_encoding(PlyFileEncoding const& file_encoding) c
 	edge_list << file_encoding;
 	return true;
 }
-bool PlyFile::read_element_edge(fstream& f)
+bool PlyFile::read_element_edge(fstream& f) const
 {
-	return false;
+	auto& edge_list = *this->point_edge_list;
+	edge_list << f;
+	return true;
 }
 
 std::shared_ptr<PlyEdgeList> PlyFile::GetPointEdgeList()
@@ -342,7 +344,10 @@ bool PlyFile::read_body(fstream& f)
 		read_element_face(f);
 	}
 #ifdef _DEBUG
-	cout << "The last face: " << *this->GetPointFaceList()->GetFaces()->back() << endl;
+	if (this->GetPointFaceList()->GetFaces()->empty())
+	{
+		cout << "Empty face." << endl;
+	} else cout << "The last face: " << *this->GetPointFaceList()->GetFaces()->back() << endl;
 #endif
 
 	read_element_edge_encoding(*this->FileEncoding);

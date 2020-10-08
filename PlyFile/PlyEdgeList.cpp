@@ -12,14 +12,25 @@
 #endif
 
 #ifdef __PLY_EDGE_LIST_H__
-#include <iostream>
 using namespace std;
-PlyEdgeList& PlyEdgeList::operator<<(std::string const&)
+PlyEdgeList::PlyEdgeList()
 {
+	this->edges = make_shared<vector<shared_ptr<PlyEdge>>>();
+}
+PlyEdgeList::~PlyEdgeList()
+{
+	this->edges = nullptr;
+}
+PlyEdgeList& PlyEdgeList::operator<<(std::string const& str_edge)
+{
+	auto edge = std::make_shared<PlyEdge>(names, str_edge);
+	this->edges->emplace_back(edge);
 	return *this;
 }
-PlyEdgeList& PlyEdgeList::operator<<(std::fstream&)
+PlyEdgeList& PlyEdgeList::operator<<(std::fstream& file)
 {
+	auto edge = std::make_shared<PlyEdge>(names, file, file_encoding);
+	this->edges->emplace_back(edge);
 	return *this;
 }
 PlyEdgeList& PlyEdgeList::operator<<(std::shared_ptr<PlyEdge> const& edge)
