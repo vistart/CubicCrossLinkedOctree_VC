@@ -19,6 +19,19 @@
  */
 class PlyEdge : public PointEdge
 {
+public:
+	enum PropertyNames {
+		PROPERTY_NONE,
+		PROPERTY_VERTEX1,
+		PROPERTY_VERTEX2,
+		PROPERTY_RED,
+		PROPERTY_GREEN,
+		PROPERTY_BLUE
+	};
+	struct EdgeName {
+		int name;
+		int type;
+	};
 };
 
 #endif

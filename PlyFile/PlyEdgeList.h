@@ -33,7 +33,6 @@ public:
 	PlyEdgeList& operator<<(std::shared_ptr<PlyEdge> const&);
 	PlyEdgeList& operator<<(PlyFileEncoding const&);
 	bool read_element_edge_names(std::fstream& file);
-	void demo();
 	/*
 	 Set the count of edge according to the value stored in ply file header.
 	 Note: It is strongly recommended to set it only once before reading the
@@ -55,6 +54,8 @@ public:
 	 @return the shared pointer to all edges.
 	 */
 	[[nodiscard]] std::shared_ptr<std::vector<std::shared_ptr<PlyEdge>>> GetEdges() const override;
+
+	std::vector<PlyEdge::EdgeName> names;
 protected:
 	unsigned int count_in_header = 0;
 	PlyFileEncoding::FileEncoding file_encoding = { PlyFileEncoding::FILE_ENCODING_ASCII, 1.0 };

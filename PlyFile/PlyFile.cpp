@@ -174,10 +174,10 @@ shared_ptr<PlyFaceList> PlyFile::GetPointFaceList()
 #pragma region Edge
 bool PlyFile::read_element_edge_names(fstream& f) const
 {
-	string edge;
-	getline(f, edge);
+	this->point_edge_list->read_element_edge_names(f);
+	const auto& name = this->point_edge_list->names.back();
 #ifdef _DEBUG
-	cout << "Element: " << edge << endl;
+	cout << "Property: " << name.name << " | " << name.type << endl;
 #endif
 	return true;
 }
