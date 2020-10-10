@@ -34,7 +34,7 @@ public:
 	PlyFace(FaceDescription const&, std::string const&);
 	PlyFace(FaceDescription const&, std::fstream&, PlyFileEncoding::FileEncoding const&);
 	PlyFace(std::initializer_list<unsigned int> const&);
-	virtual ~PlyFace() = default;
+	~PlyFace() override = default;
 	enum PropertyNames {
 		PROPERTY_NONE,
 		PROPERTY_LIST,

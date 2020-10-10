@@ -22,7 +22,7 @@ using namespace std;
 
 PointFace::PointFace()
 {
-	this->vertex_indices = std::make_shared<std::priority_queue<unsigned int, std::vector<unsigned int>, std::greater<>>>();
+	this->vertex_indices = make_shared<priority_queue<unsigned int, vector<unsigned int>, greater<>>>();
 }
 
 PointFace::~PointFace()

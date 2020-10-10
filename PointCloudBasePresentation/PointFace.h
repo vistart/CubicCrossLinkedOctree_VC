@@ -12,7 +12,7 @@
 #ifndef __POINT_FACE__
 #define __POINT_FACE__
 
-#include <iomanip>
+#include <memory>
 #include <vector>
 #include <queue>
 #ifdef _MSC_VER

@@ -53,7 +53,6 @@ public:
     {
         points = other.points;
         other.points = nullptr;
-        return *this;
     }
     PointList& operator=(PointList&& other) noexcept
     {
