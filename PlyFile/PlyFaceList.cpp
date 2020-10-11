@@ -10,10 +10,10 @@
 #ifndef __PLY_FACE_LIST_H__
 #include "PlyFaceList.h"
 #endif
-#include <memory>
 
 #ifdef __PLY_FACE_LIST_H__
 using namespace std;
+#include <memory>
 PlyFaceList::PlyFaceList()
 {
 	this->faces = make_shared<vector<shared_ptr<PlyFace>>>();

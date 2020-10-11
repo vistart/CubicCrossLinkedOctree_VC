@@ -10,10 +10,10 @@
 #ifndef __PLY_VERTEX_LIST_H__
 #include "PlyVertexList.h"
 #endif
-#include <memory>
 
 #ifdef __PLY_VERTEX_LIST_H__
 using namespace std;
+#include <memory>
 
 PlyVertexList::PlyVertexList()
 {
