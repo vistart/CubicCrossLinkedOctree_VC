@@ -19,6 +19,7 @@
 #include <map>
 #include <tuple>
 #include <unordered_map>
+#include "pybind11/pybind11.h"
 #ifdef _MSC_VER
 #include <exception>
 #endif
