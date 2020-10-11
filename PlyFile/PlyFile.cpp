@@ -16,6 +16,10 @@
 #include <iomanip>
 #include <algorithm>
 
+#ifdef _DEBUG
+#include <chrono>
+#endif
+
 using namespace std;
 
 #pragma region Constructor & Destructor
@@ -365,12 +369,25 @@ bool PlyFile::read_body(fstream& f)
 
 bool PlyFile::read(fstream& f)
 {
+#ifdef _DEBUG
+	const chrono::steady_clock::time_point time_start = chrono::steady_clock::now();
+#endif
 	if (!this->read_header(f)) {
 		return false;
 	}
+#ifdef _DEBUG
+	const chrono::steady_clock::time_point time_end_read_header = chrono::steady_clock::now();
+	const chrono::duration<double> duration_read_header = chrono::duration_cast<chrono::duration<double>>(time_end_read_header - time_start);
+	cout << "Time elapsed of reading header: " << duration_read_header.count() << " s" << endl;
+#endif
 	if (!this->read_body(f)) {
 		return false;
 	}
+#ifdef _DEBUG
+	const chrono::steady_clock::time_point time_end_read_body = chrono::steady_clock::now();
+	const chrono::duration<double> duration_read_body = chrono::duration_cast<chrono::duration<double>>(time_end_read_body - time_end_read_header);
+	cout << "Time elapsed of reading body: " << duration_read_body.count() << " s" << endl;
+#endif
 	return true;
 }
 
