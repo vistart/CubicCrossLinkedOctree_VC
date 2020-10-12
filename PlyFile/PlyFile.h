@@ -36,7 +36,7 @@ public:
 #pragma endregion
 
 #pragma region File Format
-	[[nodiscard]] std::string GetFileFormat() const;
+	[[nodiscard]] std::string get_file_format() const;
 #pragma endregion
 
 #pragma region File Encoding
@@ -165,19 +165,19 @@ protected:
 	 * file encoding.
 	 *
 	 * @param file_encoding the file encoding.
-	 * @return bool true if the file was read successfully.
+	 * @return true if the file was read successfully.
 	 */
-	bool read_element_vertex_encoding(PlyFileEncoding const&) const;
+	bool read_element_vertex_encoding(PlyFileEncoding const& file_encoding) const;
 	/**
 	 * Read Vertex from ply file.
 	 * You need to determine the file encoding and number of points before
 	 * calling this method.
 	 * This method determines the meaning of each property based on vertex_names.
 	 *
-	 * @param file the file to be read.
+	 * @param f the file to be read.
 	 * @return bool true if the file was read successfully.
 	 */
-	bool read_element_vertex(std::fstream&) const;
+	bool read_element_vertex(std::fstream& f) const;
 	// std::shared_ptr<PlyVertexList> point_list;
 #pragma endregion
 

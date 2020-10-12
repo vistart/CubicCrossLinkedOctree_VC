@@ -61,7 +61,7 @@ bool PlyFile::GetIsValid() const
 #pragma endregion
 
 #pragma region File Format
-string PlyFile::GetFileFormat() const
+string PlyFile::get_file_format() const
 {
 	if (this->file_format == FILE_FORMAT_PLY)
 	{
