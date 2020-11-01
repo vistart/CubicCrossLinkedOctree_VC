@@ -18,8 +18,8 @@ class PointEdge
 public:
 	PointEdge() = default;
 	virtual ~PointEdge() = default;
-	int vertex1;
-	int vertex2;
+	int vertex1 = 0;
+	int vertex2 = 0;
     struct RGB
     {
         double R;

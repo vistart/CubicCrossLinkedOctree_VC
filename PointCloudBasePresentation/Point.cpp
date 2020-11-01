@@ -13,6 +13,7 @@
 
 #ifdef __POINT_H__
 using namespace std;
+#include <immintrin.h>
 #ifdef _MSC_VER
 #include <exception>
 #endif
@@ -20,12 +21,9 @@ using namespace std;
 #include <stdexcept>
 #endif
 
-
 Point* Point::operator+(Point const& target)
 {
-    __X += target.X();
-    __Y += target.Y();
-    __Z += target.Z();
+    offset(target.X(), target.Y(), target.Z());
     return this;
 }
 
@@ -35,11 +33,23 @@ Point* Point::operator+(XYZ const& target)
     return this;
 }
 
-void Point::offset(double offset_x, double offset_y, double offset_z)
+inline void Point::offset(double offset_x, double offset_y, double offset_z)
 {
+#ifdef __AVX2__
+    __m256d __m256d_origin = _mm256_set_pd(__X, __Y, __Z, 0);
+    __m256d __m256d_target = _mm256_set_pd(offset_x, offset_y, offset_z, 0);
+    __m256d __m256d_result = _mm256_add_pd(__m256d_origin, __m256d_target);
+    double result[4];
+    _mm256_storeu_pd(result, __m256d_result);
+    // The order of the calculation results is opposite to the order in which the parameters are passed in.
+    __X = result[3];
+    __Y = result[2];
+    __Z = result[1];
+#else
     __X += offset_x;
     __Y += offset_y;
     __Z += offset_z;
+#endif
 }
 
 void Point::offset(Point const& target)
@@ -73,7 +83,7 @@ double Point::offset_of(double offset, Coordination const& coordination) const
 
 std::tuple<double, double, double> Point::offset_of(std::tuple<double, double, double> const& offset) const
 {
-    auto& [x, y, z] = offset;
+    const auto& [x, y, z] = offset;
     return make_tuple<double, double, double>(__X - x, __Y - y, __Z - z);
 }
 

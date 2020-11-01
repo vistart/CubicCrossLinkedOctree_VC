@@ -87,10 +87,10 @@ public:
         std::cout << "Z-axis extended range: " << std::setprecision(8) << z_mid - (max_range + leaf_width) / 2 << " to " << std::setprecision(8) << z_mid + (max_range + leaf_width) / 2 << std::endl;
 #endif
 #pragma endregion
-        
+
+        auto points = point_list->GetPoints();
 #pragma region Insert Point into Octree
         std::cout << "Inserting all points into Octree:" << std::endl;
-        auto points = point_list->GetPoints();
         //nodes.rehash(points->size());
         for (auto i = 0; i < points->size(); i++) {
             auto& point = (*points)[i];
